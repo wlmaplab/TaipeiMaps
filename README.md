@@ -1,9 +1,14 @@
-# Taipei Maps 🗺 (for macOS)
+# Taipei Maps 🗺 - macOS 版本
 
+*台北生活的工具地圖*
 
-## TODO
+## 地圖列表
 
 - 公共飲水機
+
+
+## TODO (待加入)
+
 - 自來水直飲台
 - Taipei Free 熱點
 - 自行車停放區

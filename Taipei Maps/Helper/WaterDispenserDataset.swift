@@ -22,6 +22,5 @@ class WaterDispenserDataset: APIHelper {
     class func fetch(callback: @escaping (Dictionary<String,Any>?) -> Void) {
         httpGET_withFetchJsonObject(URLString: urlString, callback: callback)
     }
-    
 }
 

@@ -25,13 +25,26 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     let siteCoordinate = CLLocationCoordinate2D(latitude: 25.046856, longitude: 121.516923) //台北車站
     let siteName = "台北車站"
-    let mapTitles = ["公共飲水機", "自來水直飲台", "Taipei Free 熱點", "自行車停放區", "垃圾清運點位", "行人清潔箱", "台北市公廁", "新北市公廁"]
+    
+    let mapTitles = ["公共飲水機", "自來水直飲台",
+                     "Taipei Free 熱點", "自行車停放區",
+                     "垃圾清運點位", "行人清潔箱",
+                     "台北市公廁", "新北市公廁"]
+    
+    let mapIDs    = ["waterDispenser", "tapWater",
+                     "freeWifi", "bicycleParking",
+                     "garbageTruck", "trashBin",
+                     "tpToilet", "ntpcToilet" ]
+    
     
     var myLocation = CLLocationCoordinate2D()
     var isMoveToUserLocation = true
     
     var currentSearchPlace : CLPlacemark?
     var currentSearchPlaceAnnotation : MKPointAnnotation?
+    
+    var showDataList : Array<Dictionary<String,Any>>?
+    var showAnnotations = Array<MKAnnotation>()
     
     
     
@@ -46,11 +59,11 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         frame.size = initialSize
         self.view.window?.setFrame(frame, display: true)
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        fetchWaterDispenserData()
     }
 
     override var representedObject: Any? {
@@ -121,6 +134,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         if let location = userLocation.location {
             print("緯度:\(location.coordinate.latitude), 經度: \(location.coordinate.longitude)")
+            
+            /*
             self.myLocation.latitude = location.coordinate.latitude
             self.myLocation.longitude = location.coordinate.longitude
             
@@ -132,9 +147,71 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
                 let adjustedRegion = mapView.regionThatFits(viewRegion)
                 mapView.setRegion(adjustedRegion, animated: true)
                 self.myLocationButton.title = "我的位置"
-            }
+            }*/
         }
     }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        if annotation.isMember(of: WaterDispenserAnnotation.self) {
+            var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: "waterDispenserAnnotationView") as? WaterDispenserAnnotationView
+            if annoView == nil {
+                annoView = WaterDispenserAnnotationView(annotation: annotation, reuseIdentifier: "waterDispenserAnnotationView")
+            }
+            
+            let anno = annotation as! WaterDispenserAnnotation
+            annoView?.image      = anno.image
+            annoView?.coordinate = anno.coordinate
+            
+            weak var weakSelf = self
+            annoView?.selectedAction = { coordinate in
+                weakSelf?.selectedAnnotation(anno, coordinate: coordinate)
+            }
+            
+            let attrStr = anno.infoToAttributedString()
+            annoView?.detailCalloutAccessoryView = detailLabelWith(attributedString: attrStr)
+            annoView?.canShowCallout = true
+            annoView?.leftCalloutOffset  = CGPoint(x: -4, y: -27)
+            annoView?.rightCalloutOffset = CGPoint(x: 4, y: -27)
+            
+            return annoView
+        }
+        return nil
+    }
+    
+    
+    // MARK: - Detail Label
+    
+    func detailLabelWith(attributedString: NSAttributedString) -> NSTextField {
+        let label = NSTextField(labelWithAttributedString: attributedString)
+        
+        let labelWidth : CGFloat = 300
+        let labelHeight = label.cell!.cellSize(forBounds: NSRect(x: 0, y: 0,
+                                                                 width: labelWidth,
+                                                                 height: CGFloat(Float.greatestFiniteMagnitude))).height
+        
+        label.frame = NSRect(x: 0, y: 0,
+                             width: labelWidth,
+                             height: (labelHeight + 10))
+        
+        return label
+    }
+    
+    
+    // MARK: - Selected Annotation
+    
+    func selectedAnnotation(_ annotation: MKAnnotation, coordinate: CLLocationCoordinate2D) {
+        let moveToCoordinate = CLLocationCoordinate2D(latitude: coordinate.latitude,
+                                                      longitude: coordinate.longitude)
+        
+        let viewRegion = MKCoordinateRegion(center: moveToCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        let adjustedRegion = mapView.regionThatFits(viewRegion)
+        mapView.setRegion(adjustedRegion, animated: true)
+    }
+    
     
     
     // MARK: - NSSearchField Delegate / NSTextField Delegate
@@ -150,9 +227,6 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         }
         return false
     }
-    
-    
-    
     
     
     // MARK: - Search Place
@@ -252,6 +326,40 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     @IBAction func selectedMapsPopUpButton(sender: NSPopUpButton) {
         print("\(sender.titleOfSelectedItem ?? "") : \(sender.indexOfSelectedItem)")
+        
+        /*
+         * "公共飲水機" : "waterDispenser",
+         * "自來水直飲台" : "tapWater",
+         * "Taipei Free 熱點" : "freeWifi",
+         * "自行車停放區" : "bicycleParking",
+         * "垃圾清運點位" : "garbageTruck",
+         * "行人清潔箱" : "trashBin",
+         * "台北市公廁" : "tpToilet",
+         * "新北市公廁" : "ntpcToilet"
+         */
+        
+        let mapid = mapIDs[sender.indexOfSelectedItem]
+        
+        switch mapid {
+        case "waterDispenser":
+            fetchWaterDispenserData()
+        case "tapWater":
+            print("")
+        case "freeWifi":
+            print("")
+        case "bicycleParking":
+            print("")
+        case "garbageTruck":
+            print("")
+        case "trashBin":
+            print("")
+        case "tpToilet":
+            print("")
+        case "ntpcToilet":
+            print("")
+        default:
+            break
+        }
     }
     
     @IBAction func pressedMyLocationButton(sender: NSButton) {
@@ -270,6 +378,64 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             mapView.selectAnnotation(currentSearchPlaceAnnotation!, animated: true)
         }
     }
+    
+    
+    // MARK: - Fetch Water Dispenser Data
+    
+    func fetchWaterDispenserData() {
+        WaterDispenserDataset.fetch() { json in
+            self.showDataList = nil
+            
+            if let json = json,
+               let result = json["result"] as? Dictionary<String,Any>,
+               let results = result["results"] as? Array<Dictionary<String,Any>>
+            {
+                self.showDataList = results
+            }
+            
+            self.showWaterDispenserMarkers()
+        }
+    }
+    
+    func showWaterDispenserMarkers() {
+        guard let items = self.showDataList else { return }
+        
+        var annoArray = Array<WaterDispenserAnnotation>()
+        
+        for item in items {
+            var latitude : Double = 0
+            var longitude : Double = 0
+            
+            if let latStr = item["緯度"] as? String {
+                let lat = latStr.trimmingCharacters(in: .whitespacesAndNewlines)
+                latitude = Double(lat) ?? 0
+            }
+            if let lngStr = item["經度"] as? String {
+                let lng = lngStr.trimmingCharacters(in: .whitespacesAndNewlines)
+                longitude = Double(lng) ?? 0
+            }
+            
+            if latitude == 0 || longitude == 0 {
+                continue
+            }
+            
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let anno = WaterDispenserAnnotation(coordinate: coordinate)
+            anno.image = NSImage(named: "wd_pin")
+            anno.info = item
+            
+            annoArray.append(anno)
+        }
+        
+        // clear Annotations
+        mapView.removeAnnotations(showAnnotations)
+        showAnnotations.removeAll()
+        
+        // add Annotations
+        showAnnotations.append(contentsOf: annoArray)
+        mapView.addAnnotations(showAnnotations)
+    }
+    
     
 }
 
