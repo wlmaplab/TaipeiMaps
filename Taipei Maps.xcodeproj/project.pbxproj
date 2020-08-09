@@ -11,6 +11,18 @@
 		2519BB1B24DFB210000F5FFC /* WaterDispenserDataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB1A24DFB210000F5FFC /* WaterDispenserDataset.swift */; };
 		2519BB1D24DFB2DA000F5FFC /* TapWaterDataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB1C24DFB2DA000F5FFC /* TapWaterDataset.swift */; };
 		2519BB1F24DFBD7B000F5FFC /* FreeWifiDataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB1E24DFBD7B000F5FFC /* FreeWifiDataset.swift */; };
+		2519BB2B24DFC0C7000F5FFC /* wifi_pin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB2124DFC0C7000F5FFC /* wifi_pin2.png */; };
+		2519BB2C24DFC0C7000F5FFC /* water_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB2224DFC0C7000F5FFC /* water_pin@2x.png */; };
+		2519BB2D24DFC0C7000F5FFC /* wd_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB2324DFC0C7000F5FFC /* wd_pin@2x.png */; };
+		2519BB2E24DFC0C7000F5FFC /* trash_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB2424DFC0C7000F5FFC /* trash_pin.png */; };
+		2519BB2F24DFC0C7000F5FFC /* wd_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB2524DFC0C7000F5FFC /* wd_pin.png */; };
+		2519BB3024DFC0C7000F5FFC /* toilet_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB2624DFC0C7000F5FFC /* toilet_pin@2x.png */; };
+		2519BB3124DFC0C7000F5FFC /* trash_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB2724DFC0C7000F5FFC /* trash_pin@2x.png */; };
+		2519BB3224DFC0C7000F5FFC /* toilet_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB2824DFC0C7000F5FFC /* toilet_pin.png */; };
+		2519BB3324DFC0C7000F5FFC /* water_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB2924DFC0C7000F5FFC /* water_pin.png */; };
+		2519BB3424DFC0C7000F5FFC /* wifi_pin2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB2A24DFC0C7000F5FFC /* wifi_pin2@2x.png */; };
+		2519BB3724DFC0EC000F5FFC /* bicycle_pin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB3524DFC0EC000F5FFC /* bicycle_pin2.png */; };
+		2519BB3824DFC0EC000F5FFC /* bicycle_pin2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB3624DFC0EC000F5FFC /* bicycle_pin2@2x.png */; };
 		25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E224DE67460067BAFE /* AppDelegate.swift */; };
 		25C112E524DE67460067BAFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E424DE67460067BAFE /* ViewController.swift */; };
 		25C112E724DE67480067BAFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C112E624DE67480067BAFE /* Assets.xcassets */; };
@@ -22,6 +34,18 @@
 		2519BB1A24DFB210000F5FFC /* WaterDispenserDataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterDispenserDataset.swift; sourceTree = "<group>"; };
 		2519BB1C24DFB2DA000F5FFC /* TapWaterDataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapWaterDataset.swift; sourceTree = "<group>"; };
 		2519BB1E24DFBD7B000F5FFC /* FreeWifiDataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeWifiDataset.swift; sourceTree = "<group>"; };
+		2519BB2124DFC0C7000F5FFC /* wifi_pin2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wifi_pin2.png; sourceTree = "<group>"; };
+		2519BB2224DFC0C7000F5FFC /* water_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "water_pin@2x.png"; sourceTree = "<group>"; };
+		2519BB2324DFC0C7000F5FFC /* wd_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wd_pin@2x.png"; sourceTree = "<group>"; };
+		2519BB2424DFC0C7000F5FFC /* trash_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_pin.png; sourceTree = "<group>"; };
+		2519BB2524DFC0C7000F5FFC /* wd_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wd_pin.png; sourceTree = "<group>"; };
+		2519BB2624DFC0C7000F5FFC /* toilet_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toilet_pin@2x.png"; sourceTree = "<group>"; };
+		2519BB2724DFC0C7000F5FFC /* trash_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash_pin@2x.png"; sourceTree = "<group>"; };
+		2519BB2824DFC0C7000F5FFC /* toilet_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toilet_pin.png; sourceTree = "<group>"; };
+		2519BB2924DFC0C7000F5FFC /* water_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water_pin.png; sourceTree = "<group>"; };
+		2519BB2A24DFC0C7000F5FFC /* wifi_pin2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wifi_pin2@2x.png"; sourceTree = "<group>"; };
+		2519BB3524DFC0EC000F5FFC /* bicycle_pin2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bicycle_pin2.png; sourceTree = "<group>"; };
+		2519BB3624DFC0EC000F5FFC /* bicycle_pin2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bicycle_pin2@2x.png"; sourceTree = "<group>"; };
 		25C112DF24DE67460067BAFE /* Taipei Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Taipei Maps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C112E224DE67460067BAFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C112E424DE67460067BAFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +84,25 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		2519BB2024DFBFE6000F5FFC /* imgs */ = {
+			isa = PBXGroup;
+			children = (
+				2519BB3524DFC0EC000F5FFC /* bicycle_pin2.png */,
+				2519BB3624DFC0EC000F5FFC /* bicycle_pin2@2x.png */,
+				2519BB2824DFC0C7000F5FFC /* toilet_pin.png */,
+				2519BB2624DFC0C7000F5FFC /* toilet_pin@2x.png */,
+				2519BB2424DFC0C7000F5FFC /* trash_pin.png */,
+				2519BB2724DFC0C7000F5FFC /* trash_pin@2x.png */,
+				2519BB2924DFC0C7000F5FFC /* water_pin.png */,
+				2519BB2224DFC0C7000F5FFC /* water_pin@2x.png */,
+				2519BB2524DFC0C7000F5FFC /* wd_pin.png */,
+				2519BB2324DFC0C7000F5FFC /* wd_pin@2x.png */,
+				2519BB2124DFC0C7000F5FFC /* wifi_pin2.png */,
+				2519BB2A24DFC0C7000F5FFC /* wifi_pin2@2x.png */,
+			);
+			path = imgs;
+			sourceTree = "<group>";
+		};
 		25C112D624DE67460067BAFE = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +122,7 @@
 		25C112E124DE67460067BAFE /* Taipei Maps */ = {
 			isa = PBXGroup;
 			children = (
+				2519BB2024DFBFE6000F5FFC /* imgs */,
 				2519BB1624DE91AB000F5FFC /* Helper */,
 				2519BB1724DE91B8000F5FFC /* Views */,
 				25C112E224DE67460067BAFE /* AppDelegate.swift */,
@@ -150,7 +194,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				25C112E724DE67480067BAFE /* Assets.xcassets in Resources */,
+				2519BB3824DFC0EC000F5FFC /* bicycle_pin2@2x.png in Resources */,
+				2519BB2B24DFC0C7000F5FFC /* wifi_pin2.png in Resources */,
+				2519BB3724DFC0EC000F5FFC /* bicycle_pin2.png in Resources */,
+				2519BB2C24DFC0C7000F5FFC /* water_pin@2x.png in Resources */,
+				2519BB2F24DFC0C7000F5FFC /* wd_pin.png in Resources */,
+				2519BB3424DFC0C7000F5FFC /* wifi_pin2@2x.png in Resources */,
+				2519BB3224DFC0C7000F5FFC /* toilet_pin.png in Resources */,
+				2519BB2D24DFC0C7000F5FFC /* wd_pin@2x.png in Resources */,
+				2519BB3024DFC0C7000F5FFC /* toilet_pin@2x.png in Resources */,
+				2519BB2E24DFC0C7000F5FFC /* trash_pin.png in Resources */,
 				25C112EA24DE67480067BAFE /* Main.storyboard in Resources */,
+				2519BB3124DFC0C7000F5FFC /* trash_pin@2x.png in Resources */,
+				2519BB3324DFC0C7000F5FFC /* water_pin.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
