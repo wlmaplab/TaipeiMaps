@@ -7,3 +7,21 @@
 //
 
 import Foundation
+import MapKit
+
+class WaterDispenserAnnotation: NSObject, MKAnnotation {
+    
+    var coordinate : CLLocationCoordinate2D
+    var image : NSImage?
+    var info : Dictionary<String,Any>?
+    
+    override init() {
+        self.coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    }
+    
+    convenience init(coordinate: CLLocationCoordinate2D) {
+        self.init()
+        self.coordinate = coordinate
+    }
+    
+}
