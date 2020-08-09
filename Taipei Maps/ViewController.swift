@@ -25,7 +25,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     let siteCoordinate = CLLocationCoordinate2D(latitude: 25.046856, longitude: 121.516923) //台北車站
     let siteName = "台北車站"
-    let mapTitles = ["公共飲水機", "自來水直飲台", "Taipei Free 熱點"]
+    let mapTitles = ["公共飲水機", "自來水直飲台", "Taipei Free 熱點", "自行車停放區", "垃圾清運點位", "行人清潔箱", "台北市公廁", "新北市公廁"]
     
     var myLocation = CLLocationCoordinate2D()
     var isMoveToUserLocation = true
@@ -120,26 +120,24 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         if let location = userLocation.location {
-            DispatchQueue.main.async {
-                print("緯度:\(location.coordinate.latitude), 經度: \(location.coordinate.longitude)")
-                self.myLocation.latitude = location.coordinate.latitude
-                self.myLocation.longitude = location.coordinate.longitude
-                
-                if self.isMoveToUserLocation == true {
-                    self.isMoveToUserLocation = false
-                    let viewRegion = MKCoordinateRegion(center: self.myLocation,
-                                                        latitudinalMeters: 3000,
-                                                        longitudinalMeters: 3000)
-                    let adjustedRegion = mapView.regionThatFits(viewRegion)
-                    mapView.setRegion(adjustedRegion, animated: true)
-                    self.myLocationButton.title = "我的位置"
-                }
+            print("緯度:\(location.coordinate.latitude), 經度: \(location.coordinate.longitude)")
+            self.myLocation.latitude = location.coordinate.latitude
+            self.myLocation.longitude = location.coordinate.longitude
+            
+            if self.isMoveToUserLocation == true {
+                self.isMoveToUserLocation = false
+                let viewRegion = MKCoordinateRegion(center: self.myLocation,
+                                                    latitudinalMeters: 3000,
+                                                    longitudinalMeters: 3000)
+                let adjustedRegion = mapView.regionThatFits(viewRegion)
+                mapView.setRegion(adjustedRegion, animated: true)
+                self.myLocationButton.title = "我的位置"
             }
         }
     }
     
     
-    // MARK: - NSSearchFieldDelegate / NSTextFieldDelegate
+    // MARK: - NSSearchField Delegate / NSTextField Delegate
     
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         if (commandSelector == #selector(NSResponder.insertNewline(_:))) {
