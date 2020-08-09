@@ -708,17 +708,21 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Taipei_Maps" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="711" height="510"/>
+                        <rect key="frame" x="0.0" y="0.0" width="711" height="511"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <mapView mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Lox-hc-4Hg">
-                                <rect key="frame" x="0.0" y="37" width="711" height="434"/>
+                                <rect key="frame" x="0.0" y="37" width="711" height="435"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="434" id="NyD-iQ-LGs"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="711" id="UQa-IF-VbE"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="YOf-pI-1qI"/>
                                 </connections>
                             </mapView>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VbN-e1-VkW">
-                                <rect key="frame" x="8" y="478" width="77" height="25"/>
+                                <rect key="frame" x="8" y="479" width="77" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="K5P-Dg-3hx" id="S8J-5R-moh">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -735,7 +739,10 @@
                                 </connections>
                             </popUpButton>
                             <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ltC-At-VlZ">
-                                <rect key="frame" x="92" y="481" width="528" height="22"/>
+                                <rect key="frame" x="92" y="482" width="528" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="528" id="j0m-eP-2cb"/>
+                                </constraints>
                                 <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="OM9-ZM-w1K">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -746,7 +753,7 @@
                                 </connections>
                             </searchField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mgo-rS-Ag5">
-                                <rect key="frame" x="624" y="474" width="83" height="32"/>
+                                <rect key="frame" x="624" y="475" width="83" height="32"/>
                                 <buttonCell key="cell" type="push" title="Search" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PNU-F3-ffC">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
