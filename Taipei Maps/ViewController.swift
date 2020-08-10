@@ -163,27 +163,48 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             }
             
             let anno = annotation as! WaterDispenserAnnotation
-            annoView?.image      = anno.image
-            annoView?.coordinate = anno.coordinate
-            
-            weak var weakSelf = self
-            annoView?.selectedAction = { coordinate in
-                weakSelf?.selectedAnnotation(anno, coordinate: coordinate)
-            }
-            
-            let attrStr = anno.infoToAttributedString()
-            annoView?.detailCalloutAccessoryView = detailLabelWith(attributedString: attrStr)
-            annoView?.canShowCallout = true
-            annoView?.leftCalloutOffset  = CGPoint(x: -4, y: -27)
-            annoView?.rightCalloutOffset = CGPoint(x: 4, y: -27)
+            setMapAnnotationView(annoView, annotation: anno)
+            setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
             
             return annoView
         }
+        else if annotation.isMember(of: TapWaterAnnotation.self) {
+            var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: "tapWaterAnnotationView") as? TapWaterAnnotationView
+            if annoView == nil {
+                annoView = TapWaterAnnotationView(annotation: annotation, reuseIdentifier: "tapWaterAnnotationView")
+            }
+            
+            let anno = annotation as! TapWaterAnnotation
+            setMapAnnotationView(annoView, annotation: anno)
+            setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
+            
+            return annoView
+        }
+        
         return nil
     }
     
     
-    // MARK: - Detail Label
+    // MARK: - MapAnnotationView / Detail Callout View
+    
+    func setMapAnnotationView(_ annotationView: TpMapAnnotationView?, annotation: TpMapAnnotation) {
+        annotationView?.image      = annotation.image
+        annotationView?.coordinate = annotation.coordinate
+        annotationView?.info       = annotation.info
+        
+        weak var weakSelf = self
+        annotationView?.selectedAction = { coordinate in
+            weakSelf?.selectedAnnotation(annotation, coordinate: coordinate)
+        }
+    }
+    
+    func setCalloutViewWith(annotationView: MKAnnotationView?, attributedString: NSAttributedString) {
+        annotationView?.detailCalloutAccessoryView = detailLabelWith(attributedString: attributedString)
+        annotationView?.canShowCallout = true
+        annotationView?.leftCalloutOffset  = CGPoint(x: -4, y: -27)
+        annotationView?.rightCalloutOffset = CGPoint(x: 4, y: -27)
+    }
+    
     
     func detailLabelWith(attributedString: NSAttributedString) -> NSTextField {
         let label = NSTextField(labelWithAttributedString: attributedString)
@@ -344,7 +365,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         case "waterDispenser":
             fetchWaterDispenserData()
         case "tapWater":
-            print("")
+            fetchTapWaterData()
         case "freeWifi":
             print("")
         case "bicycleParking":
@@ -399,7 +420,6 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func showWaterDispenserMarkers() {
         guard let items = self.showDataList else { return }
-        
         var annoArray = Array<WaterDispenserAnnotation>()
         
         for item in items {
@@ -435,6 +455,63 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         showAnnotations.append(contentsOf: annoArray)
         mapView.addAnnotations(showAnnotations)
     }
+    
+    
+    // MARK: - Fetch Tap Water Data
+    
+    func fetchTapWaterData() {
+        TapWaterDataset.fetch() { json in
+            self.showDataList = nil
+            
+            if let json = json,
+               let result = json["result"] as? Dictionary<String,Any>,
+               let results = result["results"] as? Array<Dictionary<String,Any>>
+            {
+                self.showDataList = results
+            }
+            
+            self.showTapWaterMarkers()
+        }
+    }
+    
+    func showTapWaterMarkers() {
+        guard let items = self.showDataList else { return }
+        var annoArray = Array<TapWaterAnnotation>()
+        
+        for item in items {
+            var latitude : Double = 0
+            var longitude : Double = 0
+            
+            if let latStr = item["緯度"] as? String {
+                let lat = latStr.trimmingCharacters(in: .whitespacesAndNewlines)
+                latitude = Double(lat) ?? 0
+            }
+            if let lngStr = item["經度"] as? String {
+                let lng = lngStr.trimmingCharacters(in: .whitespacesAndNewlines)
+                longitude = Double(lng) ?? 0
+            }
+            
+            if latitude == 0 || longitude == 0 {
+                continue
+            }
+            
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let anno = TapWaterAnnotation(coordinate: coordinate)
+            anno.image = NSImage(named: "water_pin")
+            anno.info = item
+            
+            annoArray.append(anno)
+        }
+        
+        // clear Annotations
+        mapView.removeAnnotations(showAnnotations)
+        showAnnotations.removeAll()
+        
+        // add Annotations
+        showAnnotations.append(contentsOf: annoArray)
+        mapView.addAnnotations(showAnnotations)
+    }
+    
     
     
 }

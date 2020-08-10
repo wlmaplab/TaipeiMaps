@@ -25,6 +25,10 @@
 		2519BB3C24DFFD91000F5FFC /* WaterDispenserAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB3B24DFFD91000F5FFC /* WaterDispenserAnnotationView.swift */; };
 		2519BB3F24E046A1000F5FFC /* wd_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB3D24E046A1000F5FFC /* wd_pin@2x.png */; };
 		2519BB4024E046A1000F5FFC /* wd_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB3E24E046A1000F5FFC /* wd_pin.png */; };
+		2519BB4224E110A7000F5FFC /* TapWaterAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB4124E110A7000F5FFC /* TapWaterAnnotation.swift */; };
+		2519BB4424E11114000F5FFC /* TapWaterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB4324E11114000F5FFC /* TapWaterAnnotationView.swift */; };
+		2519BB4624E1183E000F5FFC /* TpMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB4524E1183E000F5FFC /* TpMapAnnotation.swift */; };
+		2519BB4824E118BB000F5FFC /* TpMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB4724E118BB000F5FFC /* TpMapAnnotationView.swift */; };
 		25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E224DE67460067BAFE /* AppDelegate.swift */; };
 		25C112E524DE67460067BAFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E424DE67460067BAFE /* ViewController.swift */; };
 		25C112E724DE67480067BAFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C112E624DE67480067BAFE /* Assets.xcassets */; };
@@ -50,6 +54,10 @@
 		2519BB3B24DFFD91000F5FFC /* WaterDispenserAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterDispenserAnnotationView.swift; sourceTree = "<group>"; };
 		2519BB3D24E046A1000F5FFC /* wd_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wd_pin@2x.png"; sourceTree = "<group>"; };
 		2519BB3E24E046A1000F5FFC /* wd_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wd_pin.png; sourceTree = "<group>"; };
+		2519BB4124E110A7000F5FFC /* TapWaterAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapWaterAnnotation.swift; sourceTree = "<group>"; };
+		2519BB4324E11114000F5FFC /* TapWaterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapWaterAnnotationView.swift; sourceTree = "<group>"; };
+		2519BB4524E1183E000F5FFC /* TpMapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TpMapAnnotation.swift; sourceTree = "<group>"; };
+		2519BB4724E118BB000F5FFC /* TpMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TpMapAnnotationView.swift; sourceTree = "<group>"; };
 		25C112DF24DE67460067BAFE /* Taipei Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Taipei Maps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C112E224DE67460067BAFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C112E424DE67460067BAFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -84,8 +92,12 @@
 		2519BB1724DE91B8000F5FFC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2519BB4524E1183E000F5FFC /* TpMapAnnotation.swift */,
 				2519BB3924DFFCF6000F5FFC /* WaterDispenserAnnotation.swift */,
+				2519BB4124E110A7000F5FFC /* TapWaterAnnotation.swift */,
+				2519BB4724E118BB000F5FFC /* TpMapAnnotationView.swift */,
 				2519BB3B24DFFD91000F5FFC /* WaterDispenserAnnotationView.swift */,
+				2519BB4324E11114000F5FFC /* TapWaterAnnotationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -223,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2519BB4824E118BB000F5FFC /* TpMapAnnotationView.swift in Sources */,
 				2519BB1D24DFB2DA000F5FFC /* TapWaterDataset.swift in Sources */,
 				2519BB3A24DFFCF6000F5FFC /* WaterDispenserAnnotation.swift in Sources */,
 				2519BB1B24DFB210000F5FFC /* WaterDispenserDataset.swift in Sources */,
@@ -231,6 +244,9 @@
 				25C112E524DE67460067BAFE /* ViewController.swift in Sources */,
 				25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */,
 				2519BB3C24DFFD91000F5FFC /* WaterDispenserAnnotationView.swift in Sources */,
+				2519BB4224E110A7000F5FFC /* TapWaterAnnotation.swift in Sources */,
+				2519BB4624E1183E000F5FFC /* TpMapAnnotation.swift in Sources */,
+				2519BB4424E11114000F5FFC /* TapWaterAnnotationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
