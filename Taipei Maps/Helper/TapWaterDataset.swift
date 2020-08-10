@@ -9,7 +9,7 @@
 import Foundation
 
 
-// 自來水直飲台
+// 自來水直飲臺
 class TapWaterDataset: APIHelper {
     
     // MARK: - API URL String
