@@ -782,6 +782,30 @@
                                     <action selector="pressedPlaceButtonWithSender:" target="XfG-lQ-9wD" id="fTL-UC-MAZ"/>
                                 </connections>
                             </button>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="QCL-an-z64">
+                                <rect key="frame" x="0.0" y="442" width="711" height="30"/>
+                                <subviews>
+                                    <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="m7S-vc-MRV">
+                                        <rect key="frame" x="13" y="7" width="16" height="16"/>
+                                    </progressIndicator>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6C3-Uh-ymp">
+                                        <rect key="frame" x="38" y="8" width="635" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Label" id="7k7-FX-eHj">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="6C3-Uh-ymp" firstAttribute="centerY" secondItem="QCL-an-z64" secondAttribute="centerY" constant="-1" id="2Br-5M-xwb"/>
+                                    <constraint firstAttribute="height" constant="30" id="LaZ-sT-FtS"/>
+                                    <constraint firstItem="6C3-Uh-ymp" firstAttribute="leading" secondItem="QCL-an-z64" secondAttribute="leading" constant="40" id="Ycs-DW-4RN"/>
+                                    <constraint firstItem="m7S-vc-MRV" firstAttribute="centerY" secondItem="QCL-an-z64" secondAttribute="centerY" id="a0V-gY-gQP"/>
+                                    <constraint firstItem="m7S-vc-MRV" firstAttribute="leading" secondItem="QCL-an-z64" secondAttribute="leading" constant="13" id="tx4-vC-lN7"/>
+                                    <constraint firstAttribute="trailing" secondItem="6C3-Uh-ymp" secondAttribute="trailing" constant="40" id="zeP-k5-ffL"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="centerY" secondItem="WNv-i6-IbZ" secondAttribute="centerY" id="4Tv-Hl-xlx"/>
@@ -792,18 +816,24 @@
                             <constraint firstItem="ltC-At-VlZ" firstAttribute="centerY" secondItem="VbN-e1-VkW" secondAttribute="centerY" id="KOe-hd-efb"/>
                             <constraint firstAttribute="trailing" secondItem="Lox-hc-4Hg" secondAttribute="trailing" id="N6L-NM-Dz0"/>
                             <constraint firstItem="Mgo-rS-Ag5" firstAttribute="leading" secondItem="ltC-At-VlZ" secondAttribute="trailing" constant="10" id="Nxg-MH-pbh"/>
+                            <constraint firstItem="QCL-an-z64" firstAttribute="top" secondItem="VbN-e1-VkW" secondAttribute="bottom" constant="10" id="Y1D-X6-OhA"/>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="top" secondItem="Lox-hc-4Hg" secondAttribute="bottom" constant="8" id="jcc-mZ-QN5"/>
                             <constraint firstItem="ltC-At-VlZ" firstAttribute="leading" secondItem="VbN-e1-VkW" secondAttribute="trailing" constant="10" id="lQZ-xt-xX5"/>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="leading" secondItem="WNv-i6-IbZ" secondAttribute="trailing" constant="10" id="mCv-GV-KFm"/>
                             <constraint firstItem="Mgo-rS-Ag5" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="8" id="oSf-jA-c0T"/>
+                            <constraint firstItem="QCL-an-z64" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="qdU-qu-vEb"/>
                             <constraint firstItem="Mgo-rS-Ag5" firstAttribute="centerY" secondItem="VbN-e1-VkW" secondAttribute="centerY" id="vXI-Wb-M2e"/>
                             <constraint firstAttribute="bottom" secondItem="4PF-Zm-8sD" secondAttribute="bottom" constant="8" id="vwO-oh-6zA"/>
                             <constraint firstAttribute="trailing" secondItem="4PF-Zm-8sD" secondAttribute="trailing" constant="10" id="y9V-n9-2cB"/>
+                            <constraint firstAttribute="trailing" secondItem="QCL-an-z64" secondAttribute="trailing" id="zgI-M7-X5e"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="Lox-hc-4Hg" id="DY5-q4-faw"/>
                         <outlet property="mapsPopUpButton" destination="VbN-e1-VkW" id="XaC-AU-gXq"/>
+                        <outlet property="messageIndicator" destination="m7S-vc-MRV" id="5uJ-QD-BBl"/>
+                        <outlet property="messageLabel" destination="6C3-Uh-ymp" id="ztT-fw-IuW"/>
+                        <outlet property="messageView" destination="QCL-an-z64" id="5oK-nU-4kM"/>
                         <outlet property="myLocationButton" destination="4PF-Zm-8sD" id="ALq-ow-1Ex"/>
                         <outlet property="placeButton" destination="WNv-i6-IbZ" id="jZs-7D-uZM"/>
                         <outlet property="searchButton" destination="Mgo-rS-Ag5" id="dUf-QO-m49"/>
@@ -812,7 +842,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75.5" y="809"/>
+            <point key="canvasLocation" x="75.5" y="808.5"/>
         </scene>
     </scenes>
 </document>

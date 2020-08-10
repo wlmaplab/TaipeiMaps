@@ -22,11 +22,15 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     @IBOutlet var placeButton : NSButton!
     @IBOutlet var myLocationButton : NSButton!
     
+    @IBOutlet var messageView : NSView!
+    @IBOutlet var messageLabel : NSTextField!
+    @IBOutlet var messageIndicator : NSProgressIndicator!
+    
     
     let siteCoordinate = CLLocationCoordinate2D(latitude: 25.046856, longitude: 121.516923) //台北車站
     let siteName = "台北車站"
     
-    let mapTitles = ["公共飲水機", "自來水直飲台",
+    let mapTitles = ["公共飲水機", "自來水直飲臺",
                      "Taipei Free 熱點", "自行車停放區",
                      "垃圾清運點位", "行人清潔箱",
                      "台北市公廁", "新北市公廁"]
@@ -80,6 +84,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         setupMyLocation()
         setupMapsPopUpButton()
         setupSearchComponents()
+        setupMessageViewComponents()
         
         // move to siteLocation
         moveToSiteLocation()
@@ -119,6 +124,26 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         placeButton.alphaValue = 0
     }
 
+    func setupMessageViewComponents() {
+        // view
+        messageView.wantsLayer = true
+        messageView.layer?.backgroundColor = NSColor.systemBlue.cgColor
+        
+        // label
+        messageLabel.textColor = NSColor.white
+        messageLabel.stringValue = ""
+        
+        // indicator
+        if let filter = CIFilter(name: "CIColorControls") {
+            filter.setDefaults()
+            filter.setValue(1, forKey: "inputBrightness")
+            messageIndicator.contentFilters = [filter]
+            stopMessageIndicator()
+        }
+        
+        // hide
+        messageView.alphaValue = 0
+    }
     
     // MARK: - Site Location
     
@@ -339,6 +364,36 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
+    // MARK: - MessageView / Indicator
+    
+    func startMessageIndicator() {
+        messageIndicator.startAnimation(nil)
+        messageIndicator.alphaValue = 1
+    }
+    
+    func stopMessageIndicator() {
+        messageIndicator.stopAnimation(nil)
+        messageIndicator.alphaValue = 0
+    }
+    
+    func showMessageView(message: String) {
+        messageLabel.stringValue = message
+        startMessageIndicator()
+        messageView.alphaValue = 1
+    }
+    
+    func dismissMessageView() {
+        NSAnimationContext.runAnimationGroup({ _ in
+            NSAnimationContext.current.duration = 0.25
+            self.messageView.animator().alphaValue = 0
+        }, completionHandler: {
+            //done
+            self.messageLabel.stringValue = ""
+            self.stopMessageIndicator()
+        })
+    }
+    
+    
     // MARK: - IBAction
     
     @IBAction func pressedSearchButton(sender: NSButton) {
@@ -350,7 +405,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         /*
          * "公共飲水機" : "waterDispenser",
-         * "自來水直飲台" : "tapWater",
+         * "自來水直飲臺" : "tapWater",
          * "Taipei Free 熱點" : "freeWifi",
          * "自行車停放區" : "bicycleParking",
          * "垃圾清運點位" : "garbageTruck",
@@ -404,6 +459,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     // MARK: - Fetch Water Dispenser Data
     
     func fetchWaterDispenserData() {
+        showMessageView(message: "正在下載飲水機資料集...")
+        
         WaterDispenserDataset.fetch() { json in
             self.showDataList = nil
             
@@ -415,6 +472,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             }
             
             self.showWaterDispenserMarkers()
+            self.dismissMessageView()
         }
     }
     
@@ -460,6 +518,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     // MARK: - Fetch Tap Water Data
     
     func fetchTapWaterData() {
+        showMessageView(message: "正在下載直飲臺資料集...")
+        
         TapWaterDataset.fetch() { json in
             self.showDataList = nil
             
@@ -471,6 +531,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             }
             
             self.showTapWaterMarkers()
+            self.dismissMessageView()
         }
     }
     
