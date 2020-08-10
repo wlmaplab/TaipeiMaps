@@ -498,17 +498,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         var annoArray = Array<WaterDispenserAnnotation>()
         
         for item in items {
-            var latitude : Double = 0
-            var longitude : Double = 0
-            
-            if let latStr = item["緯度"] as? String {
-                let lat = latStr.trimmingCharacters(in: .whitespacesAndNewlines)
-                latitude = Double(lat) ?? 0
-            }
-            if let lngStr = item["經度"] as? String {
-                let lng = lngStr.trimmingCharacters(in: .whitespacesAndNewlines)
-                longitude = Double(lng) ?? 0
-            }
+            let latitude  = MyTools.doubleFrom(string: item["緯度"] as? String)
+            let longitude = MyTools.doubleFrom(string: item["經度"] as? String)
             
             if latitude == 0 || longitude == 0 {
                 continue
@@ -559,17 +550,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         var annoArray = Array<TapWaterAnnotation>()
         
         for item in items {
-            var latitude : Double = 0
-            var longitude : Double = 0
-            
-            if let latStr = item["緯度"] as? String {
-                let lat = latStr.trimmingCharacters(in: .whitespacesAndNewlines)
-                latitude = Double(lat) ?? 0
-            }
-            if let lngStr = item["經度"] as? String {
-                let lng = lngStr.trimmingCharacters(in: .whitespacesAndNewlines)
-                longitude = Double(lng) ?? 0
-            }
+            let latitude : Double = MyTools.doubleFrom(string: item["緯度"] as? String)
+            let longitude : Double = MyTools.doubleFrom(string: item["經度"] as? String)
             
             if latitude == 0 || longitude == 0 {
                 continue
@@ -633,17 +615,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         var annoArray = Array<FreeWifiAnnotation>()
         
         for item in items {
-            var latitude : Double = 0
-            var longitude : Double = 0
-            
-            if let latStr = item["LATITUDE"] as? String {
-                let lat = latStr.trimmingCharacters(in: .whitespacesAndNewlines)
-                latitude = Double(lat) ?? 0
-            }
-            if let lngStr = item["LONGITUDE"] as? String {
-                let lng = lngStr.trimmingCharacters(in: .whitespacesAndNewlines)
-                longitude = Double(lng) ?? 0
-            }
+            let latitude : Double = MyTools.doubleFrom(string: item["LATITUDE"] as? String)
+            let longitude : Double = MyTools.doubleFrom(string: item["LONGITUDE"] as? String)
             
             if latitude == 0 || longitude == 0 {
                 continue
