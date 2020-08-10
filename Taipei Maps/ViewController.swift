@@ -50,6 +50,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     var showDataList : Array<Dictionary<String,Any>>?
     var showAnnotations = Array<MKAnnotation>()
     
+    let tpApiFetchLimit  = 1000
+    var tpApiFetchOffset = 0
     
     
     // MARK: - viewLoad
@@ -67,7 +69,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        fetchWaterDispenserData()
+        fetchWaterDispenserData(datasetName: mapTitles[0])
     }
 
     override var representedObject: Any? {
@@ -200,6 +202,18 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             }
             
             let anno = annotation as! TapWaterAnnotation
+            setMapAnnotationView(annoView, annotation: anno)
+            setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
+            
+            return annoView
+        }
+        else if annotation.isMember(of: FreeWifiAnnotation.self) {
+            var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: "freeWifiAnnotationView") as? FreeWifiAnnotationView
+            if annoView == nil {
+                annoView = FreeWifiAnnotationView(annotation: annotation, reuseIdentifier: "freeWifiAnnotationView")
+            }
+            
+            let anno = annotation as! FreeWifiAnnotation
             setMapAnnotationView(annoView, annotation: anno)
             setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
             
@@ -415,14 +429,15 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
          */
         
         let mapid = mapIDs[sender.indexOfSelectedItem]
+        let name = mapTitles[sender.indexOfSelectedItem]
         
         switch mapid {
         case "waterDispenser":
-            fetchWaterDispenserData()
+            fetchWaterDispenserData(datasetName: name)
         case "tapWater":
-            fetchTapWaterData()
+            fetchTapWaterData(datasetName: name)
         case "freeWifi":
-            print("")
+            fetchFreeWifiData(datasetName: name)
         case "bicycleParking":
             print("")
         case "garbageTruck":
@@ -458,8 +473,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     // MARK: - Fetch Water Dispenser Data
     
-    func fetchWaterDispenserData() {
-        showMessageView(message: "正在下載飲水機資料集...")
+    func fetchWaterDispenserData(datasetName: String) {
+        showMessageView(message: "正在下載\(datasetName)資料集...")
         
         WaterDispenserDataset.fetch() { json in
             self.showDataList = nil
@@ -478,6 +493,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func showWaterDispenserMarkers() {
         guard let items = self.showDataList else { return }
+        print("WaterDispenser count: \(items.count)")
+        
         var annoArray = Array<WaterDispenserAnnotation>()
         
         for item in items {
@@ -517,8 +534,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     // MARK: - Fetch Tap Water Data
     
-    func fetchTapWaterData() {
-        showMessageView(message: "正在下載直飲臺資料集...")
+    func fetchTapWaterData(datasetName: String) {
+        showMessageView(message: "正在下載\(datasetName)資料集...")
         
         TapWaterDataset.fetch() { json in
             self.showDataList = nil
@@ -537,6 +554,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func showTapWaterMarkers() {
         guard let items = self.showDataList else { return }
+        print("TapWater count: \(items.count)")
+        
         var annoArray = Array<TapWaterAnnotation>()
         
         for item in items {
@@ -574,6 +593,78 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
+    // MARK: - Fetch Free Wifi Data
+    
+    func fetchFreeWifiData(datasetName: String) {
+        showMessageView(message: "正在下載 \(datasetName)資料集...")
+        
+        tpApiFetchOffset = 0
+        self.showDataList = Array<Dictionary<String,Any>>()
+        downloadFreeWifiDataset()
+    }
+    
+    func downloadFreeWifiDataset() {
+        FreeWifiDataset.fetch(limit: tpApiFetchLimit, offset: tpApiFetchOffset) { json in
+            var resultsCount = 0
+            
+            if let json = json,
+               let result = json["result"] as? Dictionary<String,Any>,
+               let results = result["results"] as? Array<Dictionary<String,Any>>
+            {
+                self.showDataList?.append(contentsOf: results)
+                resultsCount = results.count
+            }
+            
+            if resultsCount >= self.tpApiFetchLimit {
+                self.tpApiFetchOffset += self.tpApiFetchLimit
+                self.downloadFreeWifiDataset()
+            }
+            else {
+                self.showFreeWifiMarkers()
+                self.dismissMessageView()
+            }
+        }
+    }
+    
+    func showFreeWifiMarkers() {
+        guard let items = self.showDataList else { return }
+        print("FreeWifi count: \(items.count)")
+        
+        var annoArray = Array<FreeWifiAnnotation>()
+        
+        for item in items {
+            var latitude : Double = 0
+            var longitude : Double = 0
+            
+            if let latStr = item["LATITUDE"] as? String {
+                let lat = latStr.trimmingCharacters(in: .whitespacesAndNewlines)
+                latitude = Double(lat) ?? 0
+            }
+            if let lngStr = item["LONGITUDE"] as? String {
+                let lng = lngStr.trimmingCharacters(in: .whitespacesAndNewlines)
+                longitude = Double(lng) ?? 0
+            }
+            
+            if latitude == 0 || longitude == 0 {
+                continue
+            }
+            
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let anno = FreeWifiAnnotation(coordinate: coordinate)
+            anno.image = NSImage(named: "wifi_pin2")
+            anno.info = item
+            
+            annoArray.append(anno)
+        }
+        
+        // clear Annotations
+        mapView.removeAnnotations(showAnnotations)
+        showAnnotations.removeAll()
+        
+        // add Annotations
+        showAnnotations.append(contentsOf: annoArray)
+        mapView.addAnnotations(showAnnotations)
+    }
     
 }
 
