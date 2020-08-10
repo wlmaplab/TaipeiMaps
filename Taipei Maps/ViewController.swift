@@ -26,7 +26,6 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     @IBOutlet var messageLabel : NSTextField!
     @IBOutlet var messageIndicator : NSProgressIndicator!
     
-    
     let siteCoordinate = CLLocationCoordinate2D(latitude: 25.046856, longitude: 121.516923) //台北車站
     let siteName = "台北車站"
     
@@ -41,17 +40,21 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
                      "tpToilet", "ntpcToilet" ]
     
     
+    var waterDispenserList : Array<Dictionary<String,Any>>?
+    var tapWaterList : Array<Dictionary<String,Any>>?
+    var freeWifiList : Array<Dictionary<String,Any>>?
+    
+    
     var myLocation = CLLocationCoordinate2D()
     var isMoveToUserLocation = true
     
     var currentSearchPlace : CLPlacemark?
     var currentSearchPlaceAnnotation : MKPointAnnotation?
-    
-    var showDataList : Array<Dictionary<String,Any>>?
     var showAnnotations = Array<MKAnnotation>()
     
     let tpApiFetchLimit  = 1000
     var tpApiFetchOffset = 0
+    
     
     
     // MARK: - viewLoad
@@ -433,11 +436,11 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         switch mapid {
         case "waterDispenser":
-            fetchWaterDispenserData(datasetName: name)
+            loadWaterDispenser(title: name)
         case "tapWater":
-            fetchTapWaterData(datasetName: name)
+            loadTapWater(title: name)
         case "freeWifi":
-            fetchFreeWifiData(datasetName: name)
+            loadFreeWifi(title: name)
         case "bicycleParking":
             print("")
         case "garbageTruck":
@@ -471,19 +474,27 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
-    // MARK: - Fetch Water Dispenser Data
+    // MARK: - Load or Fetch Water Dispenser Data
+    
+    func loadWaterDispenser(title: String) {
+        if let list = waterDispenserList, list.count > 0 {
+            self.showWaterDispenserMarkers()
+        } else {
+            fetchWaterDispenserData(datasetName: title)
+        }
+    }
     
     func fetchWaterDispenserData(datasetName: String) {
         showMessageView(message: "正在下載\(datasetName)資料集...")
         
         WaterDispenserDataset.fetch() { json in
-            self.showDataList = nil
+            self.waterDispenserList = nil
             
             if let json = json,
                let result = json["result"] as? Dictionary<String,Any>,
                let results = result["results"] as? Array<Dictionary<String,Any>>
             {
-                self.showDataList = results
+                self.waterDispenserList = results
             }
             
             self.showWaterDispenserMarkers()
@@ -492,7 +503,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showWaterDispenserMarkers() {
-        guard let items = self.showDataList else { return }
+        guard let items = self.waterDispenserList else { return }
         print("WaterDispenser count: \(items.count)")
         
         var annoArray = Array<WaterDispenserAnnotation>()
@@ -523,19 +534,27 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
-    // MARK: - Fetch Tap Water Data
+    // MARK: - Load or Fetch Tap Water Data
+    
+    func loadTapWater(title: String) {
+        if let list = tapWaterList, list.count > 0 {
+            self.showTapWaterMarkers()
+        } else {
+            fetchTapWaterData(datasetName: title)
+        }
+    }
     
     func fetchTapWaterData(datasetName: String) {
         showMessageView(message: "正在下載\(datasetName)資料集...")
         
         TapWaterDataset.fetch() { json in
-            self.showDataList = nil
+            self.tapWaterList = nil
             
             if let json = json,
                let result = json["result"] as? Dictionary<String,Any>,
                let results = result["results"] as? Array<Dictionary<String,Any>>
             {
-                self.showDataList = results
+                self.tapWaterList = results
             }
             
             self.showTapWaterMarkers()
@@ -544,7 +563,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showTapWaterMarkers() {
-        guard let items = self.showDataList else { return }
+        guard let items = self.tapWaterList else { return }
         print("TapWater count: \(items.count)")
         
         var annoArray = Array<TapWaterAnnotation>()
@@ -577,11 +596,18 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     // MARK: - Fetch Free Wifi Data
     
+    func loadFreeWifi(title: String) {
+        if let list = freeWifiList, list.count > 0 {
+            self.showFreeWifiMarkers()
+        } else {
+            fetchFreeWifiData(datasetName: title)
+        }
+    }
+    
     func fetchFreeWifiData(datasetName: String) {
         showMessageView(message: "正在下載 \(datasetName)資料集...")
-        
         tpApiFetchOffset = 0
-        self.showDataList = Array<Dictionary<String,Any>>()
+        self.freeWifiList = Array<Dictionary<String,Any>>()
         downloadFreeWifiDataset()
     }
     
@@ -593,7 +619,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
                let result = json["result"] as? Dictionary<String,Any>,
                let results = result["results"] as? Array<Dictionary<String,Any>>
             {
-                self.showDataList?.append(contentsOf: results)
+                self.freeWifiList?.append(contentsOf: results)
                 resultsCount = results.count
             }
             
@@ -609,7 +635,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showFreeWifiMarkers() {
-        guard let items = self.showDataList else { return }
+        guard let items = self.freeWifiList else { return }
         print("FreeWifi count: \(items.count)")
         
         var annoArray = Array<FreeWifiAnnotation>()
