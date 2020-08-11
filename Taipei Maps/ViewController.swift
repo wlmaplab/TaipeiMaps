@@ -45,6 +45,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     var tapWaterList : Array<Dictionary<String,Any>>?
     var freeWifiList : Array<Dictionary<String,Any>>?
     var bicycleParkingList : Array<Dictionary<String,Any>>?
+    var trashBinList : Array<Dictionary<String,Any>>?
     
     
     var myLocation = CLLocationCoordinate2D()
@@ -56,6 +57,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     let tpApiFetchLimit  = 1000
     var tpApiFetchOffset = 0
+    var trashBinDatasetDownloadCount = 0
     
     
     
@@ -242,7 +244,18 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             
             return annoView
         }
-        
+        else if annotation.isMember(of: TrashBinAnnotation.self) {
+            var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: "trashBinAnnotationView") as? TrashBinAnnotationView
+            if annoView == nil {
+                annoView = TrashBinAnnotationView(annotation: annotation, reuseIdentifier: "trashBinAnnotationView")
+            }
+            
+            let anno = annotation as! TrashBinAnnotation
+            setMapAnnotationView(annoView, annotation: anno)
+            setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
+            
+            return annoView
+        }
         
         return nil
     }
@@ -495,7 +508,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         case "garbageTruck":
             print("")
         case "trashBin":
-            print("")
+            loadTrashBin(title: name, isReload: isReload)
         case "tpToilet":
             print("")
         case "ntpcToilet":
@@ -520,7 +533,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func loadWaterDispenser(title: String, isReload: Bool) {
         if let list = waterDispenserList, list.count > 0, isReload == false {
-            self.showWaterDispenserMarkers()
+            showWaterDispenserMarkers()
         } else {
             fetchWaterDispenserData(datasetName: title)
         }
@@ -574,7 +587,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func loadTapWater(title: String, isReload: Bool) {
         if let list = tapWaterList, list.count > 0, isReload == false {
-            self.showTapWaterMarkers()
+            showTapWaterMarkers()
         } else {
             fetchTapWaterData(datasetName: title)
         }
@@ -628,7 +641,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func loadFreeWifi(title: String, isReload: Bool) {
         if let list = freeWifiList, list.count > 0, isReload == false {
-            self.showFreeWifiMarkers()
+            showFreeWifiMarkers()
         } else {
             fetchFreeWifiData(datasetName: title)
         }
@@ -637,7 +650,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func fetchFreeWifiData(datasetName: String) {
         showMessageView(message: "正在下載 \(datasetName)資料集...")
         tpApiFetchOffset = 0
-        self.freeWifiList = Array<Dictionary<String,Any>>()
+        freeWifiList = Array<Dictionary<String,Any>>()
         downloadFreeWifiDataset()
     }
     
@@ -694,7 +707,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func loadBicycleParking(title: String, isReload: Bool) {
         if let list = bicycleParkingList, list.count > 0, isReload == false {
-            self.showBicycleParkingMarkers()
+            showBicycleParkingMarkers()
         } else {
             fetchBicycleParkingData(datasetName: title)
         }
@@ -703,14 +716,13 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func fetchBicycleParkingData(datasetName: String) {
         showMessageView(message: "正在下載\(datasetName)資料集...")
         tpApiFetchOffset = 0
-        self.bicycleParkingList = Array<Dictionary<String,Any>>()
+        bicycleParkingList = Array<Dictionary<String,Any>>()
         downloadBicycleParkingDataset()
     }
     
     func downloadBicycleParkingDataset() {
         BicycleParkingDataset.fetch(limit: tpApiFetchLimit, offset: tpApiFetchOffset) { json in
             var resultsCount = 0
-            
             if let json = json,
                let result = json["result"] as? Dictionary<String,Any>,
                let results = result["results"] as? Array<Dictionary<String,Any>>
@@ -754,6 +766,73 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         resetShowAnnotations(annoArray)
     }
+    
+    
+    // MARK: - Fetch Trash Bin Data
+    
+    func loadTrashBin(title: String, isReload: Bool) {
+        if let list = trashBinList, list.count > 0, isReload == false {
+            showTrashBinMarkers()
+        } else {
+            fetchTrashBinData(datasetName: title)
+        }
+    }
+    
+    func fetchTrashBinData(datasetName: String) {
+        showMessageView(message: "正在下載\(datasetName)資料集...")
+        
+        trashBinList = Array<Dictionary<String,Any>>()
+        trashBinDatasetDownloadCount = 0
+        
+        for datasetID in TrashBinDataset.datasetIDs {
+            downloadTrashBinDataset(datasetID: datasetID)
+        }
+    }
+    
+    func downloadTrashBinDataset(datasetID: String) {
+        TrashBinDataset.fetch(datasetID: datasetID, limit: 1000, offset: 0) { json in
+            self.trashBinDatasetDownloadCount += 1
+            
+            if let json = json,
+               let result = json["result"] as? Dictionary<String,Any>,
+               let results = result["results"] as? Array<Dictionary<String,Any>>
+            {
+                self.trashBinList?.append(contentsOf: results)
+            }
+            
+            if self.trashBinDatasetDownloadCount >= TrashBinDataset.datasetCount() {
+                self.showTrashBinMarkers()
+                self.dismissMessageView()
+            }
+        }
+    }
+    
+    func showTrashBinMarkers() {
+        guard let items = self.trashBinList else { return }
+        print("TrashBin count: \(items.count)")
+        
+        var annoArray = Array<TrashBinAnnotation>()
+        
+        for item in items {
+            let latitude : Double = MyTools.doubleFrom(string: item["緯度"] as? String)
+            let longitude : Double = MyTools.doubleFrom(string: item["經度"] as? String)
+            
+            if latitude == 0 || longitude == 0 {
+                continue
+            }
+            
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let anno = TrashBinAnnotation(coordinate: coordinate)
+            anno.image = NSImage(named: "trash_pin")
+            anno.info = item
+            
+            annoArray.append(anno)
+        }
+        
+        resetShowAnnotations(annoArray)
+    }
+    
+    
     
 }
 

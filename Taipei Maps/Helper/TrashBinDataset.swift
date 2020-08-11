@@ -29,6 +29,12 @@ class TrashBinDataset: APIHelper {
                              "7b955414-f460-4472-b1a8-44819f74dc86", "5697d81f-7c9d-43fc-a202-ae8804bbd34b"]
     
     
+    
+    class func datasetCount() -> Int {
+        return datasetIDs.count
+    }
+    
+    
     // MARK: - API URL String
     
     class func urlStringWith(datasetID: String) -> String {

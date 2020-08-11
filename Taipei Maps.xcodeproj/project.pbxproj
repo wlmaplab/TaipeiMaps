@@ -36,6 +36,8 @@
 		2519BB5224E2641A000F5FFC /* BicycleParkingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB5124E2641A000F5FFC /* BicycleParkingAnnotation.swift */; };
 		2519BB5424E26791000F5FFC /* BicycleParkingAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB5324E26791000F5FFC /* BicycleParkingAnnotationView.swift */; };
 		2519BB5624E280C0000F5FFC /* TrashBinDataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB5524E280C0000F5FFC /* TrashBinDataset.swift */; };
+		2519BB5824E29019000F5FFC /* TrashBinAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB5724E29019000F5FFC /* TrashBinAnnotation.swift */; };
+		2519BB5A24E2927C000F5FFC /* TrashBinAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB5924E2927C000F5FFC /* TrashBinAnnotationView.swift */; };
 		25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E224DE67460067BAFE /* AppDelegate.swift */; };
 		25C112E524DE67460067BAFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E424DE67460067BAFE /* ViewController.swift */; };
 		25C112E724DE67480067BAFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C112E624DE67480067BAFE /* Assets.xcassets */; };
@@ -72,6 +74,8 @@
 		2519BB5124E2641A000F5FFC /* BicycleParkingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BicycleParkingAnnotation.swift; sourceTree = "<group>"; };
 		2519BB5324E26791000F5FFC /* BicycleParkingAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BicycleParkingAnnotationView.swift; sourceTree = "<group>"; };
 		2519BB5524E280C0000F5FFC /* TrashBinDataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashBinDataset.swift; sourceTree = "<group>"; };
+		2519BB5724E29019000F5FFC /* TrashBinAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashBinAnnotation.swift; sourceTree = "<group>"; };
+		2519BB5924E2927C000F5FFC /* TrashBinAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashBinAnnotationView.swift; sourceTree = "<group>"; };
 		25C112DF24DE67460067BAFE /* Taipei Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Taipei Maps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C112E224DE67460067BAFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C112E424DE67460067BAFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -114,11 +118,13 @@
 				2519BB4124E110A7000F5FFC /* TapWaterAnnotation.swift */,
 				2519BB4924E13E49000F5FFC /* FreeWifiAnnotation.swift */,
 				2519BB5124E2641A000F5FFC /* BicycleParkingAnnotation.swift */,
+				2519BB5724E29019000F5FFC /* TrashBinAnnotation.swift */,
 				2519BB4724E118BB000F5FFC /* TpMapAnnotationView.swift */,
 				2519BB3B24DFFD91000F5FFC /* WaterDispenserAnnotationView.swift */,
 				2519BB4324E11114000F5FFC /* TapWaterAnnotationView.swift */,
 				2519BB4B24E14134000F5FFC /* FreeWifiAnnotationView.swift */,
 				2519BB5324E26791000F5FFC /* BicycleParkingAnnotationView.swift */,
+				2519BB5924E2927C000F5FFC /* TrashBinAnnotationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -257,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2519BB4824E118BB000F5FFC /* TpMapAnnotationView.swift in Sources */,
+				2519BB5824E29019000F5FFC /* TrashBinAnnotation.swift in Sources */,
 				2519BB1D24DFB2DA000F5FFC /* TapWaterDataset.swift in Sources */,
 				2519BB5424E26791000F5FFC /* BicycleParkingAnnotationView.swift in Sources */,
 				2519BB3A24DFFCF6000F5FFC /* WaterDispenserAnnotation.swift in Sources */,
@@ -271,6 +278,7 @@
 				25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */,
 				2519BB4A24E13E49000F5FFC /* FreeWifiAnnotation.swift in Sources */,
 				2519BB3C24DFFD91000F5FFC /* WaterDispenserAnnotationView.swift in Sources */,
+				2519BB5A24E2927C000F5FFC /* TrashBinAnnotationView.swift in Sources */,
 				2519BB5224E2641A000F5FFC /* BicycleParkingAnnotation.swift in Sources */,
 				2519BB4224E110A7000F5FFC /* TapWaterAnnotation.swift in Sources */,
 				2519BB4624E1183E000F5FFC /* TpMapAnnotation.swift in Sources */,
