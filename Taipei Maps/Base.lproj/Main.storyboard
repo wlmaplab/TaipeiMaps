@@ -806,16 +806,28 @@
                                     <constraint firstAttribute="trailing" secondItem="6C3-Uh-ymp" secondAttribute="trailing" constant="40" id="zeP-k5-ffL"/>
                                 </constraints>
                             </customView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NTK-H2-rdV">
+                                <rect key="frame" x="4" y="1" width="82" height="32"/>
+                                <buttonCell key="cell" type="push" title="Reload" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vr3-rT-an6">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pressedReloadButtonWithSender:" target="XfG-lQ-9wD" id="HVu-vC-vlX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="centerY" secondItem="WNv-i6-IbZ" secondAttribute="centerY" id="4Tv-Hl-xlx"/>
                             <constraint firstAttribute="trailing" secondItem="Mgo-rS-Ag5" secondAttribute="trailing" constant="10" id="6KW-Uj-QgV"/>
+                            <constraint firstAttribute="bottom" secondItem="NTK-H2-rdV" secondAttribute="bottom" constant="8" id="7iT-9x-sTt"/>
                             <constraint firstItem="Lox-hc-4Hg" firstAttribute="top" secondItem="ltC-At-VlZ" secondAttribute="bottom" constant="10" id="CwE-Me-s8F"/>
                             <constraint firstItem="VbN-e1-VkW" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="ERN-QE-5Xd"/>
                             <constraint firstItem="Lox-hc-4Hg" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="FOQ-fQ-fwu"/>
                             <constraint firstItem="ltC-At-VlZ" firstAttribute="centerY" secondItem="VbN-e1-VkW" secondAttribute="centerY" id="KOe-hd-efb"/>
                             <constraint firstAttribute="trailing" secondItem="Lox-hc-4Hg" secondAttribute="trailing" id="N6L-NM-Dz0"/>
                             <constraint firstItem="Mgo-rS-Ag5" firstAttribute="leading" secondItem="ltC-At-VlZ" secondAttribute="trailing" constant="10" id="Nxg-MH-pbh"/>
+                            <constraint firstItem="NTK-H2-rdV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="URZ-y4-75F"/>
                             <constraint firstItem="QCL-an-z64" firstAttribute="top" secondItem="VbN-e1-VkW" secondAttribute="bottom" constant="10" id="Y1D-X6-OhA"/>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="top" secondItem="Lox-hc-4Hg" secondAttribute="bottom" constant="8" id="jcc-mZ-QN5"/>
                             <constraint firstItem="ltC-At-VlZ" firstAttribute="leading" secondItem="VbN-e1-VkW" secondAttribute="trailing" constant="10" id="lQZ-xt-xX5"/>
@@ -836,6 +848,7 @@
                         <outlet property="messageView" destination="QCL-an-z64" id="5oK-nU-4kM"/>
                         <outlet property="myLocationButton" destination="4PF-Zm-8sD" id="ALq-ow-1Ex"/>
                         <outlet property="placeButton" destination="WNv-i6-IbZ" id="jZs-7D-uZM"/>
+                        <outlet property="reloadButton" destination="NTK-H2-rdV" id="jd1-Fu-sK9"/>
                         <outlet property="searchButton" destination="Mgo-rS-Ag5" id="dUf-QO-m49"/>
                         <outlet property="searchField" destination="ltC-At-VlZ" id="VsR-Ik-T5b"/>
                     </connections>

@@ -19,6 +19,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     @IBOutlet var searchButton : NSButton!
     @IBOutlet var searchField : NSSearchField!
     
+    @IBOutlet var reloadButton : NSButton!
     @IBOutlet var placeButton : NSButton!
     @IBOutlet var myLocationButton : NSButton!
     
@@ -90,6 +91,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         setupMapsPopUpButton()
         setupSearchComponents()
         setupMessageViewComponents()
+        setupReloadButton()
         
         // move to siteLocation
         moveToSiteLocation()
@@ -149,6 +151,11 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         // hide
         messageView.alphaValue = 0
     }
+    
+    func setupReloadButton() {
+        reloadButton.title = "重新整理"
+    }
+    
     
     // MARK: - Site Location
     
@@ -419,41 +426,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     @IBAction func selectedMapsPopUpButton(sender: NSPopUpButton) {
         print("\(sender.titleOfSelectedItem ?? "") : \(sender.indexOfSelectedItem)")
-        
-        /*
-         * "公共飲水機" : "waterDispenser",
-         * "自來水直飲臺" : "tapWater",
-         * "Taipei Free 熱點" : "freeWifi",
-         * "自行車停放區" : "bicycleParking",
-         * "垃圾清運點位" : "garbageTruck",
-         * "行人清潔箱" : "trashBin",
-         * "台北市公廁" : "tpToilet",
-         * "新北市公廁" : "ntpcToilet"
-         */
-        
-        let mapid = mapIDs[sender.indexOfSelectedItem]
-        let name = mapTitles[sender.indexOfSelectedItem]
-        
-        switch mapid {
-        case "waterDispenser":
-            loadWaterDispenser(title: name)
-        case "tapWater":
-            loadTapWater(title: name)
-        case "freeWifi":
-            loadFreeWifi(title: name)
-        case "bicycleParking":
-            print("")
-        case "garbageTruck":
-            print("")
-        case "trashBin":
-            print("")
-        case "tpToilet":
-            print("")
-        case "ntpcToilet":
-            print("")
-        default:
-            break
-        }
+        loadMapDataWith(index: sender.indexOfSelectedItem, isReload: false)
     }
     
     @IBAction func pressedMyLocationButton(sender: NSButton) {
@@ -473,11 +446,54 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         }
     }
     
+    @IBAction func pressedReloadButton(sender: NSButton) {
+        print("\(mapsPopUpButton.titleOfSelectedItem ?? "") : \(mapsPopUpButton.indexOfSelectedItem)")
+        loadMapDataWith(index: mapsPopUpButton.indexOfSelectedItem, isReload: true)
+    }
+    
+    
+    func loadMapDataWith(index: Int, isReload: Bool) {
+        /*
+         * "公共飲水機" : "waterDispenser",
+         * "自來水直飲臺" : "tapWater",
+         * "Taipei Free 熱點" : "freeWifi",
+         * "自行車停放區" : "bicycleParking",
+         * "垃圾清運點位" : "garbageTruck",
+         * "行人清潔箱" : "trashBin",
+         * "台北市公廁" : "tpToilet",
+         * "新北市公廁" : "ntpcToilet"
+         */
+        
+        let mapid = mapIDs[index]
+        let name = mapTitles[index]
+        
+        switch mapid {
+        case "waterDispenser":
+            loadWaterDispenser(title: name, isReload: isReload)
+        case "tapWater":
+            loadTapWater(title: name, isReload: isReload)
+        case "freeWifi":
+            loadFreeWifi(title: name, isReload: isReload)
+        case "bicycleParking":
+            print("")
+        case "garbageTruck":
+            print("")
+        case "trashBin":
+            print("")
+        case "tpToilet":
+            print("")
+        case "ntpcToilet":
+            print("")
+        default:
+            break
+        }
+    }
+    
     
     // MARK: - Load or Fetch Water Dispenser Data
     
-    func loadWaterDispenser(title: String) {
-        if let list = waterDispenserList, list.count > 0 {
+    func loadWaterDispenser(title: String, isReload: Bool) {
+        if let list = waterDispenserList, list.count > 0, isReload == false {
             self.showWaterDispenserMarkers()
         } else {
             fetchWaterDispenserData(datasetName: title)
@@ -536,8 +552,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     // MARK: - Load or Fetch Tap Water Data
     
-    func loadTapWater(title: String) {
-        if let list = tapWaterList, list.count > 0 {
+    func loadTapWater(title: String, isReload: Bool) {
+        if let list = tapWaterList, list.count > 0, isReload == false {
             self.showTapWaterMarkers()
         } else {
             fetchTapWaterData(datasetName: title)
@@ -596,8 +612,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     // MARK: - Fetch Free Wifi Data
     
-    func loadFreeWifi(title: String) {
-        if let list = freeWifiList, list.count > 0 {
+    func loadFreeWifi(title: String, isReload: Bool) {
+        if let list = freeWifiList, list.count > 0, isReload == false {
             self.showFreeWifiMarkers()
         } else {
             fetchFreeWifiData(datasetName: title)
