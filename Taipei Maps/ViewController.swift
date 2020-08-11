@@ -192,72 +192,36 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil
-        }
+        if annotation is MKUserLocation { return nil }
+        
+        var annoViewIdentifier = ""
         
         if annotation.isMember(of: WaterDispenserAnnotation.self) {
-            var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: "waterDispenserAnnotationView") as? WaterDispenserAnnotationView
-            if annoView == nil {
-                annoView = WaterDispenserAnnotationView(annotation: annotation, reuseIdentifier: "waterDispenserAnnotationView")
-            }
-            
-            let anno = annotation as! WaterDispenserAnnotation
-            setMapAnnotationView(annoView, annotation: anno)
-            setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
-            
-            return annoView
+            annoViewIdentifier = "waterDispenserAnnotationView"
         }
         else if annotation.isMember(of: TapWaterAnnotation.self) {
-            var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: "tapWaterAnnotationView") as? TapWaterAnnotationView
-            if annoView == nil {
-                annoView = TapWaterAnnotationView(annotation: annotation, reuseIdentifier: "tapWaterAnnotationView")
-            }
-            
-            let anno = annotation as! TapWaterAnnotation
-            setMapAnnotationView(annoView, annotation: anno)
-            setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
-            
-            return annoView
+            annoViewIdentifier = "tapWaterAnnotationView"
         }
         else if annotation.isMember(of: FreeWifiAnnotation.self) {
-            var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: "freeWifiAnnotationView") as? FreeWifiAnnotationView
-            if annoView == nil {
-                annoView = FreeWifiAnnotationView(annotation: annotation, reuseIdentifier: "freeWifiAnnotationView")
-            }
-            
-            let anno = annotation as! FreeWifiAnnotation
-            setMapAnnotationView(annoView, annotation: anno)
-            setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
-            
-            return annoView
+            annoViewIdentifier = "freeWifiAnnotationView"
         }
         else if annotation.isMember(of: BicycleParkingAnnotation.self) {
-            var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: "bicycleParkingAnnotationView") as? BicycleParkingAnnotationView
-            if annoView == nil {
-                annoView = BicycleParkingAnnotationView(annotation: annotation, reuseIdentifier: "bicycleParkingAnnotationView")
-            }
-            
-            let anno = annotation as! BicycleParkingAnnotation
-            setMapAnnotationView(annoView, annotation: anno)
-            setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
-            
-            return annoView
+            annoViewIdentifier = "bicycleParkingAnnotationView"
         }
         else if annotation.isMember(of: TrashBinAnnotation.self) {
-            var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: "trashBinAnnotationView") as? TrashBinAnnotationView
-            if annoView == nil {
-                annoView = TrashBinAnnotationView(annotation: annotation, reuseIdentifier: "trashBinAnnotationView")
-            }
-            
-            let anno = annotation as! TrashBinAnnotation
-            setMapAnnotationView(annoView, annotation: anno)
-            setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
-            
-            return annoView
+            annoViewIdentifier = "trashBinAnnotationView"
         }
         
-        return nil
+        var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: annoViewIdentifier) as? TpMapAnnotationView
+        if annoView == nil {
+            annoView = TpMapAnnotationView(annotation: annotation, reuseIdentifier: annoViewIdentifier)
+        }
+        
+        let anno = annotation as! TpMapAnnotation
+        setMapAnnotationView(annoView, annotation: anno)
+        setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
+        
+        return annoView
     }
     
     

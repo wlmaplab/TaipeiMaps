@@ -103,13 +103,13 @@
 		2519BB1724DE91B8000F5FFC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2519BB4724E118BB000F5FFC /* TpMapAnnotationView.swift */,
 				2519BB4524E1183E000F5FFC /* TpMapAnnotation.swift */,
 				2519BB3924DFFCF6000F5FFC /* WaterDispenserAnnotation.swift */,
 				2519BB4124E110A7000F5FFC /* TapWaterAnnotation.swift */,
 				2519BB4924E13E49000F5FFC /* FreeWifiAnnotation.swift */,
 				2519BB5124E2641A000F5FFC /* BicycleParkingAnnotation.swift */,
 				2519BB5724E29019000F5FFC /* TrashBinAnnotation.swift */,
-				2519BB4724E118BB000F5FFC /* TpMapAnnotationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

@@ -14,7 +14,7 @@ class WaterDispenserAnnotation: TpMapAnnotation {
     
     // MARK: - Info to Attributed String
     
-    func infoToAttributedString() -> NSAttributedString {
+    override func infoToAttributedString() -> NSAttributedString {
         let title = "公共飲水機"
         let name = "\(info?["場所名稱"] as? String ?? "") (\(info?["設置地點"] as? String ?? ""))"
         let address = "◎ 地址：\(info?["場所地址"] as? String ?? "")"

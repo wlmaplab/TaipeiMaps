@@ -24,5 +24,11 @@ class TpMapAnnotation: NSObject, MKAnnotation {
         self.init()
         self.coordinate = coordinate
     }
-
+    
+    
+    // MARK: - Info to Attributed String
+    
+    func infoToAttributedString() -> NSAttributedString {
+        return NSAttributedString()
+    }
 }

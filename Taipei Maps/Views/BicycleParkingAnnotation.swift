@@ -14,7 +14,7 @@ class BicycleParkingAnnotation: TpMapAnnotation {
 
     // MARK: - Info to Attributed String
     
-    func infoToAttributedString() -> NSAttributedString {
+    override func infoToAttributedString() -> NSAttributedString {
         let title = "自行車停放區"
         var byRoad = "自行車-停放區"
         if let str = info?["BYROAD"] as? String, str != "NULL", str != "null" {

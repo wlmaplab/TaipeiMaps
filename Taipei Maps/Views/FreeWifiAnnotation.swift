@@ -14,7 +14,7 @@ class FreeWifiAnnotation: TpMapAnnotation {
     
     // MARK: - Info to Attributed String
     
-    func infoToAttributedString() -> NSAttributedString {
+    override func infoToAttributedString() -> NSAttributedString {
         let title = "Taipei Free 熱點"
         let agency = "\(info?["AGENCY"] as? String ?? "")"
         let address = "◎ 地址：\(info?["ADDR"] as? String ?? "")"
