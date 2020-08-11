@@ -17,7 +17,7 @@ class BicycleParkingDataset: APIHelper {
     static let urlString = "https://data.taipei/api/v1/dataset/df937aac-3ec6-43bf-b54d-3cb990521ffe?scope=resourceAquire"
     
     
-    // MARK: - Fetch Bicycle Parking Data
+    // MARK: - Fetch Data
     
     class func fetch(limit: Int, offset: Int, callback: @escaping (Dictionary<String,Any>?) -> Void) {
         httpGET_withFetchJsonObject(URLString: "\(urlString)&limit=\(limit)&offset=\(offset)", callback: callback)
