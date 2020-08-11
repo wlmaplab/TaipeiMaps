@@ -44,6 +44,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     var waterDispenserList : Array<Dictionary<String,Any>>?
     var tapWaterList : Array<Dictionary<String,Any>>?
     var freeWifiList : Array<Dictionary<String,Any>>?
+    var bicycleParkingList : Array<Dictionary<String,Any>>?
     
     
     var myLocation = CLLocationCoordinate2D()
@@ -229,6 +230,19 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             
             return annoView
         }
+        else if annotation.isMember(of: BicycleParkingAnnotation.self) {
+            var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: "bicycleParkingAnnotationView") as? BicycleParkingAnnotationView
+            if annoView == nil {
+                annoView = BicycleParkingAnnotationView(annotation: annotation, reuseIdentifier: "bicycleParkingAnnotationView")
+            }
+            
+            let anno = annotation as! BicycleParkingAnnotation
+            setMapAnnotationView(annoView, annotation: anno)
+            setCalloutViewWith(annotationView: annoView, attributedString: anno.infoToAttributedString())
+            
+            return annoView
+        }
+        
         
         return nil
     }
@@ -452,6 +466,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
+    // MARK: - Load Map Data
+    
     func loadMapDataWith(index: Int, isReload: Bool) {
         /*
          * "公共飲水機" : "waterDispenser",
@@ -475,7 +491,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         case "freeWifi":
             loadFreeWifi(title: name, isReload: isReload)
         case "bicycleParking":
-            print("")
+            loadBicycleParking(title: name, isReload: isReload)
         case "garbageTruck":
             print("")
         case "trashBin":
@@ -487,6 +503,16 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         default:
             break
         }
+    }
+    
+    func resetShowAnnotations(_ annotations: Array<MKAnnotation>) {
+        // clear Annotations
+        mapView.removeAnnotations(showAnnotations)
+        showAnnotations.removeAll()
+        
+        // add Annotations
+        showAnnotations.append(contentsOf: annotations)
+        mapView.addAnnotations(showAnnotations)
     }
     
     
@@ -540,13 +566,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             annoArray.append(anno)
         }
         
-        // clear Annotations
-        mapView.removeAnnotations(showAnnotations)
-        showAnnotations.removeAll()
-        
-        // add Annotations
-        showAnnotations.append(contentsOf: annoArray)
-        mapView.addAnnotations(showAnnotations)
+        resetShowAnnotations(annoArray)
     }
     
     
@@ -600,13 +620,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             annoArray.append(anno)
         }
         
-        // clear Annotations
-        mapView.removeAnnotations(showAnnotations)
-        showAnnotations.removeAll()
-        
-        // add Annotations
-        showAnnotations.append(contentsOf: annoArray)
-        mapView.addAnnotations(showAnnotations)
+        resetShowAnnotations(annoArray)
     }
     
     
@@ -672,13 +686,73 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             annoArray.append(anno)
         }
         
-        // clear Annotations
-        mapView.removeAnnotations(showAnnotations)
-        showAnnotations.removeAll()
+        resetShowAnnotations(annoArray)
+    }
+    
+    
+    // MARK: - Fetch Bicycle Parking Data
+    
+    func loadBicycleParking(title: String, isReload: Bool) {
+        if let list = bicycleParkingList, list.count > 0, isReload == false {
+            self.showBicycleParkingMarkers()
+        } else {
+            fetchBicycleParkingData(datasetName: title)
+        }
+    }
+    
+    func fetchBicycleParkingData(datasetName: String) {
+        showMessageView(message: "正在下載 \(datasetName)資料集...")
+        tpApiFetchOffset = 0
+        self.bicycleParkingList = Array<Dictionary<String,Any>>()
+        downloadBicycleParkingDataset()
+    }
+    
+    func downloadBicycleParkingDataset() {
+        BicycleParkingDataset.fetch(limit: tpApiFetchLimit, offset: tpApiFetchOffset) { json in
+            var resultsCount = 0
+            
+            if let json = json,
+               let result = json["result"] as? Dictionary<String,Any>,
+               let results = result["results"] as? Array<Dictionary<String,Any>>
+            {
+                self.bicycleParkingList?.append(contentsOf: results)
+                resultsCount = results.count
+            }
+            
+            if resultsCount >= self.tpApiFetchLimit {
+                self.tpApiFetchOffset += self.tpApiFetchLimit
+                self.downloadBicycleParkingDataset()
+            }
+            else {
+                self.showBicycleParkingMarkers()
+                self.dismissMessageView()
+            }
+        }
+    }
+    
+    func showBicycleParkingMarkers() {
+        guard let items = self.bicycleParkingList else { return }
+        print("BicycleParking count: \(items.count)")
         
-        // add Annotations
-        showAnnotations.append(contentsOf: annoArray)
-        mapView.addAnnotations(showAnnotations)
+        var annoArray = Array<BicycleParkingAnnotation>()
+        
+        for item in items {
+            let latitude : Double = MyTools.doubleFrom(string: item["YW"] as? String)
+            let longitude : Double = MyTools.doubleFrom(string: item["XW"] as? String)
+            
+            if latitude == 0 || longitude == 0 {
+                continue
+            }
+            
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let anno = BicycleParkingAnnotation(coordinate: coordinate)
+            anno.image = NSImage(named: "bicycle_pin2")
+            anno.info = item
+            
+            annoArray.append(anno)
+        }
+        
+        resetShowAnnotations(annoArray)
     }
     
 }
