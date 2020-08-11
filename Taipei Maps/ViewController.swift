@@ -748,12 +748,12 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         trashBinList = Array<Dictionary<String,Any>>()
         trashBinDatasetDownloadCount = 0
         
-        for datasetID in TrashBinDataset.datasetIDs {
-            downloadTrashBinDataset(datasetID: datasetID)
+        for (districtName, datasetID) in TrashBinDataset.datasetDict {
+            downloadTrashBinDataset(datasetID: datasetID, districtName: districtName)
         }
     }
     
-    func downloadTrashBinDataset(datasetID: String) {
+    func downloadTrashBinDataset(datasetID: String, districtName: String) {
         TrashBinDataset.fetch(datasetID: datasetID, limit: 1000, offset: 0) { json in
             self.trashBinDatasetDownloadCount += 1
             
@@ -761,6 +761,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
                let result = json["result"] as? Dictionary<String,Any>,
                let results = result["results"] as? Array<Dictionary<String,Any>>
             {
+                print("\(districtName) count: \(results.count)")
                 self.trashBinList?.append(contentsOf: results)
             }
             
