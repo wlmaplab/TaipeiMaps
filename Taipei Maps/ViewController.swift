@@ -701,7 +701,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func fetchBicycleParkingData(datasetName: String) {
-        showMessageView(message: "正在下載 \(datasetName)資料集...")
+        showMessageView(message: "正在下載\(datasetName)資料集...")
         tpApiFetchOffset = 0
         self.bicycleParkingList = Array<Dictionary<String,Any>>()
         downloadBicycleParkingDataset()
