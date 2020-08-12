@@ -46,6 +46,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     var freeWifiList : Array<Dictionary<String,Any>>?
     var bicycleParkingList : Array<Dictionary<String,Any>>?
     var trashBinList : Array<Dictionary<String,Any>>?
+    var ntpcToiletList : Array<Dictionary<String,Any>>?
     
     
     var myLocation = CLLocationCoordinate2D()
@@ -57,6 +58,10 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     let tpApiFetchLimit  = 1000
     var tpApiFetchOffset = 0
+    
+    let ntpcApiFetchSize = 1000
+    var ntpcApiFetchPage = 0
+
     var trashBinDatasetDownloadCount = 0
     
     
@@ -211,6 +216,12 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         else if annotation.isMember(of: TrashBinAnnotation.self) {
             annoViewIdentifier = "trashBinAnnotationView"
         }
+        else if annotation.isMember(of: NTpcToiletAnnotation.self) {
+            annoViewIdentifier = "ntpcToiletAnnotationView"
+        }
+        else {
+            return nil
+        }
         
         var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: annoViewIdentifier) as? TpMapAnnotationView
         if annoView == nil {
@@ -268,7 +279,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         let moveToCoordinate = CLLocationCoordinate2D(latitude: coordinate.latitude,
                                                       longitude: coordinate.longitude)
         
-        let viewRegion = MKCoordinateRegion(center: moveToCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        let viewRegion = MKCoordinateRegion(center: moveToCoordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         let adjustedRegion = mapView.regionThatFits(viewRegion)
         mapView.setRegion(adjustedRegion, animated: true)
     }
@@ -476,7 +487,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         case "tpToilet":
             print("")
         case "ntpcToilet":
-            print("")
+            loadNTpcToilet(title: name, isReload: isReload)
         default:
             break
         }
@@ -789,6 +800,67 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let anno = TrashBinAnnotation(coordinate: coordinate)
             anno.image = NSImage(named: "trash_pin")
+            anno.info = item
+            
+            annoArray.append(anno)
+        }
+        
+        resetShowAnnotations(annoArray)
+    }
+    
+    
+    // MARK: - Fetch NTpc Toilet Data
+    
+    func loadNTpcToilet(title: String, isReload: Bool) {
+        if let list = ntpcToiletList, list.count > 0, isReload == false {
+            showNTpcToiletMarkers()
+        } else {
+            fetchNTpcToiletData(datasetName: title)
+        }
+    }
+    
+    func fetchNTpcToiletData(datasetName: String) {
+        showMessageView(message: "正在下載\(datasetName)資料集...")
+        ntpcApiFetchPage = 0
+        ntpcToiletList = Array<Dictionary<String,Any>>()
+        downloadNTpcToiletDataset()
+    }
+    
+    func downloadNTpcToiletDataset() {
+        NTpcToiletDataset.fetch(page: ntpcApiFetchPage, size: ntpcApiFetchSize) { json in
+            var jsonCount = 0
+            if let json = json {
+                self.ntpcToiletList?.append(contentsOf: json)
+                jsonCount = json.count
+            }
+            
+            if jsonCount >= self.ntpcApiFetchSize {
+                self.ntpcApiFetchPage += 1
+                self.downloadNTpcToiletDataset()
+            } else {
+                self.showNTpcToiletMarkers()
+                self.dismissMessageView()
+            }
+        }
+    }
+    
+    func showNTpcToiletMarkers() {
+        guard let items = self.ntpcToiletList else { return }
+        print("NTpcToilet count: \(items.count)")
+        
+        var annoArray = Array<NTpcToiletAnnotation>()
+        
+        for item in items {
+            let latitude : Double = MyTools.doubleFrom(string: item["twd97X"] as? String)
+            let longitude : Double = MyTools.doubleFrom(string: item["twd97Y"] as? String)
+            
+            if latitude == 0 || longitude == 0 {
+                continue
+            }
+            
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let anno = NTpcToiletAnnotation(coordinate: coordinate)
+            anno.image = NSImage(named: "ntpc_toilet_pin")
             anno.info = item
             
             annoArray.append(anno)

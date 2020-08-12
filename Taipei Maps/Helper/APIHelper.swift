@@ -11,16 +11,25 @@ import Foundation
 
 class APIHelper {
     
-    
     // MARK: - HTTP GET
     
+    
+    // GET Method with fetch a Dictionary
     class func httpGET_withFetchJsonObject(URLString: String, callback: @escaping (Dictionary<String,Any>?) -> Void) {
         httpRequestWithFetchJsonObject(httpMethod: "GET", URLString: URLString, parameters: nil, callback: callback)
+    }
+    
+    // GET Method with fetch an Array
+    class func httpGET_withFetchJsonArray(URLString: String, callback: @escaping (Array<Dictionary<String,Any>>?) -> Void) {
+        httpRequestWithFetchJsonArray(httpMethod: "GET", URLString: URLString, parameters: nil, callback: callback)
     }
     
     
     // MARK: - HTTP Request with Method
     
+    //
+    // fetch Dictionary
+    //
     class func httpRequestWithFetchJsonObject(httpMethod: String,
                                               URLString: String,
                                               parameters: Dictionary<String,Any>?,
@@ -54,6 +63,52 @@ class APIHelper {
                 
                 let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
                 if let responseJSON = responseJSON as? [String: Any] {
+                    callback(responseJSON)
+                } else {
+                    callback(nil)
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    
+    //
+    // fetch Array
+    //
+    class func httpRequestWithFetchJsonArray(httpMethod: String,
+                                             URLString: String,
+                                             parameters: Dictionary<String,Any>?,
+                                             callback: @escaping (Array<Dictionary<String,Any>>?) -> Void)
+    {
+        // Create request
+        let url = URL(string: URLString)!
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod
+        
+        // Header
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "accept")
+        
+        // Body
+        if let parameterDict = parameters {
+            // parameter dict to json data
+            let jsonData = try? JSONSerialization.data(withJSONObject: parameterDict)
+            // insert json data to the request
+            request.httpBody = jsonData
+        }
+        
+        // Task
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "No data")
+                    callback(nil)
+                    return
+                }
+                
+                let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+                if let responseJSON = responseJSON as? Array<Dictionary<String,Any>> {
                     callback(responseJSON)
                 } else {
                     callback(nil)
