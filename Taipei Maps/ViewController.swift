@@ -13,6 +13,12 @@ import CoreLocation
 
 class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate {
     
+    enum TpMapState {
+        case taipei
+        case newTaipei
+    }
+    
+    
     @IBOutlet var mapView : MKMapView!
     @IBOutlet var mapsPopUpButton : NSPopUpButton!
     
@@ -27,8 +33,12 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     @IBOutlet var messageLabel : NSTextField!
     @IBOutlet var messageIndicator : NSProgressIndicator!
     
-    let siteCoordinate = CLLocationCoordinate2D(latitude: 25.046856, longitude: 121.516923) //台北車站
+    
+    let taipeiSiteCoordinate = CLLocationCoordinate2D(latitude: 25.046856, longitude: 121.516923)  //台北車站
+    let banqiaoSiteCoordinate = CLLocationCoordinate2D(latitude: 25.014349, longitude: 121.463756) //板橋車站
     let siteName = "台北車站"
+    var mapState = TpMapState.taipei
+    
     
     let mapTitles = ["公共飲水機", "自來水直飲臺",
                      "Taipei Free 熱點", "自行車停放區",
@@ -50,7 +60,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     
     var myLocation = CLLocationCoordinate2D()
-    var isMoveToUserLocation = true
+    var hasUserLocation = false
+    
     
     var currentSearchPlace : CLPlacemark?
     var currentSearchPlaceAnnotation : MKPointAnnotation?
@@ -61,7 +72,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     let ntpcApiFetchSize = 1000
     var ntpcApiFetchPage = 0
-
+    
     var trashBinDatasetDownloadCount = 0
     
     
@@ -95,11 +106,13 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func setup() {
         // setup components
-        setupMyLocation()
         setupMapsPopUpButton()
         setupSearchComponents()
         setupMessageViewComponents()
         setupReloadButton()
+        
+        // setup my location
+        setupMyLocation()
         
         // move to siteLocation
         moveToSiteLocation()
@@ -110,9 +123,16 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func setupMyLocation() {
         // initial myLocation
-        myLocation.latitude = siteCoordinate.latitude
-        myLocation.longitude = siteCoordinate.longitude
-        myLocationButton.title = "台北車站"
+        switch mapState {
+        case .taipei:
+            myLocation.latitude  = taipeiSiteCoordinate.latitude
+            myLocation.longitude = taipeiSiteCoordinate.longitude
+            myLocationButton.title = "台北車站"
+        case .newTaipei:
+            myLocation.latitude  = banqiaoSiteCoordinate.latitude
+            myLocation.longitude = banqiaoSiteCoordinate.longitude
+            myLocationButton.title = "板橋車站"
+        }
     }
     
     func setupMapsPopUpButton() {
@@ -165,10 +185,16 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
-    // MARK: - Site Location
+    // MARK: - Move to Site Location
     
     func moveToSiteLocation() {
-        let viewRegion = MKCoordinateRegion(center: siteCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000);
+        var coordinate = taipeiSiteCoordinate
+        
+        if mapState == .newTaipei {
+            coordinate = banqiaoSiteCoordinate
+        }
+        
+        let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000);
         let adjustedRegion = mapView.regionThatFits(viewRegion)
         mapView.setRegion(adjustedRegion, animated: true)
     }
@@ -181,17 +207,18 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             print("緯度:\(location.coordinate.latitude), 經度: \(location.coordinate.longitude)")
             
             /*
-            self.myLocation.latitude = location.coordinate.latitude
-            self.myLocation.longitude = location.coordinate.longitude
+            myLocation.latitude = location.coordinate.latitude
+            myLocation.longitude = location.coordinate.longitude
             
-            if self.isMoveToUserLocation == true {
-                self.isMoveToUserLocation = false
-                let viewRegion = MKCoordinateRegion(center: self.myLocation,
+            if hasUserLocation == false {
+                hasUserLocation = true
+                let viewRegion = MKCoordinateRegion(center: myLocation,
                                                     latitudinalMeters: 3000,
                                                     longitudinalMeters: 3000)
+                
                 let adjustedRegion = mapView.regionThatFits(viewRegion)
                 mapView.setRegion(adjustedRegion, animated: true)
-                self.myLocationButton.title = "我的位置"
+                myLocationButton.title = "我的位置"
             }*/
         }
     }
@@ -471,6 +498,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         let mapid = mapIDs[index]
         let name = mapTitles[index]
         
+        mapState = .taipei
+        
         switch mapid {
         case "waterDispenser":
             loadWaterDispenser(title: name, isReload: isReload)
@@ -488,8 +517,16 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             print("")
         case "ntpcToilet":
             loadNTpcToilet(title: name, isReload: isReload)
+            mapState = .newTaipei
         default:
             break
+        }
+        changedMapAction()
+    }
+    
+    func changedMapAction() {
+        if hasUserLocation == false {
+            setupMyLocation()
         }
     }
     
