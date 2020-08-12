@@ -56,6 +56,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     var freeWifiList : Array<Dictionary<String,Any>>?
     var bicycleParkingList : Array<Dictionary<String,Any>>?
     var trashBinList : Array<Dictionary<String,Any>>?
+    var tpToiletList : Array<Dictionary<String,Any>>?
     var ntpcToiletList : Array<Dictionary<String,Any>>?
     
     
@@ -514,7 +515,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         case "trashBin":
             loadTrashBin(title: name, isReload: isReload)
         case "tpToilet":
-            print("")
+            loadTpToilet(title: name, isReload: isReload)
         case "ntpcToilet":
             loadNTpcToilet(title: name, isReload: isReload)
             mapState = .newTaipei
@@ -649,7 +650,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
-    // MARK: - Fetch Free Wifi Data
+    // MARK: - Load or Fetch Free Wifi Data
     
     func loadFreeWifi(title: String, isReload: Bool) {
         if let list = freeWifiList, list.count > 0, isReload == false {
@@ -715,7 +716,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
-    // MARK: - Fetch Bicycle Parking Data
+    // MARK: - Load or Fetch Bicycle Parking Data
     
     func loadBicycleParking(title: String, isReload: Bool) {
         if let list = bicycleParkingList, list.count > 0, isReload == false {
@@ -780,7 +781,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
-    // MARK: - Fetch Trash Bin Data
+    // MARK: - Load or Fetch Trash Bin Data
     
     func loadTrashBin(title: String, isReload: Bool) {
         if let list = trashBinList, list.count > 0, isReload == false {
@@ -846,7 +847,36 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
-    // MARK: - Fetch NTpc Toilet Data
+    // MARK: - Load or Fetch Tp Toilet Data
+    
+    func loadTpToilet(title: String, isReload: Bool) {
+        if let list = tpToiletList, list.count > 0, isReload == false {
+            //showTpToiletMarkers()
+        } else {
+            fetchTpToiletData(datasetName: title)
+        }
+    }
+    
+    func fetchTpToiletData(datasetName: String) {
+        showMessageView(message: "正在下載\(datasetName)資料集...")
+        
+        TpToiletDataset.fetch() { xmlText in
+            if let text = xmlText, text != "" {
+                print(text)
+            }
+            
+            self.dismissMessageView()
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    // MARK: - Load or Fetch NTpc Toilet Data
     
     func loadNTpcToilet(title: String, isReload: Bool) {
         if let list = ntpcToiletList, list.count > 0, isReload == false {

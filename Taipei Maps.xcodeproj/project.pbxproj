@@ -37,6 +37,7 @@
 		2519BB5E24E39315000F5FFC /* ntpc_toilet_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB5C24E39315000F5FFC /* ntpc_toilet_pin@2x.png */; };
 		2519BB6024E39398000F5FFC /* NTpcToiletDataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB5F24E39398000F5FFC /* NTpcToiletDataset.swift */; };
 		2519BB6224E39D0A000F5FFC /* NTpcToiletAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB6124E39D0A000F5FFC /* NTpcToiletAnnotation.swift */; };
+		2519BB6424E41150000F5FFC /* TpToiletDataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB6324E41150000F5FFC /* TpToiletDataset.swift */; };
 		25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E224DE67460067BAFE /* AppDelegate.swift */; };
 		25C112E524DE67460067BAFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E424DE67460067BAFE /* ViewController.swift */; };
 		25C112E724DE67480067BAFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C112E624DE67480067BAFE /* Assets.xcassets */; };
@@ -74,6 +75,7 @@
 		2519BB5C24E39315000F5FFC /* ntpc_toilet_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ntpc_toilet_pin@2x.png"; sourceTree = "<group>"; };
 		2519BB5F24E39398000F5FFC /* NTpcToiletDataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NTpcToiletDataset.swift; sourceTree = "<group>"; };
 		2519BB6124E39D0A000F5FFC /* NTpcToiletAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NTpcToiletAnnotation.swift; sourceTree = "<group>"; };
+		2519BB6324E41150000F5FFC /* TpToiletDataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TpToiletDataset.swift; sourceTree = "<group>"; };
 		25C112DF24DE67460067BAFE /* Taipei Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Taipei Maps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C112E224DE67460067BAFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C112E424DE67460067BAFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				2519BB1E24DFBD7B000F5FFC /* FreeWifiDataset.swift */,
 				2519BB4F24E25FA8000F5FFC /* BicycleParkingDataset.swift */,
 				2519BB5524E280C0000F5FFC /* TrashBinDataset.swift */,
+				2519BB6324E41150000F5FFC /* TpToiletDataset.swift */,
 				2519BB5F24E39398000F5FFC /* NTpcToiletDataset.swift */,
 			);
 			path = Helper;
@@ -277,6 +280,7 @@
 				25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */,
 				2519BB4A24E13E49000F5FFC /* FreeWifiAnnotation.swift in Sources */,
 				2519BB5224E2641A000F5FFC /* BicycleParkingAnnotation.swift in Sources */,
+				2519BB6424E41150000F5FFC /* TpToiletDataset.swift in Sources */,
 				2519BB4224E110A7000F5FFC /* TapWaterAnnotation.swift in Sources */,
 				2519BB4624E1183E000F5FFC /* TpMapAnnotation.swift in Sources */,
 			);

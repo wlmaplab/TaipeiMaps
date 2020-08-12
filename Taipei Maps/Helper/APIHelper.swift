@@ -24,6 +24,11 @@ class APIHelper {
         httpRequestWithFetchJsonArray(httpMethod: "GET", URLString: URLString, parameters: nil, callback: callback)
     }
     
+    // GET Method with fetch a XML text
+    class func httpGET_withFetchXMLText(URLString: String, callback: @escaping (String?) -> Void) {
+        httpRequestWithFetchXMLText(httpMethod: "GET", URLString: URLString, parameters: nil, callback: callback)
+    }
+    
     
     // MARK: - HTTP Request with Method
     
@@ -113,6 +118,48 @@ class APIHelper {
                 } else {
                     callback(nil)
                 }
+            }
+        }
+        task.resume()
+    }
+    
+    
+    //
+    // fetch XML text
+    //
+    class func httpRequestWithFetchXMLText(httpMethod: String,
+                                           URLString: String,
+                                           parameters: Dictionary<String,Any>?,
+                                           callback: @escaping (String?) -> Void)
+    {
+        // Create request
+        let url = URL(string: URLString)!
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod
+        
+        // Header
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "accept")
+        
+        // Body
+        if let parameterDict = parameters {
+            // parameter dict to json data
+            let jsonData = try? JSONSerialization.data(withJSONObject: parameterDict)
+            // insert json data to the request
+            request.httpBody = jsonData
+        }
+        
+        // Task
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "No data")
+                    callback(nil)
+                    return
+                }
+                
+                let text = String(decoding: data, as: UTF8.self)
+                callback(text)
             }
         }
         task.resume()
