@@ -56,7 +56,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     var freeWifiList : Array<Dictionary<String,Any>>?
     var bicycleParkingList : Array<Dictionary<String,Any>>?
     var trashBinList : Array<Dictionary<String,Any>>?
-    var tpToiletList : Array<Dictionary<String,Any>>?
+    var tpToiletList : Array<ToiletItem>?
     var ntpcToiletList : Array<Dictionary<String,Any>>?
     
     
@@ -243,6 +243,9 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         }
         else if annotation.isMember(of: TrashBinAnnotation.self) {
             annoViewIdentifier = "trashBinAnnotationView"
+        }
+        else if annotation.isMember(of: TpToiletAnnotation.self) {
+            annoViewIdentifier = "tpToiletAnnotationView"
         }
         else if annotation.isMember(of: NTpcToiletAnnotation.self) {
             annoViewIdentifier = "ntpcToiletAnnotationView"
@@ -851,7 +854,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func loadTpToilet(title: String, isReload: Bool) {
         if let list = tpToiletList, list.count > 0, isReload == false {
-            //showTpToiletMarkers()
+            showTpToiletMarkers()
         } else {
             fetchTpToiletData(datasetName: title)
         }
@@ -861,19 +864,44 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         showMessageView(message: "正在下載\(datasetName)資料集...")
         
         TpToiletDataset.fetch() { xmlText in
+            self.tpToiletList = nil
+            
             if let text = xmlText, text != "" {
-                print(text)
+                //print(text)
+                let data = Data(text.utf8)
+                let reader = ToiletXMLReader()
+                self.tpToiletList = reader.read(data: data)
             }
             
+            self.showTpToiletMarkers()
             self.dismissMessageView()
         }
     }
     
-    
-    
-    
-    
-    
+    func showTpToiletMarkers() {
+        guard let items = self.tpToiletList else { return }
+        print("TpToilet count: \(items.count)")
+        
+        var annoArray = Array<TpToiletAnnotation>()
+        
+        for item in items {
+            let latitude : Double = MyTools.doubleFrom(string: item.lat)
+            let longitude : Double = MyTools.doubleFrom(string: item.lng)
+            
+            if latitude == 0 || longitude == 0 {
+                continue
+            }
+            
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let anno = TpToiletAnnotation(coordinate: coordinate)
+            anno.image = NSImage(named: "toilet_pin")
+            anno.item = item
+            
+            annoArray.append(anno)
+        }
+        
+        resetShowAnnotations(annoArray)
+    }
     
     
     // MARK: - Load or Fetch NTpc Toilet Data

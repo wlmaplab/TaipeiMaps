@@ -1,27 +1,52 @@
 //
-//  WaterDispenserAnnotation.swift
+//  TpToiletAnnotation.swift
 //  Taipei Maps
 //
-//  Created by Wei-Cheng Ling on 2020/8/9.
+//  Created by Wei-Cheng Ling on 2020/8/13.
 //  Copyright © 2020 Wei-Cheng Ling. All rights reserved.
 //
 
 import Foundation
 import MapKit
 
-class WaterDispenserAnnotation: TpMapAnnotation {
+
+class TpToiletAnnotation: TpMapAnnotation {
     
+    var item : ToiletItem!
     
-    // MARK: - Info to Attributed String
-    
+
+    // MARK: - Item info to Attributed String
+
     override func infoToAttributedString() -> NSAttributedString {
-        let title = "公共飲水機"
-        let name = "\(info?["場所名稱"] as? String ?? "") (\(info?["設置地點"] as? String ?? ""))"
-        let address = "◎ 地址：\(info?["場所地址"] as? String ?? "")"
-        let time = "◎ 開放時間：\(info?["場所開放時間"] as? String ?? "")"
-        let number = "◎ 飲水台數：\(info?["飲水台數"] as? String ?? "")"
+        let title = "台北市公廁"
+        let name = "\(item.depName) (\(item.attribute))"
+        let address = "◎ 地址：\(item.address)"
+        let property = "◎ 類別：\(item.property)"
         
-        let textStr = "\(title)\n\(name)\n\(address)\n\(time)\n\(number)" as NSString
+        var restroom = "◎ 無障礙廁所："
+        if item.restroom == "Y" || item.restroom == "y" {
+            restroom += "有"
+        } else {
+            restroom += "無"
+        }
+        
+        var childroom = "◎ 親子廁間："
+        if item.childroom == "Y" || item.childroom == "y" {
+            childroom += "有"
+        } else {
+            childroom += "無"
+        }
+        
+        var kindlyroom = "◎ 貼心公廁："
+        if item.kindlyroom == "Y" || item.kindlyroom == "y" {
+            kindlyroom += "有"
+        } else {
+            kindlyroom += "無"
+        }
+        
+        let number = "◎ 座數：\(item.number)"
+        
+        let textStr = "\(title)\n\(name)\n\(address)\n\(property)\n\(restroom)\n\(childroom)\n\(kindlyroom)\n\(number)" as NSString
         let attrStr = NSMutableAttributedString(string: textStr as String)
         
         
@@ -68,7 +93,7 @@ class WaterDispenserAnnotation: TpMapAnnotation {
         
         
         // set field name
-        for text in ["◎ 地址：", "◎ 開放時間：", "◎ 飲水台數："] {
+        for text in ["◎ 地址：", "◎ 類別：", "◎ 無障礙廁所：", "◎ 親子廁間：", "◎ 貼心公廁：", "◎ 座數："] {
             attrStr.addAttribute(.font,
                                  value: NSFont.boldSystemFont(ofSize: 15),
                                  range: textStr.range(of: text))
@@ -76,5 +101,5 @@ class WaterDispenserAnnotation: TpMapAnnotation {
         
         return attrStr
     }
-    
+
 }
