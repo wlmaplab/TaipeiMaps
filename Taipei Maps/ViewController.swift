@@ -285,10 +285,9 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func setCalloutViewWith(annotationView: MKAnnotationView?, attributedString: NSAttributedString) {
         annotationView?.detailCalloutAccessoryView = detailLabelWith(attributedString: attributedString)
         annotationView?.canShowCallout = true
-        annotationView?.leftCalloutOffset  = CGPoint(x: -4, y: -27)
-        annotationView?.rightCalloutOffset = CGPoint(x: 4, y: -27)
+        annotationView?.leftCalloutOffset  = CGPoint(x: -4, y: -26)
+        annotationView?.rightCalloutOffset = CGPoint(x: 4, y: -26)
     }
-    
     
     func detailLabelWith(attributedString: NSAttributedString) -> NSTextField {
         let label = NSTextField(labelWithAttributedString: attributedString)
