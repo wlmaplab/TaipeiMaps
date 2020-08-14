@@ -43,12 +43,14 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     let mapTitles = ["公共飲水機", "自來水直飲臺",
                      "Taipei Free 熱點", "自行車停放區",
                      "垃圾清運點位", "行人清潔箱",
-                     "台北市公廁", "新北市公廁"]
+                     "台北市公廁", "新北市公廁",
+                     "郵局營業據點"]
     
     let mapIDs    = ["waterDispenser", "tapWater",
                      "freeWifi", "bicycleParking",
                      "garbageTruck", "trashBin",
-                     "tpToilet", "ntpcToilet" ]
+                     "tpToilet", "ntpcToilet",
+                     "postOffices"]
     
     
     var waterDispenserList : Array<Dictionary<String,Any>>?
@@ -497,6 +499,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
          * "行人清潔箱" : "trashBin",
          * "台北市公廁" : "tpToilet",
          * "新北市公廁" : "ntpcToilet"
+         * "郵局營業據點" : "postOffices"
          */
         
         let mapid = mapIDs[index]
@@ -522,6 +525,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         case "ntpcToilet":
             loadNTpcToilet(title: name, isReload: isReload)
             mapState = .newTaipei
+        case "postOffices":
+            print("")
         default:
             break
         }
