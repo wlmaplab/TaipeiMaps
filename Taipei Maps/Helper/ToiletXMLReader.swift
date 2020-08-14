@@ -63,7 +63,7 @@ class ToiletXMLReader: NSObject, XMLParserDelegate {
     
     // MARK: - Read XML Data
     
-    func read(data: Data) -> [ToiletItem] {
+    func read(data: Data) -> Array<ToiletItem> {
         toiletItemList.removeAll()
         let xml = XMLParser(data: data)
         xml.delegate = self

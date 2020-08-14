@@ -63,9 +63,13 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     var waterDispenserList : Array<Dictionary<String,Any>>?
     var tapWaterList : Array<Dictionary<String,Any>>?
+    
     var freeWifiList : Array<Dictionary<String,Any>>?
     var bicycleParkingList : Array<Dictionary<String,Any>>?
+    
+    var garbageTruckList : Array<GarbageTruckItem>?
     var trashBinList : Array<Dictionary<String,Any>>?
+    
     var tpToiletList : Array<ToiletItem>?
     var ntpcToiletList : Array<Dictionary<String,Any>>?
     
@@ -259,6 +263,9 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         }
         else if annotation.isMember(of: BicycleParkingAnnotation.self) {
             annoViewIdentifier = "bicycleParkingAnnotationView"
+        }
+        else if annotation.isMember(of: GarbageTruckAnnotation.self){
+            annoViewIdentifier = "garbageTruckAnnotationView"
         }
         else if annotation.isMember(of: TrashBinAnnotation.self) {
             annoViewIdentifier = "trashBinAnnotationView"
@@ -540,7 +547,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         case "bicycleParking":
             loadBicycleParking(title: name, isReload: isReload)
         case "garbageTruck":
-            print("")
+            loadGarbageTruck(title: name, isReload: isReload)
         case "trashBin":
             loadTrashBin(title: name, isReload: isReload)
         case "tpToilet":
@@ -804,6 +811,60 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             let anno = BicycleParkingAnnotation(coordinate: coordinate)
             anno.image = NSImage(named: "bicycle_pin2")
             anno.info = item
+            
+            annoArray.append(anno)
+        }
+        
+        resetShowAnnotations(annoArray)
+    }
+    
+    
+    // MARK: - Load or Fetch Garbage Truck Data
+    
+    func loadGarbageTruck(title: String, isReload: Bool) {
+        if let list = garbageTruckList, list.count > 0, isReload == false {
+            showGarbageTruckMarkers()
+        } else {
+            fetchGarbageTruckData(datasetName: title)
+        }
+    }
+    
+    func fetchGarbageTruckData(datasetName: String) {
+        showMessageView(message: "正在下載\(datasetName)資料集...")
+        
+        GarbageTruckDataset.fetch(){ xmlText in
+            self.garbageTruckList = nil
+            
+            if let text = xmlText, text != "" {
+                //print(text)
+                let data = Data(text.utf8)
+                let reader = GarbageTruckXMLReader()
+                self.garbageTruckList = reader.read(data: data)
+            }
+            
+            self.showGarbageTruckMarkers()
+            self.dismissMessageView()
+        }
+    }
+    
+    func showGarbageTruckMarkers() {
+        guard let items = self.garbageTruckList else { return }
+        print("GarbageTruck count: \(items.count)")
+        
+        var annoArray = Array<GarbageTruckAnnotation>()
+        
+        for item in items {
+            let latitude : Double = MyTools.doubleFrom(string: item.lat)
+            let longitude : Double = MyTools.doubleFrom(string: item.lng)
+            
+            if latitude == 0 || longitude == 0 {
+                continue
+            }
+            
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let anno = GarbageTruckAnnotation(coordinate: coordinate)
+            anno.image = NSImage(named: "truck-pin")
+            anno.item = item
             
             annoArray.append(anno)
         }
