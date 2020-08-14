@@ -18,6 +18,12 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         case newTaipei
     }
     
+    enum ToiletCategory {
+        case all
+        case restroom
+        case childroom
+        case kindlyroom
+    }
     
     @IBOutlet var mapView : MKMapView!
     @IBOutlet var mapsPopUpButton : NSPopUpButton!
@@ -32,6 +38,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     @IBOutlet var messageView : NSView!
     @IBOutlet var messageLabel : NSTextField!
     @IBOutlet var messageIndicator : NSProgressIndicator!
+    
+    @IBOutlet var tpToiletSegmentedControl : NSSegmentedControl!
     
     
     let taipeiSiteCoordinate = CLLocationCoordinate2D(latitude: 25.046856, longitude: 121.516923)  //台北車站
@@ -113,6 +121,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         setupSearchComponents()
         setupMessageViewComponents()
         setupReloadButton()
+        setupTpToiletSegmentedControl()
         
         // setup my location
         setupMyLocation()
@@ -185,6 +194,14 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func setupReloadButton() {
         reloadButton.title = "重新整理"
+    }
+    
+    func setupTpToiletSegmentedControl() {
+        tpToiletSegmentedControl.setLabel("全部", forSegment: 0)
+        tpToiletSegmentedControl.setLabel("無障礙廁所", forSegment: 1)
+        tpToiletSegmentedControl.setLabel("親子廁間", forSegment: 2)
+        tpToiletSegmentedControl.setLabel("貼心公廁", forSegment: 3)
+        tpToiletSegmentedControl.isHidden = true
     }
     
     
@@ -485,6 +502,12 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         loadMapDataWith(index: mapsPopUpButton.indexOfSelectedItem, isReload: true)
     }
     
+    @IBAction func selectedTpToiletSegmentedControl(sender: NSSegmentedControl) {
+        print("segment: \(sender.selectedSegment), tag: \(sender.selectedTag())")
+        showTpToiletMarkers()
+    }
+    
+    
     
     // MARK: - Load Map Data
     
@@ -505,6 +528,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         let name = mapTitles[index]
         
         mapState = .taipei
+        tpToiletSegmentedControl.isHidden = true
         
         switch mapid {
         case "waterDispenser":
@@ -883,8 +907,16 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showTpToiletMarkers() {
-        guard let items = self.tpToiletList else { return }
-        print("TpToilet count: \(items.count)")
+        guard let allItems = self.tpToiletList else { return }
+        print("TpToilet all count: \(allItems.count)\n")
+        
+        let selectedSegment = tpToiletSegmentedControl.selectedSegment
+        let items = filterTpToilet(allItems: allItems,
+                                   category: toiletCategoryWith(segment: selectedSegment))
+        
+        print(">> selected segment: \(selectedSegment), \(tpToiletSegmentedControl.label(forSegment: selectedSegment) ?? "")")
+        print(">> count: \(items.count)")
+        
         
         var annoArray = Array<TpToiletAnnotation>()
         
@@ -905,7 +937,43 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         }
         
         resetShowAnnotations(annoArray)
+        
+        if tpToiletSegmentedControl.isHidden {
+            tpToiletSegmentedControl.isHidden = false
+        }
     }
+    
+    func toiletCategoryWith(segment: Int) -> ToiletCategory {
+        switch segment {
+        case 0:
+            return .all
+        case 1:
+            return .restroom
+        case 2:
+            return .childroom
+        case 3:
+            return .kindlyroom
+        default:
+            return .all
+        }
+    }
+    
+    func filterTpToilet(allItems: Array<ToiletItem>, category: ToiletCategory) -> Array<ToiletItem> {
+        switch category {
+        case .all:
+            return allItems
+        case .restroom:
+            return allItems.filter() { $0.restroom.lowercased() == "y" }
+        case .childroom:
+            return allItems.filter() { $0.childroom.lowercased() == "y" }
+        case .kindlyroom:
+            return allItems.filter() { $0.kindlyroom.lowercased() == "y" }
+        }
+    }
+    
+    
+    
+    
     
     
     // MARK: - Load or Fetch NTpc Toilet Data

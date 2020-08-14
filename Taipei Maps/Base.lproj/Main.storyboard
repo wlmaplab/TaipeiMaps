@@ -449,21 +449,21 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Taipei_Maps" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="711" height="511"/>
+                        <rect key="frame" x="0.0" y="0.0" width="912" height="614"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <mapView mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Lox-hc-4Hg">
-                                <rect key="frame" x="0.0" y="37" width="711" height="435"/>
+                                <rect key="frame" x="0.0" y="37" width="912" height="538"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="434" id="NyD-iQ-LGs"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="711" id="UQa-IF-VbE"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="537" id="5SG-7h-qx6"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="912" id="GxR-Ud-VPx"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="YOf-pI-1qI"/>
                                 </connections>
                             </mapView>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VbN-e1-VkW">
-                                <rect key="frame" x="8" y="479" width="77" height="25"/>
+                                <rect key="frame" x="8" y="582" width="77" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="K5P-Dg-3hx" id="S8J-5R-moh">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -480,9 +480,9 @@
                                 </connections>
                             </popUpButton>
                             <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ltC-At-VlZ">
-                                <rect key="frame" x="92" y="482" width="528" height="22"/>
+                                <rect key="frame" x="92" y="585" width="729" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="528" id="j0m-eP-2cb"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="729" id="KQg-Ua-tgo"/>
                                 </constraints>
                                 <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="OM9-ZM-w1K">
                                     <font key="font" metaFont="system"/>
@@ -494,7 +494,7 @@
                                 </connections>
                             </searchField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mgo-rS-Ag5">
-                                <rect key="frame" x="624" y="475" width="83" height="32"/>
+                                <rect key="frame" x="825" y="578" width="83" height="32"/>
                                 <buttonCell key="cell" type="push" title="Search" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PNU-F3-ffC">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -504,7 +504,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4PF-Zm-8sD">
-                                <rect key="frame" x="593" y="1" width="114" height="32"/>
+                                <rect key="frame" x="794" y="1" width="114" height="32"/>
                                 <buttonCell key="cell" type="push" title="My Location" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KDc-p1-4tZ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -514,7 +514,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WNv-i6-IbZ">
-                                <rect key="frame" x="460" y="1" width="135" height="32"/>
+                                <rect key="frame" x="661" y="1" width="135" height="32"/>
                                 <buttonCell key="cell" type="push" title="Searched Place" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JfV-XA-h9J">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -524,13 +524,13 @@
                                 </connections>
                             </button>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="QCL-an-z64">
-                                <rect key="frame" x="0.0" y="442" width="711" height="30"/>
+                                <rect key="frame" x="0.0" y="545" width="912" height="30"/>
                                 <subviews>
                                     <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="m7S-vc-MRV">
                                         <rect key="frame" x="13" y="7" width="16" height="16"/>
                                     </progressIndicator>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6C3-Uh-ymp">
-                                        <rect key="frame" x="38" y="8" width="635" height="16"/>
+                                        <rect key="frame" x="38" y="8" width="836" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Label" id="7k7-FX-eHj">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -557,6 +557,21 @@
                                     <action selector="pressedReloadButtonWithSender:" target="XfG-lQ-9wD" id="HVu-vC-vlX"/>
                                 </connections>
                             </button>
+                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FaS-4v-VZO">
+                                <rect key="frame" x="264" y="7" width="385" height="23"/>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedRounded" trackingMode="selectOne" id="jn1-4z-8wL">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment label="All" width="96" selected="YES"/>
+                                        <segment label="Restroom" width="96" tag="1"/>
+                                        <segment label="Childroom" width="95" tag="2"/>
+                                        <segment label="Kindlyroom" tag="3"/>
+                                    </segments>
+                                </segmentedCell>
+                                <connections>
+                                    <action selector="selectedTpToiletSegmentedControlWithSender:" target="XfG-lQ-9wD" id="7nE-WJ-zRc"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <constraints>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="centerY" secondItem="WNv-i6-IbZ" secondAttribute="centerY" id="4Tv-Hl-xlx"/>
@@ -564,6 +579,7 @@
                             <constraint firstAttribute="bottom" secondItem="NTK-H2-rdV" secondAttribute="bottom" constant="8" id="7iT-9x-sTt"/>
                             <constraint firstItem="Lox-hc-4Hg" firstAttribute="top" secondItem="ltC-At-VlZ" secondAttribute="bottom" constant="10" id="CwE-Me-s8F"/>
                             <constraint firstItem="VbN-e1-VkW" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="ERN-QE-5Xd"/>
+                            <constraint firstItem="FaS-4v-VZO" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="FMm-SP-xss"/>
                             <constraint firstItem="Lox-hc-4Hg" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="FOQ-fQ-fwu"/>
                             <constraint firstItem="ltC-At-VlZ" firstAttribute="centerY" secondItem="VbN-e1-VkW" secondAttribute="centerY" id="KOe-hd-efb"/>
                             <constraint firstAttribute="trailing" secondItem="Lox-hc-4Hg" secondAttribute="trailing" id="N6L-NM-Dz0"/>
@@ -571,6 +587,7 @@
                             <constraint firstItem="NTK-H2-rdV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="URZ-y4-75F"/>
                             <constraint firstItem="QCL-an-z64" firstAttribute="top" secondItem="VbN-e1-VkW" secondAttribute="bottom" constant="10" id="Y1D-X6-OhA"/>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="top" secondItem="Lox-hc-4Hg" secondAttribute="bottom" constant="8" id="jcc-mZ-QN5"/>
+                            <constraint firstAttribute="bottom" secondItem="FaS-4v-VZO" secondAttribute="bottom" constant="8" id="jld-BK-DtC"/>
                             <constraint firstItem="ltC-At-VlZ" firstAttribute="leading" secondItem="VbN-e1-VkW" secondAttribute="trailing" constant="10" id="lQZ-xt-xX5"/>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="leading" secondItem="WNv-i6-IbZ" secondAttribute="trailing" constant="10" id="mCv-GV-KFm"/>
                             <constraint firstItem="Mgo-rS-Ag5" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="8" id="oSf-jA-c0T"/>
@@ -592,11 +609,12 @@
                         <outlet property="reloadButton" destination="NTK-H2-rdV" id="jd1-Fu-sK9"/>
                         <outlet property="searchButton" destination="Mgo-rS-Ag5" id="dUf-QO-m49"/>
                         <outlet property="searchField" destination="ltC-At-VlZ" id="VsR-Ik-T5b"/>
+                        <outlet property="tpToiletSegmentedControl" destination="FaS-4v-VZO" id="CQ0-3N-tyw"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75.5" y="808.5"/>
+            <point key="canvasLocation" x="101" y="886"/>
         </scene>
     </scenes>
 </document>
