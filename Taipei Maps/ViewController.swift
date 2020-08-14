@@ -168,7 +168,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         // place
         placeButton.title = "標記的位置"
-        placeButton.alphaValue = 0
+        placeButton.isHidden = true
     }
 
     func setupMessageViewComponents() {
@@ -358,7 +358,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         removeCurrentSearchPlaceAnnotation()
         currentSearchPlace = nil
-        placeButton.alphaValue = 0
+        placeButton.isHidden = true
         
         if keyword == "" {
             return
@@ -434,7 +434,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             mapView.selectAnnotation(anno, animated: true)
             
             currentSearchPlaceAnnotation = anno
-            placeButton.alphaValue = 1
+            placeButton.isHidden = false
         }
     }
     
