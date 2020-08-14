@@ -489,7 +489,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             let coordinate = CLLocationCoordinate2D(latitude: place.location!.coordinate.latitude,
                                                     longitude: place.location!.coordinate.longitude)
             
-            let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1800, longitudinalMeters: 1800);
+            let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000);
             let adjustedRegion = mapView.regionThatFits(viewRegion)
             mapView.setRegion(adjustedRegion, animated: true)
             
