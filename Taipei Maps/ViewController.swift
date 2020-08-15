@@ -474,20 +474,20 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     // MARK: - IBAction
     
-    @IBAction func pressedSearchButton(sender: NSButton) {
+    @IBAction func pressedSearchButton(_ sender: NSButton) {
         searchPlace()
     }
     
-    @IBAction func selectedMapsPopUpButton(sender: NSPopUpButton) {
+    @IBAction func selectedMapsPopUpButton(_ sender: NSPopUpButton) {
         print("\(sender.titleOfSelectedItem ?? "") : \(sender.indexOfSelectedItem)")
         loadMapDataWith(index: sender.indexOfSelectedItem, isReload: false)
     }
     
-    @IBAction func pressedMyLocationButton(sender: NSButton) {
+    @IBAction func pressedMyLocationButton(_ sender: NSButton) {
         mapView.setCenter(myLocation, animated: true)
     }
     
-    @IBAction func pressedPlaceButton(sender: NSButton) {
+    @IBAction func pressedPlaceButton(_ sender: NSButton) {
         if let place = currentSearchPlace, place.location != nil, currentSearchPlaceAnnotation != nil {
             let coordinate = CLLocationCoordinate2D(latitude: place.location!.coordinate.latitude,
                                                     longitude: place.location!.coordinate.longitude)
@@ -500,12 +500,12 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         }
     }
     
-    @IBAction func pressedReloadButton(sender: NSButton) {
+    @IBAction func pressedReloadButton(_ sender: NSButton) {
         print("\(mapsPopUpButton.titleOfSelectedItem ?? "") : \(mapsPopUpButton.indexOfSelectedItem)")
         loadMapDataWith(index: mapsPopUpButton.indexOfSelectedItem, isReload: true)
     }
     
-    @IBAction func selectedTpToiletSegmentedControl(sender: NSSegmentedControl) {
+    @IBAction func selectedTpToiletSegmentedControl(_ sender: NSSegmentedControl) {
         print("segment: \(sender.selectedSegment), tag: \(sender.selectedTag())")
         showTpToiletMarkers()
     }

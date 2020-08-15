@@ -473,7 +473,7 @@
                                     </menu>
                                 </popUpButtonCell>
                                 <connections>
-                                    <action selector="selectedMapsPopUpButtonWithSender:" target="XfG-lQ-9wD" id="Fws-wt-MR9"/>
+                                    <action selector="selectedMapsPopUpButton:" target="XfG-lQ-9wD" id="SPu-Jf-3Z2"/>
                                 </connections>
                             </popUpButton>
                             <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ltC-At-VlZ">
@@ -494,7 +494,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="pressedSearchButtonWithSender:" target="XfG-lQ-9wD" id="GSv-nU-oge"/>
+                                    <action selector="pressedSearchButton:" target="XfG-lQ-9wD" id="FS4-MO-gi9"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4PF-Zm-8sD">
@@ -504,7 +504,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="pressedMyLocationButtonWithSender:" target="XfG-lQ-9wD" id="54a-UQ-p8w"/>
+                                    <action selector="pressedMyLocationButton:" target="XfG-lQ-9wD" id="hnN-Oi-Ygt"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WNv-i6-IbZ">
@@ -514,7 +514,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="pressedPlaceButtonWithSender:" target="XfG-lQ-9wD" id="fTL-UC-MAZ"/>
+                                    <action selector="pressedPlaceButton:" target="XfG-lQ-9wD" id="e8W-pc-9Hj"/>
                                 </connections>
                             </button>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="QCL-an-z64">
@@ -548,7 +548,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="pressedReloadButtonWithSender:" target="XfG-lQ-9wD" id="HVu-vC-vlX"/>
+                                    <action selector="pressedReloadButton:" target="XfG-lQ-9wD" id="XiQ-tT-IXK"/>
                                 </connections>
                             </button>
                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FaS-4v-VZO">
@@ -563,7 +563,7 @@
                                     </segments>
                                 </segmentedCell>
                                 <connections>
-                                    <action selector="selectedTpToiletSegmentedControlWithSender:" target="XfG-lQ-9wD" id="7nE-WJ-zRc"/>
+                                    <action selector="selectedTpToiletSegmentedControl:" target="XfG-lQ-9wD" id="Lu3-2l-59d"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>
