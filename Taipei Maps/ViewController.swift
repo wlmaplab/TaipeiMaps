@@ -834,8 +834,10 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             if let text = xmlText, text != "" {
                 //print(text)
                 let data = Data(text.utf8)
-                let reader = GarbageTruckXMLReader()
-                self.garbageTruckList = reader.read(data: data)
+                let reader = MyXMLReader()
+                self.garbageTruckList = reader.read(data: data,
+                                                    tagName: "Table",
+                                                    fieldNames: ["Unit", "Title", "Content", "Lng", "Lat", "ModifyDate"])
             }
             
             self.showGarbageTruckMarkers()
@@ -954,8 +956,31 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             if let text = xmlText, text != "" {
                 //print(text)
                 let data = Data(text.utf8)
-                let reader = ToiletXMLReader()
-                self.tpToiletList = reader.read(data: data)
+                
+                let fieldNames = ["Region",
+                                  "Property",
+                                  "Attribute",
+                                  "ChiefOrg",
+                                  "DepName",
+                                  "Number",
+                                  "Address",
+                                  "FirstLevel",
+                                  "SecondLevel",
+                                  "ThirdLevel",
+                                  "FourthLevel",
+                                  "FifthLevel",
+                                  "Restroom",
+                                  "Childroom",
+                                  "Kindlyroom",
+                                  "Lng",
+                                  "Lat",
+                                  "EngName",
+                                  "EngAddress"]
+                
+                let reader = MyXMLReader()
+                self.tpToiletList = reader.read(data: data,
+                                                tagName: "ToiletData",
+                                                fieldNames: fieldNames)
             }
             
             self.showTpToiletMarkers()

@@ -83,7 +83,7 @@ class TpToiletAnnotation: TpMapAnnotation {
     }
 
     func optionsTextFrom(value: String) -> String {
-        if value.lowercased() == "y" {
+        if value.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() == "y" {
             return "有"
         }
         return "無"
