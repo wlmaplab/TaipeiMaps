@@ -9,6 +9,7 @@
 import Foundation
 
 
+/*
 struct GarbageTruckItem {
     var unit : String = ""
     var title : String = ""
@@ -16,7 +17,7 @@ struct GarbageTruckItem {
     var lng : String = ""
     var lat : String = ""
     var modifyDate : String = ""
-}
+}*/
 
 
 class GarbageTruckXMLReader: NSObject, XMLParserDelegate {
@@ -30,21 +31,21 @@ class GarbageTruckXMLReader: NSObject, XMLParserDelegate {
     var currentLat = ""
     var currentModifyDate = ""
     
-    var currentGarbageTruckItem : GarbageTruckItem!
-    var garbageTruckItemList = Array<GarbageTruckItem>()
+    var currentItem : Dictionary<String,String>!
+    var itemList = Array<Dictionary<String,String>>()
     
     
     // MARK: - Read XML Data
     
-    func read(data: Data) -> Array<GarbageTruckItem> {
-        garbageTruckItemList.removeAll()
+    func read(data: Data) -> Array<Dictionary<String,String>> {
+        itemList.removeAll()
         let xml = XMLParser(data: data)
         xml.delegate = self
         xml.parse()
         
         print(">> XML parse done!")
         
-        return garbageTruckItemList
+        return itemList
     }
     
     
@@ -66,8 +67,8 @@ class GarbageTruckXMLReader: NSObject, XMLParserDelegate {
             currentLat = ""
             currentModifyDate = ""
             
-            // create a GarbageTruckItem
-            currentGarbageTruckItem = GarbageTruckItem()
+            // create a Item
+            currentItem = Dictionary<String,String>()
         }
     }
     
@@ -106,15 +107,15 @@ class GarbageTruckXMLReader: NSObject, XMLParserDelegate {
             
             
             // set currentGarbageTruckItem
-            currentGarbageTruckItem.unit = currentUnit
-            currentGarbageTruckItem.title = currentTitle
-            currentGarbageTruckItem.content = currentContent
-            currentGarbageTruckItem.lng = currentLng
-            currentGarbageTruckItem.lat = currentLat
-            currentGarbageTruckItem.modifyDate = currentModifyDate
+            currentItem["Unit"] = currentUnit
+            currentItem["Title"] = currentTitle
+            currentItem["Content"] = currentContent
+            currentItem["Lng"] = currentLng
+            currentItem["Lat"] = currentLat
+            currentItem["ModifyDate"] = currentModifyDate
             
-            // add to garbageTruckItemList
-            garbageTruckItemList.append(currentGarbageTruckItem)
+            // add to itemList
+            itemList.append(currentItem)
         }
     }
     

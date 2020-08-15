@@ -67,7 +67,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     var freeWifiList : Array<Dictionary<String,Any>>?
     var bicycleParkingList : Array<Dictionary<String,Any>>?
     
-    var garbageTruckList : Array<GarbageTruckItem>?
+    var garbageTruckList : Array<Dictionary<String,Any>>?
     var trashBinList : Array<Dictionary<String,Any>>?
     
     var tpToiletList : Array<ToiletItem>?
@@ -850,8 +850,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         var annoArray = Array<GarbageTruckAnnotation>()
         
         for item in items {
-            let latitude : Double = MyTools.doubleFrom(string: item.lat)
-            let longitude : Double = MyTools.doubleFrom(string: item.lng)
+            let latitude : Double = MyTools.doubleFrom(string: item["Lat"] as? String)
+            let longitude : Double = MyTools.doubleFrom(string: item["Lng"] as? String)
             
             if latitude == 0 || longitude == 0 {
                 continue
@@ -860,7 +860,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let anno = GarbageTruckAnnotation(coordinate: coordinate)
             anno.image = NSImage(named: "truck-pin")
-            anno.item = item
+            anno.info = item
             
             annoArray.append(anno)
         }

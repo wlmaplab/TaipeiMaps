@@ -12,15 +12,12 @@ import MapKit
 
 class GarbageTruckAnnotation: TpMapAnnotation {
     
-    var item : GarbageTruckItem!
-    
-    
     // MARK: - Info to Attributed String
     
     override func infoToAttributedString() -> NSAttributedString {
         let title = "垃圾清運點位 (垃圾車)"
-        let name = item.title
-        let time = item.content.replacingOccurrences(of: "，", with: "\n")
+        let name = info?["Title"] as? String ?? ""
+        let time = "\(info?["Content"] as? String ?? "")".replacingOccurrences(of: "，", with: "\n")
         
         let textStr = "\(title)\n\(name)\n\(time)" as NSString
         let attrStr = NSMutableAttributedString(string: textStr as String)
