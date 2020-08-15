@@ -70,7 +70,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     var garbageTruckList : Array<Dictionary<String,Any>>?
     var trashBinList : Array<Dictionary<String,Any>>?
     
-    var tpToiletList : Array<ToiletItem>?
+    var tpToiletList : Array<Dictionary<String,Any>>?
     var ntpcToiletList : Array<Dictionary<String,Any>>?
     
     
@@ -978,8 +978,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         var annoArray = Array<TpToiletAnnotation>()
         
         for item in items {
-            let latitude : Double = MyTools.doubleFrom(string: item.lat)
-            let longitude : Double = MyTools.doubleFrom(string: item.lng)
+            let latitude : Double = MyTools.doubleFrom(string: item["Lat"] as? String)
+            let longitude : Double = MyTools.doubleFrom(string: item["Lng"] as? String)
             
             if latitude == 0 || longitude == 0 {
                 continue
@@ -988,7 +988,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let anno = TpToiletAnnotation(coordinate: coordinate)
             anno.image = NSImage(named: "toilet_pin")
-            anno.item = item
+            anno.info = item
             
             annoArray.append(anno)
         }
@@ -1015,22 +1015,18 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         }
     }
     
-    func filterTpToilet(allItems: Array<ToiletItem>, category: ToiletCategory) -> Array<ToiletItem> {
+    func filterTpToilet(allItems: Array<Dictionary<String,Any>>, category: ToiletCategory) -> Array<Dictionary<String,Any>> {
         switch category {
         case .all:
             return allItems
         case .restroom:
-            return allItems.filter() { $0.restroom.lowercased() == "y" }
+            return allItems.filter() { ($0["Restroom"] as! String).lowercased() == "y" }
         case .childroom:
-            return allItems.filter() { $0.childroom.lowercased() == "y" }
+            return allItems.filter() { ($0["Childroom"] as! String).lowercased() == "y" }
         case .kindlyroom:
-            return allItems.filter() { $0.kindlyroom.lowercased() == "y" }
+            return allItems.filter() { ($0["Kindlyroom"] as! String).lowercased() == "y" }
         }
     }
-    
-    
-    
-    
     
     
     // MARK: - Load or Fetch NTpc Toilet Data

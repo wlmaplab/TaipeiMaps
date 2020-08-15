@@ -9,6 +9,7 @@
 import Foundation
 
 
+/*
 struct ToiletItem {
     var region : String = ""
     var property : String = ""
@@ -29,7 +30,7 @@ struct ToiletItem {
     var lat : String = ""
     var engName : String = ""
     var engAddress : String = ""
-}
+}*/
 
 
 class ToiletXMLReader: NSObject, XMLParserDelegate {
@@ -56,22 +57,22 @@ class ToiletXMLReader: NSObject, XMLParserDelegate {
     var currentEngName = ""
     var currentEngAddress = ""
     
-    var currentToiletItem : ToiletItem!
-    var toiletItemList = Array<ToiletItem>()
+    var currentItem : Dictionary<String,String>!
+    var itemList = Array<Dictionary<String,String>>()
     
     
     
     // MARK: - Read XML Data
     
-    func read(data: Data) -> Array<ToiletItem> {
-        toiletItemList.removeAll()
+    func read(data: Data) -> Array<Dictionary<String,String>> {
+        itemList.removeAll()
         let xml = XMLParser(data: data)
         xml.delegate = self
         xml.parse()
         
         print(">> XML parse done!")
         
-        return toiletItemList
+        return itemList
     }
     
     
@@ -106,8 +107,8 @@ class ToiletXMLReader: NSObject, XMLParserDelegate {
             currentEngName = ""
             currentEngAddress = ""
             
-            // create a ToiletItem
-            currentToiletItem = ToiletItem()
+            // create a Item
+            currentItem = Dictionary<String,String>()
         }
     }
     
@@ -185,28 +186,28 @@ class ToiletXMLReader: NSObject, XMLParserDelegate {
             
             
             // set currentToiletItem
-            currentToiletItem.region = currentRegion
-            currentToiletItem.property = currentProperty
-            currentToiletItem.attribute = currentAttribute
-            currentToiletItem.chiefOrg = currentChiefOrg
-            currentToiletItem.depName = currentDepName
-            currentToiletItem.number = currentNumber
-            currentToiletItem.address = currentAddress
-            currentToiletItem.firstLevel = currentFirstLevel
-            currentToiletItem.secondLevel = currentSecondLevel
-            currentToiletItem.thirdLevel = currentThirdLevel
-            currentToiletItem.fourthLevel = currentFourthLevel
-            currentToiletItem.fifthLevel = currentFifthLevel
-            currentToiletItem.restroom = currentRestroom
-            currentToiletItem.childroom = currentChildroom
-            currentToiletItem.kindlyroom = currentKindlyroom
-            currentToiletItem.lng = currentLng
-            currentToiletItem.lat = currentLat
-            currentToiletItem.engName = currentEngName
-            currentToiletItem.engAddress = currentEngAddress
+            currentItem["Region"]      = currentRegion
+            currentItem["Property"]    = currentProperty
+            currentItem["Attribute"]   = currentAttribute
+            currentItem["ChiefOrg"]    = currentChiefOrg
+            currentItem["DepName"]     = currentDepName
+            currentItem["Number"]      = currentNumber
+            currentItem["Address"]     = currentAddress
+            currentItem["FirstLevel"]  = currentFirstLevel
+            currentItem["SecondLevel"] = currentSecondLevel
+            currentItem["ThirdLevel"]  = currentThirdLevel
+            currentItem["FourthLevel"] = currentFourthLevel
+            currentItem["FifthLevel"]  = currentFifthLevel
+            currentItem["Restroom"]    = currentRestroom
+            currentItem["Childroom"]   = currentChildroom
+            currentItem["Kindlyroom"]  = currentKindlyroom
+            currentItem["Lng"]         = currentLng
+            currentItem["Lat"]         = currentLat
+            currentItem["EngName"]     = currentEngName
+            currentItem["EngAddress"]  = currentEngAddress
             
             // add to toiletItemList
-            toiletItemList.append(currentToiletItem)
+            itemList.append(currentItem)
         }
     }
     

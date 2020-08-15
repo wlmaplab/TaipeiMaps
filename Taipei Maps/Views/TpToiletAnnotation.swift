@@ -11,40 +11,20 @@ import MapKit
 
 
 class TpToiletAnnotation: TpMapAnnotation {
-    
-    var item : ToiletItem!
-    
 
     // MARK: - Item info to Attributed String
 
     override func infoToAttributedString() -> NSAttributedString {
         let title = "台北市公廁"
-        let name = "\(item.depName) (\(item.attribute))"
-        let address = "◎ 地址：\(item.address)"
-        let property = "◎ 類別：\(item.property)"
+        let name = "\(info?["DepName"] as? String ?? "") (\(info?["Attribute"] as? String ?? ""))"
+        let address = "◎ 地址：\(info?["Address"] as? String ?? "")"
+        let property = "◎ 類別：\(info?["Property"] as? String ?? "")"
         
-        var restroom = "◎ 無障礙廁所："
-        if item.restroom == "Y" || item.restroom == "y" {
-            restroom += "有"
-        } else {
-            restroom += "無"
-        }
+        let restroom = "◎ 無障礙廁所：" + optionsTextFrom(value: "\(info?["Restroom"] as? String ?? "")")
+        let childroom = "◎ 親子廁間：" + optionsTextFrom(value: "\(info?["Childroom"] as? String ?? "")")
+        let kindlyroom = "◎ 貼心公廁：" + optionsTextFrom(value: "\(info?["Kindlyroom"] as? String ?? "")")
         
-        var childroom = "◎ 親子廁間："
-        if item.childroom == "Y" || item.childroom == "y" {
-            childroom += "有"
-        } else {
-            childroom += "無"
-        }
-        
-        var kindlyroom = "◎ 貼心公廁："
-        if item.kindlyroom == "Y" || item.kindlyroom == "y" {
-            kindlyroom += "有"
-        } else {
-            kindlyroom += "無"
-        }
-        
-        let number = "◎ 座數：\(item.number)"
+        let number = "◎ 座數：\(info?["Number"] as? String ?? "")"
         
         let textStr = "\(title)\n\(name)\n\(address)\n\(property)\n\(restroom)\n\(childroom)\n\(kindlyroom)\n\(number)" as NSString
         let attrStr = NSMutableAttributedString(string: textStr as String)
@@ -102,4 +82,11 @@ class TpToiletAnnotation: TpMapAnnotation {
         return attrStr
     }
 
+    func optionsTextFrom(value: String) -> String {
+        if value.lowercased() == "y" {
+            return "有"
+        }
+        return "無"
+    }
+    
 }
