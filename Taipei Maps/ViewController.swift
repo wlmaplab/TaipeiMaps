@@ -94,15 +94,11 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     // MARK: - viewLoad
     
+    /*
     override func viewDidAppear() {
         super.viewDidAppear()
         self.view.window?.title = "Taipei Maps"
-        
-        var frame = self.view.window!.frame
-        let initialSize = NSSize(width: 1000, height: 750)
-        frame.size = initialSize
-        self.view.window?.setFrame(frame, display: true)
-    }
+    }*/
 
     override func viewDidLoad() {
         super.viewDidLoad()

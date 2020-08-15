@@ -421,17 +421,18 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="65" y="-742"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Taipei Maps" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="196" y="205" width="960" height="720"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <value key="minSize" type="size" width="960" height="720"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
@@ -442,28 +443,24 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="65" y="-249"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Taipei_Maps" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="912" height="614"/>
+                        <rect key="frame" x="0.0" y="0.0" width="912" height="616"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <mapView mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Lox-hc-4Hg">
-                                <rect key="frame" x="0.0" y="37" width="912" height="538"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="537" id="5SG-7h-qx6"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="912" id="GxR-Ud-VPx"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="37" width="912" height="540"/>
                                 <connections>
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="YOf-pI-1qI"/>
                                 </connections>
                             </mapView>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VbN-e1-VkW">
-                                <rect key="frame" x="8" y="582" width="77" height="25"/>
+                                <rect key="frame" x="8" y="584" width="77" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="K5P-Dg-3hx" id="S8J-5R-moh">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -480,10 +477,7 @@
                                 </connections>
                             </popUpButton>
                             <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ltC-At-VlZ">
-                                <rect key="frame" x="92" y="585" width="729" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="729" id="KQg-Ua-tgo"/>
-                                </constraints>
+                                <rect key="frame" x="92" y="587" width="729" height="22"/>
                                 <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="OM9-ZM-w1K">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -494,7 +488,7 @@
                                 </connections>
                             </searchField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mgo-rS-Ag5">
-                                <rect key="frame" x="825" y="578" width="83" height="32"/>
+                                <rect key="frame" x="825" y="580" width="83" height="32"/>
                                 <buttonCell key="cell" type="push" title="Search" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PNU-F3-ffC">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -524,7 +518,7 @@
                                 </connections>
                             </button>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="QCL-an-z64">
-                                <rect key="frame" x="0.0" y="545" width="912" height="30"/>
+                                <rect key="frame" x="0.0" y="547" width="912" height="30"/>
                                 <subviews>
                                     <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="m7S-vc-MRV">
                                         <rect key="frame" x="13" y="7" width="16" height="16"/>
@@ -614,7 +608,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="101" y="886"/>
+            <point key="canvasLocation" x="65" y="645"/>
         </scene>
     </scenes>
 </document>
