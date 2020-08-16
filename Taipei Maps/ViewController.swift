@@ -681,8 +681,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             if resultsCount >= self.tpApiFetchLimit {
                 self.tpApiFetchOffset += self.tpApiFetchLimit
                 self.downloadFreeWifiDataset()
-            }
-            else {
+            } else {
                 self.showFreeWifiMarkers()
                 self.dismissMessageView()
             }
@@ -730,8 +729,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             if resultsCount >= self.tpApiFetchLimit {
                 self.tpApiFetchOffset += self.tpApiFetchLimit
                 self.downloadBicycleParkingDataset()
-            }
-            else {
+            } else {
                 self.showBicycleParkingMarkers()
                 self.dismissMessageView()
             }
