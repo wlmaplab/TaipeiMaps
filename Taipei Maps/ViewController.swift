@@ -40,6 +40,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     @IBOutlet var messageIndicator : NSProgressIndicator!
     
     @IBOutlet var tpToiletSegmentedControl : NSSegmentedControl!
+    @IBOutlet var descriptionBgView : NSView!
+    @IBOutlet var descriptionLabel : NSTextField!
     
     
     let taipeiSiteCoordinate = CLLocationCoordinate2D(latitude: 25.046856, longitude: 121.516923)  //台北車站
@@ -120,6 +122,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         setupMessageViewComponents()
         setupReloadButton()
         setupTpToiletSegmentedControl()
+        setupDescriptionViewComponents()
         
         // setup my location
         setupMyLocation()
@@ -200,6 +203,22 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         tpToiletSegmentedControl.setLabel("親子廁間", forSegment: 2)
         tpToiletSegmentedControl.setLabel("貼心公廁", forSegment: 3)
         tpToiletSegmentedControl.isHidden = true
+    }
+    
+    func setupDescriptionViewComponents() {
+        // view
+        descriptionBgView.wantsLayer = true
+        descriptionBgView.layer?.backgroundColor = NSColor.white.cgColor
+        descriptionBgView.layer?.cornerRadius = 5
+        descriptionBgView.alphaValue = 0.9
+        
+        // label
+        descriptionLabel.stringValue = ""
+        descriptionLabel.font = NSFont.systemFont(ofSize: 13)
+        descriptionLabel.textColor = NSColor.darkGray
+        
+        // hide
+        descriptionBgView.isHidden = true
     }
     
     
@@ -518,6 +537,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         mapState = .taipei
         tpToiletSegmentedControl.isHidden = true
+        descriptionBgView.isHidden = true
         
         switch mapid {
         case "waterDispenser":
@@ -561,6 +581,11 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         mapView.addAnnotations(showAnnotations)
     }
     
+    func showDataCountDescription(_ count: Int) {
+        descriptionLabel.stringValue = "資料數量：\(count)"
+        descriptionBgView.isHidden = false
+    }
+    
     
     // MARK: - Load or Fetch Water Dispenser Data
     
@@ -593,6 +618,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func showWaterDispenserMarkers() {
         guard let items = self.waterDispenserList else { return }
         print("WaterDispenser count: \(items.count)")
+        showDataCountDescription(items.count)
         
         var annoArray = Array<WaterDispenserAnnotation>()
         createAnnotations(&annoArray, items: items, latKey: "緯度", lngKey: "經度", imageName: "wd_pin")
@@ -631,6 +657,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func showTapWaterMarkers() {
         guard let items = self.tapWaterList else { return }
         print("TapWater count: \(items.count)")
+        showDataCountDescription(items.count)
         
         var annoArray = Array<TapWaterAnnotation>()
         createAnnotations(&annoArray, items: items, latKey: "緯度", lngKey: "經度", imageName: "water_pin")
@@ -680,6 +707,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func showFreeWifiMarkers() {
         guard let items = self.freeWifiList else { return }
         print("FreeWifi count: \(items.count)")
+        showDataCountDescription(items.count)
         
         var annoArray = Array<FreeWifiAnnotation>()
         createAnnotations(&annoArray, items: items, latKey: "LATITUDE", lngKey: "LONGITUDE", imageName: "wifi_pin2")
@@ -728,6 +756,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func showBicycleParkingMarkers() {
         guard let items = self.bicycleParkingList else { return }
         print("BicycleParking count: \(items.count)")
+        showDataCountDescription(items.count)
         
         var annoArray = Array<BicycleParkingAnnotation>()
         createAnnotations(&annoArray, items: items, latKey: "YW", lngKey: "XW", imageName: "bicycle_pin2")
@@ -768,6 +797,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func showGarbageTruckMarkers() {
         guard let items = self.garbageTruckList else { return }
         print("GarbageTruck count: \(items.count)")
+        showDataCountDescription(items.count)
         
         var annoArray = Array<GarbageTruckAnnotation>()
         createAnnotations(&annoArray, items: items, latKey: "Lat", lngKey: "Lng", imageName: "truck-pin")
@@ -818,6 +848,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func showTrashBinMarkers() {
         guard let items = self.trashBinList else { return }
         print("TrashBin count: \(items.count)")
+        showDataCountDescription(items.count)
         
         var annoArray = Array<TrashBinAnnotation>()
         createAnnotations(&annoArray, items: items, latKey: "緯度", lngKey: "經度", imageName: "trash_pin")
@@ -886,6 +917,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         print(">> selected segment: \(selectedSegment), \(tpToiletSegmentedControl.label(forSegment: selectedSegment) ?? "")")
         print(">> count: \(items.count)")
+        
+        showDataCountDescription(items.count)
         
         var annoArray = Array<TpToiletAnnotation>()
         createAnnotations(&annoArray, items: items, latKey: "Lat", lngKey: "Lng", imageName: "toilet_pin")
@@ -963,6 +996,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func showNTpcToiletMarkers() {
         guard let items = self.ntpcToiletList else { return }
         print("NTpcToilet count: \(items.count)")
+        showDataCountDescription(items.count)
         
         var annoArray = Array<NTpcToiletAnnotation>()
         createAnnotations(&annoArray, items: items, latKey: "twd97X", lngKey: "twd97Y", imageName: "ntpc_toilet_pin")

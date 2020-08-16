@@ -566,6 +566,26 @@
                                     <action selector="selectedTpToiletSegmentedControl:" target="XfG-lQ-9wD" id="Lu3-2l-59d"/>
                                 </connections>
                             </segmentedControl>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="ld7-u7-hBi">
+                                <rect key="frame" x="10" y="49" width="122" height="28"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cRL-bA-kmP">
+                                        <rect key="frame" x="0.0" y="8" width="122" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Label" id="Vu6-l8-UKU">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="cRL-bA-kmP" firstAttribute="top" secondItem="ld7-u7-hBi" secondAttribute="top" constant="4" id="33t-zT-CqY"/>
+                                    <constraint firstAttribute="trailing" secondItem="cRL-bA-kmP" secondAttribute="trailing" constant="2" id="LCj-LY-g0w"/>
+                                    <constraint firstAttribute="height" constant="28" id="Lgq-dX-NFF"/>
+                                    <constraint firstAttribute="width" constant="122" id="tEm-yv-m2T"/>
+                                    <constraint firstItem="cRL-bA-kmP" firstAttribute="leading" secondItem="ld7-u7-hBi" secondAttribute="leading" constant="2" id="ukf-J9-pPn"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="centerY" secondItem="WNv-i6-IbZ" secondAttribute="centerY" id="4Tv-Hl-xlx"/>
@@ -576,6 +596,7 @@
                             <constraint firstItem="FaS-4v-VZO" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="FMm-SP-xss"/>
                             <constraint firstItem="Lox-hc-4Hg" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="FOQ-fQ-fwu"/>
                             <constraint firstItem="ltC-At-VlZ" firstAttribute="centerY" secondItem="VbN-e1-VkW" secondAttribute="centerY" id="KOe-hd-efb"/>
+                            <constraint firstItem="ld7-u7-hBi" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="Mnc-B9-rIL"/>
                             <constraint firstAttribute="trailing" secondItem="Lox-hc-4Hg" secondAttribute="trailing" id="N6L-NM-Dz0"/>
                             <constraint firstItem="Mgo-rS-Ag5" firstAttribute="leading" secondItem="ltC-At-VlZ" secondAttribute="trailing" constant="10" id="Nxg-MH-pbh"/>
                             <constraint firstItem="NTK-H2-rdV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="URZ-y4-75F"/>
@@ -588,11 +609,14 @@
                             <constraint firstItem="QCL-an-z64" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="qdU-qu-vEb"/>
                             <constraint firstItem="Mgo-rS-Ag5" firstAttribute="centerY" secondItem="VbN-e1-VkW" secondAttribute="centerY" id="vXI-Wb-M2e"/>
                             <constraint firstAttribute="bottom" secondItem="4PF-Zm-8sD" secondAttribute="bottom" constant="8" id="vwO-oh-6zA"/>
+                            <constraint firstItem="NTK-H2-rdV" firstAttribute="top" secondItem="ld7-u7-hBi" secondAttribute="bottom" constant="20" id="wnP-Qq-z2U"/>
                             <constraint firstAttribute="trailing" secondItem="4PF-Zm-8sD" secondAttribute="trailing" constant="10" id="y9V-n9-2cB"/>
                             <constraint firstAttribute="trailing" secondItem="QCL-an-z64" secondAttribute="trailing" id="zgI-M7-X5e"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="descriptionBgView" destination="ld7-u7-hBi" id="hSU-Eg-4xw"/>
+                        <outlet property="descriptionLabel" destination="cRL-bA-kmP" id="PTF-8B-Zua"/>
                         <outlet property="mapView" destination="Lox-hc-4Hg" id="DY5-q4-faw"/>
                         <outlet property="mapsPopUpButton" destination="VbN-e1-VkW" id="XaC-AU-gXq"/>
                         <outlet property="messageIndicator" destination="m7S-vc-MRV" id="5uJ-QD-BBl"/>
