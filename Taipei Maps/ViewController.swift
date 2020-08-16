@@ -93,19 +93,17 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     
     // MARK: - viewLoad
-    
-    /*
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        self.view.window?.title = "Taipei Maps"
-    }*/
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    override func viewWillAppear() {
+        super.viewWillAppear()
         setup()
         fetchWaterDispenserData(datasetName: mapTitles[0])
     }
-
+    
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
@@ -216,7 +214,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000);
         let adjustedRegion = mapView.regionThatFits(viewRegion)
-        mapView.setRegion(adjustedRegion, animated: true)
+        mapView.setRegion(adjustedRegion, animated: false)
     }
     
     
@@ -237,7 +235,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
                                                     longitudinalMeters: 3000)
                 
                 let adjustedRegion = mapView.regionThatFits(viewRegion)
-                mapView.setRegion(adjustedRegion, animated: true)
+                mapView.setRegion(adjustedRegion, animated: false)
                 myLocationButton.title = "我的位置"
             }*/
         }
@@ -245,35 +243,26 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation { return nil }
+        if !annotation.isKind(of: TpMapAnnotation.self) { return nil }
         
         var annoViewIdentifier = ""
         
         if annotation.isMember(of: WaterDispenserAnnotation.self) {
             annoViewIdentifier = "waterDispenserAnnotationView"
-        }
-        else if annotation.isMember(of: TapWaterAnnotation.self) {
+        } else if annotation.isMember(of: TapWaterAnnotation.self) {
             annoViewIdentifier = "tapWaterAnnotationView"
-        }
-        else if annotation.isMember(of: FreeWifiAnnotation.self) {
+        } else if annotation.isMember(of: FreeWifiAnnotation.self) {
             annoViewIdentifier = "freeWifiAnnotationView"
-        }
-        else if annotation.isMember(of: BicycleParkingAnnotation.self) {
+        } else if annotation.isMember(of: BicycleParkingAnnotation.self) {
             annoViewIdentifier = "bicycleParkingAnnotationView"
-        }
-        else if annotation.isMember(of: GarbageTruckAnnotation.self){
+        } else if annotation.isMember(of: GarbageTruckAnnotation.self){
             annoViewIdentifier = "garbageTruckAnnotationView"
-        }
-        else if annotation.isMember(of: TrashBinAnnotation.self) {
+        } else if annotation.isMember(of: TrashBinAnnotation.self) {
             annoViewIdentifier = "trashBinAnnotationView"
-        }
-        else if annotation.isMember(of: TpToiletAnnotation.self) {
+        } else if annotation.isMember(of: TpToiletAnnotation.self) {
             annoViewIdentifier = "tpToiletAnnotationView"
-        }
-        else if annotation.isMember(of: NTpcToiletAnnotation.self) {
+        } else if annotation.isMember(of: NTpcToiletAnnotation.self) {
             annoViewIdentifier = "ntpcToiletAnnotationView"
-        }
-        else {
-            return nil
         }
         
         var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: annoViewIdentifier) as? TpMapAnnotationView
