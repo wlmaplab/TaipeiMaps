@@ -20,7 +20,7 @@ class TpMapAnnotation: NSObject, MKAnnotation {
         self.coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     }
     
-    convenience init(coordinate: CLLocationCoordinate2D) {
+    required convenience init(coordinate: CLLocationCoordinate2D) {
         self.init()
         self.coordinate = coordinate
     }

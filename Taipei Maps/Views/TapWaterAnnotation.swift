@@ -17,7 +17,7 @@ class TapWaterAnnotation: TpMapAnnotation {
     override func infoToAttributedString() -> NSAttributedString {
         let title = "自來水直飲臺"
         let name = "\(info?["場所名稱"] as? String ?? "") (\(info?["設置地點"] as? String ?? ""))"
-        let address = "◎ 地址：\(info?["場所地址"] as? String ?? "")"
+        let address = "◎ 地址：\(info?["地址"] as? String ?? "")"
         let serialNumber = "◎ 直飲臺編號：\(info?["直飲臺編號"] as? String ?? "")"
         let arena = "◎ 場所別：\(info?["場所別"] as? String ?? "") (\(info?["場所次分類"] as? String ?? ""))"
         let openTime = "◎ 開放時間：\(info?["場所開放時間"] as? String ?? "")"

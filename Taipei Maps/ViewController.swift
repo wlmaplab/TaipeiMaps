@@ -296,9 +296,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         annotationView?.coordinate = annotation.coordinate
         annotationView?.info       = annotation.info
         
-        weak var weakSelf = self
-        annotationView?.selectedAction = { coordinate in
-            weakSelf?.selectedAnnotation(annotation, coordinate: coordinate)
+        annotationView?.selectedAction = { [weak self] (coordinate) in
+            self?.selectedAnnotation(annotation, coordinate: coordinate)
         }
     }
     
@@ -335,7 +334,6 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         let adjustedRegion = mapView.regionThatFits(viewRegion)
         mapView.setRegion(adjustedRegion, animated: true)
     }
-    
     
     
     // MARK: - NSSearchField Delegate / NSTextField Delegate
@@ -511,7 +509,6 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     
-    
     // MARK: - Load Map Data
     
     func loadMapDataWith(index: Int, isReload: Bool) {
@@ -609,23 +606,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         print("WaterDispenser count: \(items.count)")
         
         var annoArray = Array<WaterDispenserAnnotation>()
-        
-        for item in items {
-            let latitude  = MyTools.doubleFrom(string: item["緯度"] as? String)
-            let longitude = MyTools.doubleFrom(string: item["經度"] as? String)
-            
-            if latitude == 0 || longitude == 0 {
-                continue
-            }
-            
-            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let anno = WaterDispenserAnnotation(coordinate: coordinate)
-            anno.image = NSImage(named: "wd_pin")
-            anno.info = item
-            
-            annoArray.append(anno)
-        }
-        
+        createAnnotations(&annoArray, items: items, latKey: "緯度", lngKey: "經度", imageName: "wd_pin")
         resetShowAnnotations(annoArray)
     }
     
@@ -663,23 +644,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         print("TapWater count: \(items.count)")
         
         var annoArray = Array<TapWaterAnnotation>()
-        
-        for item in items {
-            let latitude : Double = MyTools.doubleFrom(string: item["緯度"] as? String)
-            let longitude : Double = MyTools.doubleFrom(string: item["經度"] as? String)
-            
-            if latitude == 0 || longitude == 0 {
-                continue
-            }
-            
-            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let anno = TapWaterAnnotation(coordinate: coordinate)
-            anno.image = NSImage(named: "water_pin")
-            anno.info = item
-            
-            annoArray.append(anno)
-        }
-        
+        createAnnotations(&annoArray, items: items, latKey: "緯度", lngKey: "經度", imageName: "water_pin")
         resetShowAnnotations(annoArray)
     }
     
@@ -729,23 +694,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         print("FreeWifi count: \(items.count)")
         
         var annoArray = Array<FreeWifiAnnotation>()
-        
-        for item in items {
-            let latitude : Double = MyTools.doubleFrom(string: item["LATITUDE"] as? String)
-            let longitude : Double = MyTools.doubleFrom(string: item["LONGITUDE"] as? String)
-            
-            if latitude == 0 || longitude == 0 {
-                continue
-            }
-            
-            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let anno = FreeWifiAnnotation(coordinate: coordinate)
-            anno.image = NSImage(named: "wifi_pin2")
-            anno.info = item
-            
-            annoArray.append(anno)
-        }
-        
+        createAnnotations(&annoArray, items: items, latKey: "LATITUDE", lngKey: "LONGITUDE", imageName: "wifi_pin2")
         resetShowAnnotations(annoArray)
     }
     
@@ -794,23 +743,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         print("BicycleParking count: \(items.count)")
         
         var annoArray = Array<BicycleParkingAnnotation>()
-        
-        for item in items {
-            let latitude : Double = MyTools.doubleFrom(string: item["YW"] as? String)
-            let longitude : Double = MyTools.doubleFrom(string: item["XW"] as? String)
-            
-            if latitude == 0 || longitude == 0 {
-                continue
-            }
-            
-            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let anno = BicycleParkingAnnotation(coordinate: coordinate)
-            anno.image = NSImage(named: "bicycle_pin2")
-            anno.info = item
-            
-            annoArray.append(anno)
-        }
-        
+        createAnnotations(&annoArray, items: items, latKey: "YW", lngKey: "XW", imageName: "bicycle_pin2")
         resetShowAnnotations(annoArray)
     }
     
@@ -850,23 +783,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         print("GarbageTruck count: \(items.count)")
         
         var annoArray = Array<GarbageTruckAnnotation>()
-        
-        for item in items {
-            let latitude : Double = MyTools.doubleFrom(string: item["Lat"] as? String)
-            let longitude : Double = MyTools.doubleFrom(string: item["Lng"] as? String)
-            
-            if latitude == 0 || longitude == 0 {
-                continue
-            }
-            
-            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let anno = GarbageTruckAnnotation(coordinate: coordinate)
-            anno.image = NSImage(named: "truck-pin")
-            anno.info = item
-            
-            annoArray.append(anno)
-        }
-        
+        createAnnotations(&annoArray, items: items, latKey: "Lat", lngKey: "Lng", imageName: "truck-pin")
         resetShowAnnotations(annoArray)
     }
     
@@ -916,23 +833,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         print("TrashBin count: \(items.count)")
         
         var annoArray = Array<TrashBinAnnotation>()
-        
-        for item in items {
-            let latitude : Double = MyTools.doubleFrom(string: item["緯度"] as? String)
-            let longitude : Double = MyTools.doubleFrom(string: item["經度"] as? String)
-            
-            if latitude == 0 || longitude == 0 {
-                continue
-            }
-            
-            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let anno = TrashBinAnnotation(coordinate: coordinate)
-            anno.image = NSImage(named: "trash_pin")
-            anno.info = item
-            
-            annoArray.append(anno)
-        }
-        
+        createAnnotations(&annoArray, items: items, latKey: "緯度", lngKey: "經度", imageName: "trash_pin")
         resetShowAnnotations(annoArray)
     }
     
@@ -999,25 +900,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         print(">> selected segment: \(selectedSegment), \(tpToiletSegmentedControl.label(forSegment: selectedSegment) ?? "")")
         print(">> count: \(items.count)")
         
-        
         var annoArray = Array<TpToiletAnnotation>()
-        
-        for item in items {
-            let latitude : Double = MyTools.doubleFrom(string: item["Lat"] as? String)
-            let longitude : Double = MyTools.doubleFrom(string: item["Lng"] as? String)
-            
-            if latitude == 0 || longitude == 0 {
-                continue
-            }
-            
-            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let anno = TpToiletAnnotation(coordinate: coordinate)
-            anno.image = NSImage(named: "toilet_pin")
-            anno.info = item
-            
-            annoArray.append(anno)
-        }
-        
+        createAnnotations(&annoArray, items: items, latKey: "Lat", lngKey: "Lng", imageName: "toilet_pin")
         resetShowAnnotations(annoArray)
         
         if tpToiletSegmentedControl.isHidden {
@@ -1094,27 +978,35 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         print("NTpcToilet count: \(items.count)")
         
         var annoArray = Array<NTpcToiletAnnotation>()
-        
+        createAnnotations(&annoArray, items: items, latKey: "twd97X", lngKey: "twd97Y", imageName: "ntpc_toilet_pin")
+        resetShowAnnotations(annoArray)
+    }
+    
+    
+    // MARK: - Generic Functions
+    
+    func createAnnotations<T: TpMapAnnotation>(_ annotations: inout Array<T>,
+                                               items: Array<Dictionary<String,Any>>,
+                                               latKey: String,
+                                               lngKey: String,
+                                               imageName: String)
+    {
         for item in items {
-            let latitude : Double = MyTools.doubleFrom(string: item["twd97X"] as? String)
-            let longitude : Double = MyTools.doubleFrom(string: item["twd97Y"] as? String)
+            let latitude : Double = MyTools.doubleFrom(string: item[latKey] as? String)
+            let longitude : Double = MyTools.doubleFrom(string: item[lngKey] as? String)
             
             if latitude == 0 || longitude == 0 {
                 continue
             }
             
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            let anno = NTpcToiletAnnotation(coordinate: coordinate)
-            anno.image = NSImage(named: "ntpc_toilet_pin")
+            let anno = T(coordinate: coordinate)
+            anno.image = NSImage(named: imageName)
             anno.info = item
             
-            annoArray.append(anno)
+            annotations.append(anno)
         }
-        
-        resetShowAnnotations(annoArray)
     }
-    
-    
     
 }
 
