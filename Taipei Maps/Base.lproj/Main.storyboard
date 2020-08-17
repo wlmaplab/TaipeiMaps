@@ -586,11 +586,22 @@
                                     <constraint firstItem="cRL-bA-kmP" firstAttribute="leading" secondItem="ld7-u7-hBi" secondAttribute="leading" constant="2" id="ukf-J9-pPn"/>
                                 </constraints>
                             </customView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BWj-QY-jzp">
+                                <rect key="frame" x="84" y="1" width="125" height="32"/>
+                                <buttonCell key="cell" type="push" title="Recycling Info" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Jru-DY-Gem">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pressedRecyclingInfoButon:" target="XfG-lQ-9wD" id="QKs-5b-6FE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="centerY" secondItem="WNv-i6-IbZ" secondAttribute="centerY" id="4Tv-Hl-xlx"/>
                             <constraint firstAttribute="trailing" secondItem="Mgo-rS-Ag5" secondAttribute="trailing" constant="10" id="6KW-Uj-QgV"/>
                             <constraint firstAttribute="bottom" secondItem="NTK-H2-rdV" secondAttribute="bottom" constant="8" id="7iT-9x-sTt"/>
+                            <constraint firstItem="BWj-QY-jzp" firstAttribute="centerY" secondItem="NTK-H2-rdV" secondAttribute="centerY" id="Bi1-pV-1En"/>
                             <constraint firstItem="Lox-hc-4Hg" firstAttribute="top" secondItem="ltC-At-VlZ" secondAttribute="bottom" constant="10" id="CwE-Me-s8F"/>
                             <constraint firstItem="VbN-e1-VkW" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="ERN-QE-5Xd"/>
                             <constraint firstItem="FaS-4v-VZO" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="FMm-SP-xss"/>
@@ -600,6 +611,7 @@
                             <constraint firstAttribute="trailing" secondItem="Lox-hc-4Hg" secondAttribute="trailing" id="N6L-NM-Dz0"/>
                             <constraint firstItem="Mgo-rS-Ag5" firstAttribute="leading" secondItem="ltC-At-VlZ" secondAttribute="trailing" constant="10" id="Nxg-MH-pbh"/>
                             <constraint firstItem="NTK-H2-rdV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="URZ-y4-75F"/>
+                            <constraint firstItem="BWj-QY-jzp" firstAttribute="leading" secondItem="NTK-H2-rdV" secondAttribute="trailing" constant="10" id="X2I-d8-4Re"/>
                             <constraint firstItem="QCL-an-z64" firstAttribute="top" secondItem="VbN-e1-VkW" secondAttribute="bottom" constant="10" id="Y1D-X6-OhA"/>
                             <constraint firstItem="4PF-Zm-8sD" firstAttribute="top" secondItem="Lox-hc-4Hg" secondAttribute="bottom" constant="8" id="jcc-mZ-QN5"/>
                             <constraint firstAttribute="bottom" secondItem="FaS-4v-VZO" secondAttribute="bottom" constant="8" id="jld-BK-DtC"/>
@@ -624,6 +636,7 @@
                         <outlet property="messageView" destination="QCL-an-z64" id="5oK-nU-4kM"/>
                         <outlet property="myLocationButton" destination="4PF-Zm-8sD" id="ALq-ow-1Ex"/>
                         <outlet property="placeButton" destination="WNv-i6-IbZ" id="jZs-7D-uZM"/>
+                        <outlet property="recyclingInfoButton" destination="BWj-QY-jzp" id="A3j-VM-Exs"/>
                         <outlet property="reloadButton" destination="NTK-H2-rdV" id="jd1-Fu-sK9"/>
                         <outlet property="searchButton" destination="Mgo-rS-Ag5" id="dUf-QO-m49"/>
                         <outlet property="searchField" destination="ltC-At-VlZ" id="VsR-Ik-T5b"/>
@@ -632,7 +645,92 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="65" y="645"/>
+            <point key="canvasLocation" x="65" y="596"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="KXm-Lb-Qun">
+            <objects>
+                <windowController storyboardIdentifier="TpMapInfoStoryboardID" id="5cA-v2-ZSk" sceneMemberID="viewController">
+                    <window key="window" title="Info" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="O8X-RF-JbG" customClass="NSPanel">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES" HUD="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="345" y="335" width="340" height="500"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+                        <value key="minSize" type="size" width="340" height="500"/>
+                        <value key="maxSize" type="size" width="340" height="500"/>
+                        <connections>
+                            <outlet property="delegate" destination="5cA-v2-ZSk" id="i5m-tx-4bs"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="agV-Xa-D46" kind="relationship" relationship="window.shadowedContentViewController" id="asT-fb-rp4"/>
+                    </connections>
+                </windowController>
+                <customObject id="p5a-9o-hRW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-241" y="1273"/>
+        </scene>
+        <!--Info View Controller-->
+        <scene sceneID="xqW-oH-WyX">
+            <objects>
+                <viewController id="agV-Xa-D46" customClass="InfoViewController" customModule="Taipei_Maps" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="5fc-aw-IyT">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5g-h2-sNw">
+                                <rect key="frame" x="0.0" y="37" width="480" height="233"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="uX0-dp-Ekf">
+                                    <rect key="frame" x="0.0" y="0.0" width="465" height="233"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="HTE-x0-IfB">
+                                            <rect key="frame" x="0.0" y="0.0" width="465" height="233"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <size key="minSize" width="465" height="233"/>
+                                            <size key="maxSize" width="465" height="10000000"/>
+                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="57i-cG-ewQ">
+                                    <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="v5C-Yh-WOY">
+                                    <rect key="frame" x="465" y="0.0" width="15" height="233"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0U-8E-mZO">
+                                <rect key="frame" x="177" y="1" width="127" height="32"/>
+                                <buttonCell key="cell" type="push" title="Close Window" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="E29-wk-pCq">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pressedCloseButton:" target="agV-Xa-D46" id="Xip-yn-J3M"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="P5g-h2-sNw" secondAttribute="trailing" id="LGK-Pv-vBG"/>
+                            <constraint firstItem="P0U-8E-mZO" firstAttribute="top" secondItem="P5g-h2-sNw" secondAttribute="bottom" constant="8" id="ULc-mC-ccr"/>
+                            <constraint firstItem="P0U-8E-mZO" firstAttribute="centerX" secondItem="5fc-aw-IyT" secondAttribute="centerX" id="Yh8-RE-OFe"/>
+                            <constraint firstItem="P5g-h2-sNw" firstAttribute="leading" secondItem="5fc-aw-IyT" secondAttribute="leading" id="ZVx-3g-Sfn"/>
+                            <constraint firstAttribute="bottom" secondItem="P0U-8E-mZO" secondAttribute="bottom" constant="8" id="ZxB-zU-fum"/>
+                            <constraint firstItem="P5g-h2-sNw" firstAttribute="top" secondItem="5fc-aw-IyT" secondAttribute="top" id="aqR-SD-dko"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeButton" destination="P0U-8E-mZO" id="CeD-G9-cxt"/>
+                        <outlet property="infoTextView" destination="HTE-x0-IfB" id="StY-kz-5YO"/>
+                    </connections>
+                </viewController>
+                <customObject id="y5z-Oi-3Q7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="312" y="1318"/>
         </scene>
     </scenes>
 </document>

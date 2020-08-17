@@ -42,6 +42,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     @IBOutlet var tpToiletSegmentedControl : NSSegmentedControl!
     @IBOutlet var descriptionBgView : NSView!
     @IBOutlet var descriptionLabel : NSTextField!
+    @IBOutlet var recyclingInfoButton : NSButton!
     
     
     let taipeiSiteCoordinate = CLLocationCoordinate2D(latitude: 25.046856, longitude: 121.516923)  //台北車站
@@ -123,6 +124,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         setupReloadButton()
         setupTpToiletSegmentedControl()
         setupDescriptionViewComponents()
+        setupRecyclingInfoButton()
         
         // setup my location
         setupMyLocation()
@@ -219,6 +221,11 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         // hide
         descriptionBgView.isHidden = true
+    }
+    
+    func setupRecyclingInfoButton() {
+        recyclingInfoButton.title = "資源回收分類方式"
+        recyclingInfoButton.isHidden = true
     }
     
     
@@ -516,6 +523,19 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         showTpToiletMarkers()
     }
     
+    @IBAction func pressedRecyclingInfoButon(_ sender: NSButton) {
+        let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
+        let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
+        let storyboardID = NSStoryboard.SceneIdentifier(stringLiteral: "TpMapInfoStoryboardID")
+
+        if let infoWindowController = storyboard.instantiateController(withIdentifier: storyboardID) as? NSWindowController {
+            if let infoVC = infoWindowController.contentViewController as? InfoViewController {
+                infoVC.category = .recycling
+            }
+            infoWindowController.showWindow(nil)
+        }
+    }
+    
     
     // MARK: - Load Map Data
     
@@ -538,6 +558,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         mapState = .taipei
         tpToiletSegmentedControl.isHidden = true
         descriptionBgView.isHidden = true
+        recyclingInfoButton.isHidden = true
+        
         
         switch mapid {
         case "waterDispenser":
@@ -802,6 +824,10 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         var annoArray = Array<GarbageTruckAnnotation>()
         createAnnotations(&annoArray, items: items, latKey: "Lat", lngKey: "Lng", imageName: "truck-pin")
         resetShowAnnotations(annoArray)
+        
+        if recyclingInfoButton.isHidden {
+            recyclingInfoButton.isHidden = false
+        }
     }
     
     

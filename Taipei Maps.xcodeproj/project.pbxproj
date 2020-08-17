@@ -44,6 +44,7 @@
 		2519BB7024E6BD3E000F5FFC /* GarbageTruckDataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB6F24E6BD3E000F5FFC /* GarbageTruckDataset.swift */; };
 		2519BB7424E6C955000F5FFC /* GarbageTruckAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB7324E6C955000F5FFC /* GarbageTruckAnnotation.swift */; };
 		2519BB7624E810A1000F5FFC /* MyXMLReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB7524E810A1000F5FFC /* MyXMLReader.swift */; };
+		2519BB7824EAB87D000F5FFC /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB7724EAB87D000F5FFC /* InfoViewController.swift */; };
 		25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E224DE67460067BAFE /* AppDelegate.swift */; };
 		25C112E524DE67460067BAFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E424DE67460067BAFE /* ViewController.swift */; };
 		25C112E724DE67480067BAFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C112E624DE67480067BAFE /* Assets.xcassets */; };
@@ -88,6 +89,7 @@
 		2519BB6F24E6BD3E000F5FFC /* GarbageTruckDataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarbageTruckDataset.swift; sourceTree = "<group>"; };
 		2519BB7324E6C955000F5FFC /* GarbageTruckAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarbageTruckAnnotation.swift; sourceTree = "<group>"; };
 		2519BB7524E810A1000F5FFC /* MyXMLReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyXMLReader.swift; sourceTree = "<group>"; };
+		2519BB7724EAB87D000F5FFC /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		25C112DF24DE67460067BAFE /* Taipei Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Taipei Maps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C112E224DE67460067BAFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C112E424DE67460067BAFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				2519BB1724DE91B8000F5FFC /* Views */,
 				25C112E224DE67460067BAFE /* AppDelegate.swift */,
 				25C112E424DE67460067BAFE /* ViewController.swift */,
+				2519BB7724EAB87D000F5FFC /* InfoViewController.swift */,
 				25C112E624DE67480067BAFE /* Assets.xcassets */,
 				25C112E824DE67480067BAFE /* Main.storyboard */,
 				25C112EB24DE67480067BAFE /* Info.plist */,
@@ -306,6 +309,7 @@
 				2519BB7424E6C955000F5FFC /* GarbageTruckAnnotation.swift in Sources */,
 				2519BB6424E41150000F5FFC /* TpToiletDataset.swift in Sources */,
 				2519BB4224E110A7000F5FFC /* TapWaterAnnotation.swift in Sources */,
+				2519BB7824EAB87D000F5FFC /* InfoViewController.swift in Sources */,
 				2519BB4624E1183E000F5FFC /* TpMapAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
