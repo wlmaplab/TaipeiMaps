@@ -651,13 +651,13 @@
         <scene sceneID="KXm-Lb-Qun">
             <objects>
                 <windowController storyboardIdentifier="TpMapInfoStoryboardID" id="5cA-v2-ZSk" sceneMemberID="viewController">
-                    <window key="window" title="Info" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="O8X-RF-JbG" customClass="NSPanel">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES" HUD="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="345" y="335" width="340" height="500"/>
+                    <window key="window" title="Info" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="O8X-RF-JbG" customClass="NSPanel">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
+                        <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="130" y="385" width="300" height="400"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
-                        <value key="minSize" type="size" width="340" height="500"/>
-                        <value key="maxSize" type="size" width="340" height="500"/>
+                        <value key="minSize" type="size" width="300" height="400"/>
+                        <value key="maxSize" type="size" width="300" height="400"/>
                         <connections>
                             <outlet property="delegate" destination="5cA-v2-ZSk" id="i5m-tx-4bs"/>
                         </connections>
@@ -668,27 +668,27 @@
                 </windowController>
                 <customObject id="p5a-9o-hRW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-241" y="1273"/>
+            <point key="canvasLocation" x="-221" y="1334"/>
         </scene>
         <!--Info View Controller-->
         <scene sceneID="xqW-oH-WyX">
             <objects>
                 <viewController id="agV-Xa-D46" customClass="InfoViewController" customModule="Taipei_Maps" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="5fc-aw-IyT">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5g-h2-sNw">
-                                <rect key="frame" x="0.0" y="37" width="480" height="233"/>
+                                <rect key="frame" x="0.0" y="39" width="300" height="351"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="uX0-dp-Ekf">
-                                    <rect key="frame" x="0.0" y="0.0" width="465" height="233"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="285" height="351"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="HTE-x0-IfB">
-                                            <rect key="frame" x="0.0" y="0.0" width="465" height="233"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="285" height="351"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <size key="minSize" width="465" height="233"/>
+                                            <size key="minSize" width="285" height="351"/>
                                             <size key="maxSize" width="465" height="10000000"/>
                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
@@ -699,12 +699,12 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="v5C-Yh-WOY">
-                                    <rect key="frame" x="465" y="0.0" width="15" height="233"/>
+                                    <rect key="frame" x="285" y="0.0" width="15" height="351"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0U-8E-mZO">
-                                <rect key="frame" x="177" y="1" width="127" height="32"/>
+                                <rect key="frame" x="87" y="1" width="127" height="32"/>
                                 <buttonCell key="cell" type="push" title="Close Window" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="E29-wk-pCq">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -713,24 +713,30 @@
                                     <action selector="pressedCloseButton:" target="agV-Xa-D46" id="Xip-yn-J3M"/>
                                 </connections>
                             </button>
+                            <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="hwE-Ff-FKQ">
+                                <rect key="frame" x="134" y="199" width="32" height="32"/>
+                            </progressIndicator>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="hwE-Ff-FKQ" firstAttribute="centerY" secondItem="5fc-aw-IyT" secondAttribute="centerY" constant="-15" id="EqZ-dF-CJc"/>
                             <constraint firstAttribute="trailing" secondItem="P5g-h2-sNw" secondAttribute="trailing" id="LGK-Pv-vBG"/>
-                            <constraint firstItem="P0U-8E-mZO" firstAttribute="top" secondItem="P5g-h2-sNw" secondAttribute="bottom" constant="8" id="ULc-mC-ccr"/>
+                            <constraint firstItem="P0U-8E-mZO" firstAttribute="top" secondItem="P5g-h2-sNw" secondAttribute="bottom" constant="10" id="ULc-mC-ccr"/>
                             <constraint firstItem="P0U-8E-mZO" firstAttribute="centerX" secondItem="5fc-aw-IyT" secondAttribute="centerX" id="Yh8-RE-OFe"/>
                             <constraint firstItem="P5g-h2-sNw" firstAttribute="leading" secondItem="5fc-aw-IyT" secondAttribute="leading" id="ZVx-3g-Sfn"/>
                             <constraint firstAttribute="bottom" secondItem="P0U-8E-mZO" secondAttribute="bottom" constant="8" id="ZxB-zU-fum"/>
-                            <constraint firstItem="P5g-h2-sNw" firstAttribute="top" secondItem="5fc-aw-IyT" secondAttribute="top" id="aqR-SD-dko"/>
+                            <constraint firstItem="P5g-h2-sNw" firstAttribute="top" secondItem="5fc-aw-IyT" secondAttribute="top" constant="10" id="aqR-SD-dko"/>
+                            <constraint firstItem="hwE-Ff-FKQ" firstAttribute="centerX" secondItem="5fc-aw-IyT" secondAttribute="centerX" id="dQ8-dd-7El"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="P0U-8E-mZO" id="CeD-G9-cxt"/>
+                        <outlet property="indicator" destination="hwE-Ff-FKQ" id="VJV-Jj-pVo"/>
                         <outlet property="infoTextView" destination="HTE-x0-IfB" id="StY-kz-5YO"/>
                     </connections>
                 </viewController>
                 <customObject id="y5z-Oi-3Q7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="312" y="1318"/>
+            <point key="canvasLocation" x="329" y="1368"/>
         </scene>
     </scenes>
 </document>

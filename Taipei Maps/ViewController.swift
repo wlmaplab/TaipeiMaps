@@ -93,6 +93,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     var trashBinDatasetDownloadCount = 0
     
+    var recyclingInfoWindowController : NSWindowController?
+    
     
     
     // MARK: - viewLoad
@@ -105,6 +107,14 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         super.viewWillAppear()
         setup()
         fetchWaterDispenserData(datasetName: mapTitles[0])
+    }
+    
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        
+        if let windowController = recyclingInfoWindowController {
+            windowController.close()
+        }
     }
     
     override var representedObject: Any? {
@@ -524,15 +534,21 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     @IBAction func pressedRecyclingInfoButon(_ sender: NSButton) {
-        let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
-        let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
-        let storyboardID = NSStoryboard.SceneIdentifier(stringLiteral: "TpMapInfoStoryboardID")
+        if let windowController = recyclingInfoWindowController {
+            windowController.showWindow(nil)
+        } else {
+            let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
+            let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
+            let storyboardID = NSStoryboard.SceneIdentifier(stringLiteral: "TpMapInfoStoryboardID")
 
-        if let infoWindowController = storyboard.instantiateController(withIdentifier: storyboardID) as? NSWindowController {
-            if let infoVC = infoWindowController.contentViewController as? InfoViewController {
-                infoVC.category = .recycling
+            if let infoWindowController = storyboard.instantiateController(withIdentifier: storyboardID) as? NSWindowController {
+                if let infoVC = infoWindowController.contentViewController as? InfoViewController {
+                    infoVC.category = .recycling
+                }
+                
+                infoWindowController.showWindow(nil)
+                recyclingInfoWindowController = infoWindowController
             }
-            infoWindowController.showWindow(nil)
         }
     }
     
@@ -559,7 +575,6 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         tpToiletSegmentedControl.isHidden = true
         descriptionBgView.isHidden = true
         recyclingInfoButton.isHidden = true
-        
         
         switch mapid {
         case "waterDispenser":
@@ -590,6 +605,11 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func changedMapAction() {
         if hasUserLocation == false {
             setupMyLocation()
+        }
+        
+        if let windowController = recyclingInfoWindowController {
+            windowController.close()
+            recyclingInfoWindowController = nil
         }
     }
     
@@ -638,7 +658,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showWaterDispenserMarkers() {
-        guard let items = self.waterDispenserList else { return }
+        guard let items = waterDispenserList else { return }
         print("WaterDispenser count: \(items.count)")
         showDataCountDescription(items.count)
         
@@ -677,7 +697,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showTapWaterMarkers() {
-        guard let items = self.tapWaterList else { return }
+        guard let items = tapWaterList else { return }
         print("TapWater count: \(items.count)")
         showDataCountDescription(items.count)
         
@@ -727,7 +747,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showFreeWifiMarkers() {
-        guard let items = self.freeWifiList else { return }
+        guard let items = freeWifiList else { return }
         print("FreeWifi count: \(items.count)")
         showDataCountDescription(items.count)
         
@@ -776,7 +796,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showBicycleParkingMarkers() {
-        guard let items = self.bicycleParkingList else { return }
+        guard let items = bicycleParkingList else { return }
         print("BicycleParking count: \(items.count)")
         showDataCountDescription(items.count)
         
@@ -817,7 +837,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showGarbageTruckMarkers() {
-        guard let items = self.garbageTruckList else { return }
+        guard let items = garbageTruckList else { return }
         print("GarbageTruck count: \(items.count)")
         showDataCountDescription(items.count)
         
@@ -872,7 +892,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showTrashBinMarkers() {
-        guard let items = self.trashBinList else { return }
+        guard let items = trashBinList else { return }
         print("TrashBin count: \(items.count)")
         showDataCountDescription(items.count)
         
@@ -934,7 +954,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showTpToiletMarkers() {
-        guard let allItems = self.tpToiletList else { return }
+        guard let allItems = tpToiletList else { return }
         print("TpToilet all count: \(allItems.count)\n")
         
         let selectedSegment = tpToiletSegmentedControl.selectedSegment
@@ -1020,7 +1040,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     }
     
     func showNTpcToiletMarkers() {
-        guard let items = self.ntpcToiletList else { return }
+        guard let items = ntpcToiletList else { return }
         print("NTpcToilet count: \(items.count)")
         showDataCountDescription(items.count)
         
