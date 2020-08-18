@@ -45,6 +45,10 @@
 		2519BB7424E6C955000F5FFC /* GarbageTruckAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB7324E6C955000F5FFC /* GarbageTruckAnnotation.swift */; };
 		2519BB7624E810A1000F5FFC /* MyXMLReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB7524E810A1000F5FFC /* MyXMLReader.swift */; };
 		2519BB7824EAB87D000F5FFC /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB7724EAB87D000F5FFC /* InfoViewController.swift */; };
+		2519BB7A24EC0DC4000F5FFC /* PostOfficesDataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB7924EC0DC4000F5FFC /* PostOfficesDataset.swift */; };
+		2519BB7C24EC1231000F5FFC /* PostOfficesAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB7B24EC1231000F5FFC /* PostOfficesAnnotation.swift */; };
+		2519BB7F24EC16FA000F5FFC /* post_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB7D24EC16FA000F5FFC /* post_pin.png */; };
+		2519BB8024EC16FA000F5FFC /* post_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB7E24EC16FA000F5FFC /* post_pin@2x.png */; };
 		25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E224DE67460067BAFE /* AppDelegate.swift */; };
 		25C112E524DE67460067BAFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E424DE67460067BAFE /* ViewController.swift */; };
 		25C112E724DE67480067BAFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C112E624DE67480067BAFE /* Assets.xcassets */; };
@@ -90,6 +94,10 @@
 		2519BB7324E6C955000F5FFC /* GarbageTruckAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarbageTruckAnnotation.swift; sourceTree = "<group>"; };
 		2519BB7524E810A1000F5FFC /* MyXMLReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyXMLReader.swift; sourceTree = "<group>"; };
 		2519BB7724EAB87D000F5FFC /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		2519BB7924EC0DC4000F5FFC /* PostOfficesDataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOfficesDataset.swift; sourceTree = "<group>"; };
+		2519BB7B24EC1231000F5FFC /* PostOfficesAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOfficesAnnotation.swift; sourceTree = "<group>"; };
+		2519BB7D24EC16FA000F5FFC /* post_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = post_pin.png; sourceTree = "<group>"; };
+		2519BB7E24EC16FA000F5FFC /* post_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "post_pin@2x.png"; sourceTree = "<group>"; };
 		25C112DF24DE67460067BAFE /* Taipei Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Taipei Maps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C112E224DE67460067BAFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C112E424DE67460067BAFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +131,7 @@
 				2519BB5524E280C0000F5FFC /* TrashBinDataset.swift */,
 				2519BB6324E41150000F5FFC /* TpToiletDataset.swift */,
 				2519BB5F24E39398000F5FFC /* NTpcToiletDataset.swift */,
+				2519BB7924EC0DC4000F5FFC /* PostOfficesDataset.swift */,
 				2519BB7524E810A1000F5FFC /* MyXMLReader.swift */,
 			);
 			path = Helper;
@@ -141,6 +150,7 @@
 				2519BB6924E51E79000F5FFC /* TpToiletAnnotation.swift */,
 				2519BB6124E39D0A000F5FFC /* NTpcToiletAnnotation.swift */,
 				2519BB7324E6C955000F5FFC /* GarbageTruckAnnotation.swift */,
+				2519BB7B24EC1231000F5FFC /* PostOfficesAnnotation.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -148,6 +158,8 @@
 		2519BB2024DFBFE6000F5FFC /* imgs */ = {
 			isa = PBXGroup;
 			children = (
+				2519BB7D24EC16FA000F5FFC /* post_pin.png */,
+				2519BB7E24EC16FA000F5FFC /* post_pin@2x.png */,
 				2519BB6B24E6BCF5000F5FFC /* truck-pin.png */,
 				2519BB6C24E6BCF5000F5FFC /* truck-pin@2x.png */,
 				2519BB5B24E39315000F5FFC /* ntpc_toilet_pin.png */,
@@ -263,12 +275,14 @@
 				2519BB6D24E6BCF5000F5FFC /* truck-pin.png in Resources */,
 				25C112E724DE67480067BAFE /* Assets.xcassets in Resources */,
 				2519BB3824DFC0EC000F5FFC /* bicycle_pin2@2x.png in Resources */,
+				2519BB8024EC16FA000F5FFC /* post_pin@2x.png in Resources */,
 				2519BB5E24E39315000F5FFC /* ntpc_toilet_pin@2x.png in Resources */,
 				2519BB2B24DFC0C7000F5FFC /* wifi_pin2.png in Resources */,
 				2519BB3724DFC0EC000F5FFC /* bicycle_pin2.png in Resources */,
 				2519BB2C24DFC0C7000F5FFC /* water_pin@2x.png in Resources */,
 				2519BB3F24E046A1000F5FFC /* wd_pin@2x.png in Resources */,
 				2519BB3424DFC0C7000F5FFC /* wifi_pin2@2x.png in Resources */,
+				2519BB7F24EC16FA000F5FFC /* post_pin.png in Resources */,
 				2519BB3224DFC0C7000F5FFC /* toilet_pin.png in Resources */,
 				2519BB3024DFC0C7000F5FFC /* toilet_pin@2x.png in Resources */,
 				2519BB2E24DFC0C7000F5FFC /* trash_pin.png in Resources */,
@@ -292,6 +306,7 @@
 				2519BB1D24DFB2DA000F5FFC /* TapWaterDataset.swift in Sources */,
 				2519BB7024E6BD3E000F5FFC /* GarbageTruckDataset.swift in Sources */,
 				2519BB3A24DFFCF6000F5FFC /* WaterDispenserAnnotation.swift in Sources */,
+				2519BB7A24EC0DC4000F5FFC /* PostOfficesDataset.swift in Sources */,
 				2519BB7624E810A1000F5FFC /* MyXMLReader.swift in Sources */,
 				2519BB6224E39D0A000F5FFC /* NTpcToiletAnnotation.swift in Sources */,
 				2519BB5024E25FA8000F5FFC /* BicycleParkingDataset.swift in Sources */,
@@ -306,6 +321,7 @@
 				25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */,
 				2519BB4A24E13E49000F5FFC /* FreeWifiAnnotation.swift in Sources */,
 				2519BB5224E2641A000F5FFC /* BicycleParkingAnnotation.swift in Sources */,
+				2519BB7C24EC1231000F5FFC /* PostOfficesAnnotation.swift in Sources */,
 				2519BB7424E6C955000F5FFC /* GarbageTruckAnnotation.swift in Sources */,
 				2519BB6424E41150000F5FFC /* TpToiletDataset.swift in Sources */,
 				2519BB4224E110A7000F5FFC /* TapWaterAnnotation.swift in Sources */,

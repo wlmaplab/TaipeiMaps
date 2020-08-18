@@ -75,6 +75,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     var tpToiletList : Array<Dictionary<String,Any>>?
     var ntpcToiletList : Array<Dictionary<String,Any>>?
+    var postOfficesList : Array<Dictionary<String,Any>>?
     
     
     var myLocation = CLLocationCoordinate2D()
@@ -304,6 +305,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             annoViewIdentifier = "tpToiletAnnotationView"
         } else if annotation.isMember(of: NTpcToiletAnnotation.self) {
             annoViewIdentifier = "ntpcToiletAnnotationView"
+        } else if annotation.isMember(of: PostOfficesAnnotation.self) {
+            annoViewIdentifier = "postOfficesAnnotationView"
         }
         
         var annoView = mapView.dequeueReusableAnnotationView(withIdentifier: annoViewIdentifier) as? TpMapAnnotationView
@@ -600,7 +603,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             loadNTpcToilet(title: name, isReload: isReload)
             mapState = .newTaipei
         case "postOffices":
-            print("")
+            loadPostOffices(title: name, isReload: isReload)
         default:
             break
         }
@@ -614,7 +617,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         if let windowController = recyclingInfoWindowController {
             windowController.close()
-            recyclingInfoWindowController = nil
+            self.recyclingInfoWindowController = nil
         }
     }
     
@@ -1051,6 +1054,52 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         
         var annoArray = Array<NTpcToiletAnnotation>()
         createAnnotations(&annoArray, items: items, latKey: "twd97X", lngKey: "twd97Y", imageName: "ntpc_toilet_pin")
+        resetShowAnnotations(annoArray)
+    }
+    
+    
+    // MARK: - Load or Fetch Post Offices Data
+    
+    func loadPostOffices(title: String, isReload: Bool) {
+        if let list = postOfficesList, list.count > 0, isReload == false {
+            showPostOfficesMarkers()
+        } else {
+            fetchPostOfficesData(datasetName: title)
+        }
+    }
+    
+    func fetchPostOfficesData(datasetName: String) {
+        showMessageView(message: "正在下載\(datasetName)資料集...")
+        
+        PostOfficesDataset.fetch() { json in
+            self.postOfficesList = nil
+            
+            if let json = json {
+                self.postOfficesList = json
+            }
+            self.showPostOfficesMarkers()
+            self.dismissMessageView()
+        }
+    }
+    
+    func showPostOfficesMarkers() {
+        guard let allItems = postOfficesList else { return }
+        print("PostOffices all count: \(allItems.count)")
+        
+        var items = Array<Dictionary<String,Any>>()
+        
+        for item in allItems {
+            let city = (item["縣市"] as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            if city == "臺北市" || city == "台北市" || city == "新北市" {
+                items.append(item)
+            }
+        }
+        
+        print(">> items count: \(items.count)")
+        showDataCountDescription(items.count)
+        
+        var annoArray = Array<PostOfficesAnnotation>()
+        createAnnotations(&annoArray, items: items, latKey: "緯度", lngKey: "經度", imageName: "post_pin")
         resetShowAnnotations(annoArray)
     }
     
