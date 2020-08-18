@@ -94,20 +94,26 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     var trashBinDatasetDownloadCount = 0
     
     var recyclingInfoWindowController : NSWindowController?
-    
+    var isViewComponentsSetupDone = false
     
     
     // MARK: - viewLoad
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        isViewComponentsSetupDone = false
     }
-
+    
     override func viewWillAppear() {
         super.viewWillAppear()
-        setup()
-        fetchWaterDispenserData(datasetName: mapTitles[0])
+        
+        if isViewComponentsSetupDone == false {
+            setup()
+            isViewComponentsSetupDone = true
+            fetchWaterDispenserData(datasetName: mapTitles[0])
+        }
     }
+    
     
     override func viewWillDisappear() {
         super.viewWillDisappear()
