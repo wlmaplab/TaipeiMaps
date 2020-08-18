@@ -49,6 +49,7 @@
 		2519BB7C24EC1231000F5FFC /* PostOfficesAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB7B24EC1231000F5FFC /* PostOfficesAnnotation.swift */; };
 		2519BB7F24EC16FA000F5FFC /* post_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB7D24EC16FA000F5FFC /* post_pin.png */; };
 		2519BB8024EC16FA000F5FFC /* post_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2519BB7E24EC16FA000F5FFC /* post_pin@2x.png */; };
+		2519BB8224EC27A8000F5FFC /* SettingsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2519BB8124EC27A8000F5FFC /* SettingsHelper.swift */; };
 		25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E224DE67460067BAFE /* AppDelegate.swift */; };
 		25C112E524DE67460067BAFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C112E424DE67460067BAFE /* ViewController.swift */; };
 		25C112E724DE67480067BAFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C112E624DE67480067BAFE /* Assets.xcassets */; };
@@ -98,6 +99,7 @@
 		2519BB7B24EC1231000F5FFC /* PostOfficesAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOfficesAnnotation.swift; sourceTree = "<group>"; };
 		2519BB7D24EC16FA000F5FFC /* post_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = post_pin.png; sourceTree = "<group>"; };
 		2519BB7E24EC16FA000F5FFC /* post_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "post_pin@2x.png"; sourceTree = "<group>"; };
+		2519BB8124EC27A8000F5FFC /* SettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHelper.swift; sourceTree = "<group>"; };
 		25C112DF24DE67460067BAFE /* Taipei Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Taipei Maps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C112E224DE67460067BAFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C112E424DE67460067BAFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				2519BB5F24E39398000F5FFC /* NTpcToiletDataset.swift */,
 				2519BB7924EC0DC4000F5FFC /* PostOfficesDataset.swift */,
 				2519BB7524E810A1000F5FFC /* MyXMLReader.swift */,
+				2519BB8124EC27A8000F5FFC /* SettingsHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				2519BB6A24E51E79000F5FFC /* TpToiletAnnotation.swift in Sources */,
 				25C112E324DE67460067BAFE /* AppDelegate.swift in Sources */,
 				2519BB4A24E13E49000F5FFC /* FreeWifiAnnotation.swift in Sources */,
+				2519BB8224EC27A8000F5FFC /* SettingsHelper.swift in Sources */,
 				2519BB5224E2641A000F5FFC /* BicycleParkingAnnotation.swift in Sources */,
 				2519BB7C24EC1231000F5FFC /* PostOfficesAnnotation.swift in Sources */,
 				2519BB7424E6C955000F5FFC /* GarbageTruckAnnotation.swift in Sources */,

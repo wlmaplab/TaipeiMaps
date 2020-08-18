@@ -111,7 +111,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         if isViewComponentsSetupDone == false {
             setup()
             isViewComponentsSetupDone = true
-            fetchWaterDispenserData(datasetName: mapTitles[0])
+            loadDefaultMap()
         }
     }
     
@@ -128,7 +128,22 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         // Update the view, if already loaded.
         }
     }
+    
 
+    // MARK: - Load Default Map
+    
+    func loadDefaultMap() {
+        if let mapid = SettingsHelper.readLastSelectedMapID(),
+           let index = mapIDs.firstIndex(of: mapid)
+        {
+            print("read mapid: \(mapid), index: \(index)")
+            mapsPopUpButton.selectItem(at: index)
+            loadMapDataWith(index: index, isReload: true)
+        } else {
+            loadMapDataWith(index: 0, isReload: true)
+        }
+    }
+    
     
     // MARK: - Setup
     
@@ -266,7 +281,6 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         if let location = userLocation.location {
             print("緯度:\(location.coordinate.latitude), 經度: \(location.coordinate.longitude)")
             
-            /*
             myLocation.latitude = location.coordinate.latitude
             myLocation.longitude = location.coordinate.longitude
             
@@ -279,7 +293,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
                 let adjustedRegion = mapView.regionThatFits(viewRegion)
                 mapView.setRegion(adjustedRegion, animated: false)
                 myLocationButton.title = "我的位置"
-            }*/
+            }
         }
     }
     
@@ -607,10 +621,12 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         default:
             break
         }
-        changedMapAction()
+        changedMapAction(mapID: mapid)
     }
     
-    func changedMapAction() {
+    func changedMapAction(mapID: String) {
+        SettingsHelper.saveSelectedMapID(mapID)
+        
         if hasUserLocation == false {
             setupMyLocation()
         }
