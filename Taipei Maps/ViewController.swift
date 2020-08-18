@@ -114,7 +114,6 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         }
     }
     
-    
     override func viewWillDisappear() {
         super.viewWillDisappear()
         
