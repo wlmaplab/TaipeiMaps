@@ -1115,7 +1115,7 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
         showDataCountDescription(items.count)
         
         var annoArray = Array<PostOfficesAnnotation>()
-        createAnnotations(&annoArray, items: items, latKey: "緯度", lngKey: "經度", imageName: "post_pin")
+        createAnnotations(&annoArray, items: items, latKey: "緯度", lngKey: "經度", imageName: "post_pin2")
         resetShowAnnotations(annoArray)
     }
     

@@ -20,7 +20,6 @@
 
 ## TODO (待處理)
 
-- 更換郵局營業據點的 Pin image。
 - 繪製 App Icon。 
 
 
