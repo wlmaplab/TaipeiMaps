@@ -704,19 +704,29 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     func fetchTapWaterData(datasetName: String) {
         showMessageView(message: "正在下載\(datasetName)資料集...")
-        
-        TapWaterDataset.fetch() { json in
-            self.tapWaterList = nil
-            
+        tpApiFetchOffset = 0
+        tapWaterList = Array<Dictionary<String,Any>>()
+        downloadTapWaterDataset()
+    }
+    
+    func downloadTapWaterDataset() {
+        TapWaterDataset.fetch(limit: tpApiFetchLimit, offset: tpApiFetchOffset) { json in
+            var resultsCount = 0
             if let json = json,
                let result = json["result"] as? Dictionary<String,Any>,
                let results = result["results"] as? Array<Dictionary<String,Any>>
             {
-                self.tapWaterList = results
+                self.tapWaterList?.append(contentsOf: results)
+                resultsCount = results.count
             }
             
-            self.showTapWaterMarkers()
-            self.dismissMessageView()
+            if resultsCount >= self.tpApiFetchLimit {
+                self.tpApiFetchOffset += self.tpApiFetchLimit
+                self.downloadTapWaterDataset()
+            } else {
+                self.showTapWaterMarkers()
+                self.dismissMessageView()
+            }
         }
     }
     

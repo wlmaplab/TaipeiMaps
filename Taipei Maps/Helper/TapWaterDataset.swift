@@ -14,13 +14,13 @@ class TapWaterDataset: APIHelper {
     
     // MARK: - API URL String
     
-    static let urlString = "https://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=59629791-5f4f-4c91-903b-e9ab9aa0653b"
+    static let urlString = "https://data.taipei/api/v1/dataset/59629791-5f4f-4c91-903b-e9ab9aa0653b?scope=resourceAquire"
     
     
     // MARK: - Fetch Data
     
-    class func fetch(callback: @escaping (Dictionary<String,Any>?) -> Void) {
-        httpGET_withFetchJsonObject(URLString: urlString, callback: callback)
+    class func fetch(limit: Int, offset: Int, callback: @escaping (Dictionary<String,Any>?) -> Void) {
+        httpGET_withFetchJsonObject(URLString: "\(urlString)&limit=\(limit)&offset=\(offset)", callback: callback)
     }
 }
 
