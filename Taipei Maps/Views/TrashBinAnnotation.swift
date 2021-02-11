@@ -17,8 +17,8 @@ class TrashBinAnnotation: TpMapAnnotation {
     override func infoToAttributedString() -> NSAttributedString {
         let title = "行人清潔箱 (垃圾桶)"
         let address = "\(info?["路名"] as? String ?? "")"
-        let note = "\(info?["段、號及其他註明"] as? String ?? "")"
-        let name = "\(address) (\(note))"
+        let note = "\(info?["段號及其他註明"] as? String ?? "")"
+        let name = "\(address)\(note)"
         
         let textStr = "\(title)\n\(name)" as NSString
         let attrStr = NSMutableAttributedString(string: textStr as String)

@@ -81,7 +81,6 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     var myLocation = CLLocationCoordinate2D()
     var hasUserLocation = false
     
-    
     var currentSearchPlace : CLPlacemark?
     var currentSearchPlaceAnnotation : MKPointAnnotation?
     var showAnnotations = Array<MKAnnotation>()
@@ -91,8 +90,6 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     let ntpcApiFetchSize = 1000
     var ntpcApiFetchPage = 0
-    
-    var trashBinDatasetDownloadCount = 0
     
     var recyclingInfoWindowController : NSWindowController?
     var isViewComponentsSetupDone = false
@@ -898,27 +895,27 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func fetchTrashBinData(datasetName: String) {
         showMessageView(message: "正在下載\(datasetName)資料集...")
         
+        tpApiFetchOffset = 0
         trashBinList = Array<Dictionary<String,Any>>()
-        trashBinDatasetDownloadCount = 0
         
-        for (districtName, datasetID) in TrashBinDataset.datasetDict {
-            downloadTrashBinDataset(datasetID: datasetID, districtName: districtName)
-        }
+        downloadTrashBinDataset()
     }
     
-    func downloadTrashBinDataset(datasetID: String, districtName: String) {
-        TrashBinDataset.fetch(datasetID: datasetID, limit: 1000, offset: 0) { json in
-            self.trashBinDatasetDownloadCount += 1
-            
+    func downloadTrashBinDataset() {
+        TrashBinDataset.fetch(limit: tpApiFetchLimit, offset: tpApiFetchOffset) { json in
+            var resultsCount = 0
             if let json = json,
                let result = json["result"] as? Dictionary<String,Any>,
                let results = result["results"] as? Array<Dictionary<String,Any>>
             {
-                print("\(districtName) count: \(results.count)")
                 self.trashBinList?.append(contentsOf: results)
+                resultsCount = results.count
             }
             
-            if self.trashBinDatasetDownloadCount >= TrashBinDataset.datasetCount() {
+            if resultsCount >= self.tpApiFetchLimit {
+                self.tpApiFetchOffset += self.tpApiFetchLimit
+                self.downloadTrashBinDataset()
+            } else {
                 self.showTrashBinMarkers()
                 self.dismissMessageView()
             }
