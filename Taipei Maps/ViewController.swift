@@ -370,11 +370,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     // MARK: - Selected Annotation
     
-    func selectedAnnotation(_ annotation: MKAnnotation, coordinate: CLLocationCoordinate2D) {
-        let moveToCoordinate = CLLocationCoordinate2D(latitude: coordinate.latitude,
-                                                      longitude: coordinate.longitude)
-        
-        let viewRegion = MKCoordinateRegion(center: moveToCoordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+    func selectedAnnotation(_ annotation: MKAnnotation, coordinate: CLLocationCoordinate2D) {        
+        let viewRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         let adjustedRegion = mapView.regionThatFits(viewRegion)
         mapView.setRegion(adjustedRegion, animated: true)
     }
