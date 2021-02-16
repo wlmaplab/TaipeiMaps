@@ -20,8 +20,10 @@ class WaterDispenserAnnotation: TpMapAnnotation {
         let address = "◎ 地址：\(info?["場所地址"] as? String ?? "")"
         let time = "◎ 開放時間：\(info?["場所開放時間"] as? String ?? "")"
         let number = "◎ 飲水台數：\(info?["飲水台數"] as? String ?? "")"
+        let manager = "◎ 管理單位：\(info?["管理單位"] as? String ?? "")"
+        let tel = "◎ 連絡電話：\(info?["連絡電話"] as? String ?? "")".replacingOccurrences(of: "?", with: "")
         
-        let textStr = "\(title)\n\(name)\n\(address)\n\(time)\n\(number)" as NSString
+        let textStr = "\(title)\n\(name)\n\(address)\n\(time)\n\(number)\n\(manager)\n\(tel)" as NSString
         let attrStr = NSMutableAttributedString(string: textStr as String)
         
         
@@ -68,7 +70,7 @@ class WaterDispenserAnnotation: TpMapAnnotation {
         
         
         // set field name
-        for text in ["◎ 地址：", "◎ 開放時間：", "◎ 飲水台數："] {
+        for text in ["◎ 地址：", "◎ 開放時間：", "◎ 飲水台數：", "◎ 管理單位：", "◎ 連絡電話："] {
             attrStr.addAttribute(.font,
                                  value: NSFont.boldSystemFont(ofSize: 15),
                                  range: textStr.range(of: text))

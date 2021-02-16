@@ -26,7 +26,18 @@ class APIHelper {
     
     // GET Method with fetch a XML text
     class func httpGET_withFetchXMLText(URLString: String, callback: @escaping (String?) -> Void) {
-        httpRequestWithFetchXMLText(httpMethod: "GET", URLString: URLString, parameters: nil, callback: callback)
+        httpGET_withFetchTextContent(contentType: "text/xml",
+                                     charset: "utf-8",
+                                     URLString: URLString,
+                                     callback: callback)
+    }
+    
+    // GET Method with fetch a CSV text
+    class func httpGET_withFetchCSVText(charset: String, URLString: String, callback: @escaping (String?) -> Void) {
+        httpGET_withFetchTextContent(contentType: "text/plain",
+                                     charset: charset,
+                                     URLString: URLString,
+                                     callback: callback)
     }
     
     
@@ -125,32 +136,31 @@ class APIHelper {
     
     
     //
-    // fetch XML text
+    // fetch Text
     //
-    class func httpRequestWithFetchXMLText(httpMethod: String,
-                                           URLString: String,
-                                           parameters: Dictionary<String,Any>?,
-                                           callback: @escaping (String?) -> Void)
+    class func httpGET_withFetchTextContent(contentType: String,
+                                            charset: String,
+                                            URLString: String,
+                                            callback: @escaping (String?) -> Void)
     {
         // Create request
         let url = URL(string: URLString)!
         var request = URLRequest(url: url)
-        request.httpMethod = httpMethod
+        request.httpMethod = "GET"
         
-        // Header
-        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/json", forHTTPHeaderField: "accept")
+        // Header:
+        request.setValue("\(contentType); charset=\(charset)", forHTTPHeaderField: "Content-Type")
         
-        // Body
-        if let parameterDict = parameters {
-            // parameter dict to json data
-            let jsonData = try? JSONSerialization.data(withJSONObject: parameterDict)
-            // insert json data to the request
-            request.httpBody = jsonData
-        }
+        
+        // Session and configuration
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
+                
+        let session = URLSession(configuration: config)
         
         // Task
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let task = session.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
                     print(error?.localizedDescription ?? "No data")
@@ -158,11 +168,19 @@ class APIHelper {
                     return
                 }
                 
-                let text = String(decoding: data, as: UTF8.self)
+                var text : String? = nil
+                
+                if charset.lowercased() == "big-5" || charset.lowercased() == "big5" {
+                    let big5 = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.big5.rawValue))
+                    let big5encoding = String.Encoding(rawValue: big5)
+                    text = String(data: data, encoding: big5encoding)
+                } else if charset.lowercased() == "utf-8" || charset.lowercased() == "utf8" {
+                    text = String(decoding: data, as: UTF8.self)
+                }
+                
                 callback(text)
             }
         }
         task.resume()
     }
-    
 }

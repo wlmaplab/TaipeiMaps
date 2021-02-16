@@ -660,16 +660,32 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     func fetchWaterDispenserData(datasetName: String) {
         showMessageView(message: "正在下載\(datasetName)資料集...")
         
-        WaterDispenserDataset.fetch() { json in
+        WaterDispenserDataset.fetch() { csvText in
             self.waterDispenserList = nil
             
-            if let json = json,
-               let result = json["result"] as? Dictionary<String,Any>,
-               let results = result["results"] as? Array<Dictionary<String,Any>>
-            {
-                self.waterDispenserList = results
+            var results = Array<Dictionary<String,Any>>()
+            
+            if let rows = csvText?.components(separatedBy: "\r\n") {
+                //for i in 0..<rows.count { print("\(i)>\n \(rows[i])") }
+                
+                if rows.count >= 2 {
+                    let fields = rows[0].components(separatedBy: ",")
+                    for row in rows.dropFirst() {
+                        let columns = row.components(separatedBy: ",")
+                        if columns.count != fields.count { continue }
+                        
+                        var dict = Dictionary<String,String>()
+                        for i in 0..<columns.count {
+                            let key = fields[i].trimmingCharacters(in: .whitespacesAndNewlines)
+                            let value = columns[i].trimmingCharacters(in: .whitespacesAndNewlines)
+                            dict[key] = value
+                        }
+                        results.append(dict)
+                    }
+                }
             }
             
+            self.waterDispenserList = results
             self.showWaterDispenserMarkers()
             self.dismissMessageView()
         }

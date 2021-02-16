@@ -14,13 +14,14 @@ class WaterDispenserDataset: APIHelper {
     
     // MARK: - API URL String
     
-    static let urlString = "https://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=52538305-ed23-490c-8f67-3efff2d777c3"
+    // CSV URL
+    static let urlString = "https://data.taipei/api/getDatasetInfo/downloadResource?id=f158e1bc-8400-44c2-a93a-e09361ddb7f5&rid=52538305-ed23-490c-8f67-3efff2d777c3"
     
     
     // MARK: - Fetch Data
     
-    class func fetch(callback: @escaping (Dictionary<String,Any>?) -> Void) {
-        httpGET_withFetchJsonObject(URLString: urlString, callback: callback)
+    class func fetch(callback: @escaping (String?) -> Void) {
+        httpGET_withFetchCSVText(charset: "big-5", URLString: urlString, callback: callback)
     }
 }
 
