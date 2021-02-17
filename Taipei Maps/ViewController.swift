@@ -10,7 +10,6 @@ import Cocoa
 import MapKit
 import CoreLocation
 
-
 class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate {
     
     enum TpMapState {
@@ -93,6 +92,8 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
     
     var recyclingInfoWindowController : NSWindowController?
     var isViewComponentsSetupDone = false
+    
+    let placesSearcher = PlacesSearcher()
     
     
     // MARK: - viewLoad
@@ -389,6 +390,15 @@ class ViewController: NSViewController, MKMapViewDelegate, NSSearchFieldDelegate
             return true
         }
         return false
+    }
+    
+    func controlTextDidChange(_ obj: Notification) {
+        if let textField = obj.object as? NSTextField {
+            print(">> \(textField.stringValue)")
+            placesSearcher.search(textField.stringValue) { [weak self] (results) in
+                print(results)
+            }
+        }
     }
     
     
